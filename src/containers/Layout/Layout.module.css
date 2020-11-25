@@ -1,0 +1,19 @@
+.MainContainer {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  margin-top: 3px;
+}
+.MainContent {
+  width: calc(100% - 150px);
+  left: 150px;
+  position: absolute;
+  height: 100%;
+  background-color: #09111f;
+}
+@media (max-width: 550px) {
+  .MainContent {
+    width: calc(100% - 60px);
+    left: 60px;
+  }
+}

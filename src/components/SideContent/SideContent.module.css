@@ -1,0 +1,11 @@
+.SideContent {
+  background-color: #1f3455;
+  position: absolute;
+  height: 100%;
+  width: 180px;
+}
+@media (max-width: 550px) {
+  .SideContent {
+    width: 60px;
+  }
+}

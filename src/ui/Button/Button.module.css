@@ -1,0 +1,16 @@
+.Button {
+  width: fit-content;
+  height: fit-content;
+  padding: 5px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 1px solid rgb(20, 20, 184);
+  border-radius: 5px;
+  margin: auto;
+  color: aliceblue;
+  background-color: rgb(52, 52, 182);
+}
+button:hover,
+button:active {
+  background-color: rgb(9, 9, 160);
+}

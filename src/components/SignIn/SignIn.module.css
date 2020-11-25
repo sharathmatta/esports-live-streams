@@ -1,0 +1,58 @@
+.SignIn {
+  height: fit-content;
+  background-color: #101f38;
+}
+.Header {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  padding: 16px;
+}
+.Logo {
+  width: 30px;
+  height: 25px;
+  margin: auto 10px;
+}
+.Logo img {
+  width: 30px;
+  height: 25px;
+  padding-top: 2px;
+}
+.Message {
+  color: #89a4d3;
+  font-weight: bold;
+  font-size: 22px;
+  margin: auto;
+}
+.SignInOptions {
+  border-bottom: 2px solid rgb(37, 37, 114);
+  width: 90%;
+  color: #89a4d3;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-weight: bold;
+}
+.SignInOptions div:hover {
+  background-color: #132544;
+  cursor: pointer;
+  color: #4879cf;
+  border-bottom: 2px solid #4879cf;
+}
+.LoginOption {
+  width: fit-content;
+  padding: 10px 15px;
+}
+
+.SignupOption {
+  width: fit-content;
+  padding: 10px 15px;
+}
+.formContainer {
+  width: 90%;
+  margin: 10px auto 0 auto;
+  padding: 10px 0;
+  text-align: center;
+}
