@@ -39,7 +39,9 @@ class Login extends Component {
       },
     },
   };
-
+  componentDidMount() {
+    this.props.onClearError();
+  }
   inputChangedHandler = (event, controlName) => {
     const updatedControls = {
       ...this.state.controls,
@@ -66,6 +68,10 @@ class Login extends Component {
   };
 
   render() {
+    let errMessage = null;
+    if (this.props.error) {
+      errMessage = this.props.error.message;
+    }
     const formElementsArray = [];
     for (let key in this.state.controls) {
       formElementsArray.push({
@@ -87,6 +93,7 @@ class Login extends Component {
     ));
     return (
       <div className={classes.Login}>
+        <strong style={{ color: "#4879cf" }}>{errMessage}</strong>
         {form}
         <div className={classes.Button}>
           <Button clicked={this.loginHandler}>Log In</Button>
@@ -106,6 +113,7 @@ const matchStateToProps = (state) => {
 
 const matchDispatcToProps = (dispatch) => {
   return {
+    onClearError: () => dispatch(actions.clearError()),
     onAuth: (email, password) => dispatch(actions.auth(email, password, false)),
   };
 };
