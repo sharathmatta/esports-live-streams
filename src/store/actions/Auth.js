@@ -1,5 +1,7 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
+import { db, storage } from "../../firebase";
+import Signup from "../../components/SignIn/Signup/Signup";
 
 export const clearError = () => {
   return {
@@ -12,12 +14,15 @@ export const authStart = () => {
     type: actionTypes.AUTH_START,
   };
 };
-export const authSuccess = (token, userId) => {
+export const authSuccess = (token, userId, username) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     idToken: token,
     userId: userId,
   };
+};
+export const uploadData = (userData) => {
+  console.log(userData);
 };
 export const authFail = (error) => {
   return {
@@ -27,9 +32,6 @@ export const authFail = (error) => {
 };
 
 export const logout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("expirationTime");
-  localStorage.removeItem("userId");
   return {
     type: actionTypes.AUTH_LOGOUT,
   };
@@ -43,12 +45,12 @@ export const checkAuthTimeout = (expirationTime) => {
   };
 };
 
-export const auth = (email, password, isSignUp) => {
+export const auth = (userData, isSignUp) => {
   return (dispatch) => {
     dispatch(authStart());
     const authData = {
-      email: email,
-      password: password,
+      email: userData.email,
+      password: userData.password,
       returnSecureToken: true,
     };
     let url =
@@ -58,18 +60,43 @@ export const auth = (email, password, isSignUp) => {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA62an2yCTIIw8oXRrUfxrrK1HG_nthqnk";
     }
+
     axios
       .post(url, authData)
       .then((response) => {
-        console.log(response.data);
-        const expirationTime = new Date(
-          new Date().getTime() + response.data.expiresIn * 1000
-        );
-        localStorage.setItem("token", response.data.idToken);
-        localStorage.setItem("expirationTime", expirationTime);
-        localStorage.setItem("userId", response.data.localId);
-        dispatch(authSuccess(response.data.idToken, response.data.localId));
-        dispatch(checkAuthTimeout(response.data.expiresIn));
+        if (isSignUp) {
+          const uploadtask = storage
+            .ref(`Profile Pictures/${userData.profilePic.name}`)
+            .put(userData.profilePic);
+          uploadtask.on(
+            "state_changed",
+            (snapshot) => {},
+            (error) => {
+              console.log(error);
+            },
+            () => {
+              storage
+                .ref("Profile Pictures")
+                .child(userData.profilePic.name)
+                .getDownloadURL()
+                .then((url) => {
+                  db.collection("streamers").doc(userData.username).set({
+                    email: userData.email,
+                    id: response.data.localId,
+                    username: userData.username,
+                    profilePicURL: url,
+                  });
+                  console.log(url);
+                  dispatch(
+                    authSuccess(response.data.idToken, response.data.localId)
+                  );
+                });
+            }
+          );
+        }
+        if (!isSignUp) {
+          dispatch(authSuccess(response.data.idToken, response.data.localId));
+        }
       })
       .catch((err) => {
         console.log(err.response.data.error);
@@ -95,5 +122,26 @@ export const checkAuthState = () => {
         );
       }
     }
+  };
+};
+
+export const checkLoginStatus = (userId) => {
+  return async (dispatch) => {
+    let userPersonalData = null;
+    let query = await db
+      .collection("streamers")
+      .where("id", "==", userId)
+      .get();
+    const snapshot = query.docs[0];
+    userPersonalData = snapshot.data();
+    console.log(userPersonalData);
+    dispatch(init(userPersonalData));
+  };
+};
+export const init = (userPersonalData) => {
+  return {
+    type: actionTypes.CHECK_LOGIN_STATUS,
+    profileURL: userPersonalData.profilePicURL,
+    username: userPersonalData.username,
   };
 };

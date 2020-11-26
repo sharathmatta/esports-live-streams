@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Auxiliary from "../Auxiliary";
+import Auxiliary from "./Auxiliary";
 import Modal from "../../components/UI/modal/modal";
 
 const withErrorHandler = (WrappedContent, axios) => {
@@ -33,7 +33,6 @@ const withErrorHandler = (WrappedContent, axios) => {
             {this.state.error ? this.state.error.message : null}
           </Modal>
           <WrappedContent {...this.props} />
-          
         </Auxiliary>
       );
     }

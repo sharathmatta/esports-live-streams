@@ -11,37 +11,46 @@ const input = (props) => {
   switch (props.elementType) {
     case "input":
       inputElement = (
-        <input
-          className={inputClasses.join(" ")}
-          {...props.elementConfig}
-          value={props.value}
-          onChange={props.changed}
-        />
+        <div>
+          <input
+            className={inputClasses.join(" ")}
+            {...props.elementConfig}
+            value={props.value}
+            onChange={props.changed}
+          />
+          <p>{props.errorMessage}</p>
+        </div>
       );
       break;
     case "textarea":
       inputElement = (
-        <textarea
-          className={inputClasses.join(" ")}
-          {...props.elementConfig}
-          value={props.value}
-          onChange={props.changed}
-        />
+        <div>
+          <textarea
+            className={inputClasses.join(" ")}
+            {...props.elementConfig}
+            value={props.value}
+            onChange={props.changed}
+          />
+          <p>{props.errorMessage}</p>
+        </div>
       );
       break;
     case "select":
       inputElement = (
-        <select
-          className={inputClasses.join(" ")}
-          value={props.value}
-          onChange={props.changed}
-        >
-          {props.elementConfig.options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.displayValue}
-            </option>
-          ))}
-        </select>
+        <div>
+          <select
+            className={inputClasses.join(" ")}
+            value={props.value}
+            onChange={props.changed}
+          >
+            {props.elementConfig.options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.displayValue}
+              </option>
+            ))}
+          </select>
+          <p>{props.errorMessage}</p>
+        </div>
       );
       break;
     default:

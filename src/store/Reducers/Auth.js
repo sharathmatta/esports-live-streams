@@ -6,6 +6,8 @@ const initialState = {
   userId: null,
   error: null,
   loading: false,
+  username: null,
+  profileURL: null,
 };
 
 const authStart = (state, action) => {
@@ -28,10 +30,21 @@ const authFail = (state, action) => {
   });
 };
 const authLogout = (state, action) => {
-  return updateObject(state, { token: null, userId: null });
+  return updateObject(state, {
+    token: null,
+    userId: null,
+    username: null,
+    profileURL: null,
+  });
 };
 const clearError = (state, action) => {
   return updateObject(state, { error: null });
+};
+const checkLoginStatus = (state, action) => {
+  return updateObject(state, {
+    profileURL: action.profileURL,
+    username: action.username,
+  });
 };
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -45,6 +58,8 @@ const reducer = (state = initialState, action) => {
       return authLogout(state, action);
     case actionTypes.CLEAR_ERROR:
       return clearError(state, action);
+    case actionTypes.CHECK_LOGIN_STATUS:
+      return checkLoginStatus(state, action);
     default:
       return state;
   }

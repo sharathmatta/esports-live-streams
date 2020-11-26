@@ -20,6 +20,7 @@ class Login extends Component {
           required: true,
           isEmail: true,
         },
+        inpErrMessage: null,
         valid: false,
         touched: false,
       },
@@ -34,6 +35,7 @@ class Login extends Component {
           required: true,
           minLength: 6,
         },
+        inpErrMessage: null,
         valid: false,
         touched: false,
       },
@@ -43,15 +45,17 @@ class Login extends Component {
     this.props.onClearError();
   }
   inputChangedHandler = (event, controlName) => {
+    const validity = checkValidity(
+      event.target.value,
+      this.state.controls[controlName].validation
+    );
     const updatedControls = {
       ...this.state.controls,
       [controlName]: {
         ...this.state.controls[controlName],
         value: event.target.value,
-        valid: checkValidity(
-          event.target.value,
-          this.state.controls[controlName].validation
-        ),
+        valid: validity.isValid,
+        inpErrMessage: validity.errMessage,
         touched: true,
       },
     };
@@ -60,11 +64,11 @@ class Login extends Component {
 
   loginHandler = (event) => {
     event.preventDefault();
-    console.log(this.state);
-    this.props.onAuth(
-      this.state.controls.email.value,
-      this.state.controls.password.value
-    );
+    const userData = {
+      email: this.state.controls.email.value,
+      password: this.state.controls.password.value,
+    };
+    this.props.onAuth(userData);
   };
 
   render() {
@@ -82,6 +86,7 @@ class Login extends Component {
     let form = formElementsArray.map((formElement) => (
       <Input
         invalid={!formElement.config.valid}
+        errorMessage={formElement.config.inpErrMessage}
         shouldValidate={formElement.config.validation}
         key={formElement.id}
         elementType={formElement.config.elementType}
@@ -114,7 +119,7 @@ const matchStateToProps = (state) => {
 const matchDispatcToProps = (dispatch) => {
   return {
     onClearError: () => dispatch(actions.clearError()),
-    onAuth: (email, password) => dispatch(actions.auth(email, password, false)),
+    onAuth: (userData) => dispatch(actions.auth(userData, false)),
   };
 };
 

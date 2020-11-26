@@ -5,21 +5,40 @@ import { connect } from "react-redux";
 import Button from "../../../ui/Button/Button";
 import * as actions from "../../../store/actions/index";
 import Input from "../../../ui/Input/Input";
+import { db, auth } from "../../../firebase";
 
 class Signup extends Component {
   state = {
+    streamers: null,
     controls: {
       email: {
         elementType: "input",
         elementConfig: {
           type: "email",
-          placeholder: "Mail Adress",
+          placeholder: "Mail Address",
         },
         value: "",
         validation: {
           required: true,
           isEmail: true,
         },
+        inpErrMessage: null,
+        valid: false,
+        touched: false,
+      },
+      username: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Username",
+        },
+        value: "",
+        validation: {
+          required: true,
+          isUsername: true,
+          existingStreamers: [],
+        },
+        inpErrMessage: null,
         valid: false,
         touched: false,
       },
@@ -34,24 +53,40 @@ class Signup extends Component {
           required: true,
           minLength: 6,
         },
+        inpErrMessage: null,
         valid: false,
         touched: false,
       },
     },
+    profile: null,
   };
   componentDidMount() {
+    const docIds = [];
+    db.collection("streamers")
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          docIds.push(doc.id);
+        });
+        this.setState({ streamers: docIds });
+      });
     this.props.onClearError();
   }
+
   inputChangedHandler = (event, controlName) => {
+    const existing = this.state.streamers;
+    const validity = checkValidity(
+      event.target.value,
+      this.state.controls[controlName].validation,
+      existing
+    );
     const updatedControls = {
       ...this.state.controls,
       [controlName]: {
         ...this.state.controls[controlName],
         value: event.target.value,
-        valid: checkValidity(
-          event.target.value,
-          this.state.controls[controlName].validation
-        ),
+        valid: validity.isValid,
+        inpErrMessage: validity.errMessage,
         touched: true,
       },
     };
@@ -60,12 +95,19 @@ class Signup extends Component {
 
   SignupHandler = (event) => {
     event.preventDefault();
-    this.props.onSignUp(
-      this.state.controls.email.value,
-      this.state.controls.password.value
-    );
+    const userData = {
+      email: this.state.controls.email.value,
+      password: this.state.controls.password.value,
+      username: this.state.controls.username.value,
+      profilePic: this.state.profile,
+    };
+    this.props.onSignUp(userData);
   };
-
+  profileChangeHandler = (event) => {
+    if (event.target.files[0]) {
+      this.setState({ profile: event.target.files[0] });
+    }
+  };
   render() {
     let errMessage = null;
     if (this.props.error) {
@@ -81,6 +123,7 @@ class Signup extends Component {
     let form = formElementsArray.map((formElement) => (
       <Input
         invalid={!formElement.config.valid}
+        errorMessage={formElement.config.inpErrMessage}
         shouldValidate={formElement.config.validation}
         key={formElement.id}
         elementType={formElement.config.elementType}
@@ -94,6 +137,11 @@ class Signup extends Component {
       <div className={classes.Signup}>
         <strong style={{ color: "#4879cf" }}>{errMessage}</strong>
         {form}
+        <input
+          type="file"
+          onChange={this.profileChangeHandler}
+          style={{ color: "white" }}
+        />
         <div className={classes.Button}>
           <Button clicked={this.SignupHandler}>Sign Up</Button>
         </div>
@@ -113,8 +161,8 @@ const matchStateToProps = (state) => {
 const matchDispatcToProps = (dispatch) => {
   return {
     onClearError: () => dispatch(actions.clearError()),
-    onSignUp: (email, password) => {
-      dispatch(actions.auth(email, password, true));
+    onSignUp: (userData) => {
+      dispatch(actions.auth(userData, true));
     },
   };
 };

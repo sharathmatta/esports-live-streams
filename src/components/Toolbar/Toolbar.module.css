@@ -9,30 +9,13 @@
   background-color: #15253d;
   box-shadow: 0px 4px #2c4974;
 }
-.Logo {
-  width: 60px;
-  height: 100%;
-  margin: auto 10px;
-}
-.Logo img {
-  padding-top: 5px;
-  width: 60px;
-  height: 50px;
-}
-.BorderLine {
-  height: 60%;
-  width: 2px;
-  margin: 10px;
-  border-radius: 25%;
-  float: left;
-  background-color: #2c4974;
-}
+
 .ToolbarContent {
   height: 100%;
   width: 100%;
   display: flex;
   margin: auto;
-  padding: 0 20px;
+  padding: 0 10px;
   justify-content: space-between;
 }
 .RightContainer {
@@ -48,22 +31,10 @@
   height: 43px;
   border-radius: 50%;
 }
-.NavItemsDrop {
-  display: none;
-  margin: auto 10px;
-  flex-direction: row;
+.ToolbarContent nav {
+  margin-top: 5px;
 }
-.Dot {
-  width: 4px;
-  height: 4px;
-  margin: 2px;
-  border-radius: 50%;
-  background-color: #2259ad;
-}
-@media (max-width: 550px) {
-  .NavItems {
-    display: none;
-  }
+@media (max-width: 600px) {
   .NavItemsDrop {
     display: flex;
   }

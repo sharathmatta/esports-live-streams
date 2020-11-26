@@ -1,1 +1,7 @@
-export { auth, logout, checkAuthState, clearError } from "./Auth";
+export {
+  auth,
+  logout,
+  checkAuthState,
+  clearError,
+  checkLoginStatus,
+} from "./Auth";

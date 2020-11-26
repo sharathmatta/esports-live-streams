@@ -7,3 +7,126 @@
   align-items: center;
   height: 100%;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+nav {
+  padding: 0;
+  margin: auto;
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  align-items: center;
+  justify-content: space-between;
+}
+.NavigationItems {
+  display: flex;
+  list-style: none;
+}
+
+.NavigationItems li {
+  margin-left: 10px;
+}
+.NavigationItems li a {
+  text-decoration: none;
+  font-family: Verdana;
+  font-size: 14px;
+  color: #989ea7;
+}
+
+.hamburgerToggle {
+  display: none;
+}
+
+.hamburger {
+  width: 30px;
+  height: 30px;
+  display: none;
+  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.hamburger .bar {
+  display: inline-block;
+  width: 25px;
+  height: 2px;
+  background-color: #1e52a0;
+  position: absolute;
+  transition: all 0.3s;
+}
+.hamburger .bar::before,
+.hamburger .bar::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #1e52a0;
+  transition: alt 0.3s;
+}
+
+.hamburger .bar::before {
+  transform: translateY(-8px);
+}
+
+.hamburger .bar::after {
+  transform: translateY(8px);
+}
+
+@media (max-width: 600px) {
+  .NavigationItems {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #15253d;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+    z-index: 20;
+  }
+  .NavigationItems li {
+    margin: 10px 0;
+  }
+  .NavigationItems li a {
+    display: inline-block;
+    font-size: 20px;
+    padding: 15px 20px;
+    color: #989ea3;
+    transition: all 0.3s;
+  }
+
+  .NavigationItems li a:hover {
+    transform: scale(1.15, 1.15);
+  }
+
+  .hamburger {
+    display: flex;
+    z-index: 999;
+  }
+  .hamburgerToggle:checked ~ .NavigationItems {
+    transform: none;
+  }
+
+  .hamburgerToggle:checked ~ .hamburger .bar::before {
+    transform: rotate(45deg);
+  }
+
+  .hamburgerToggle:checked ~ .hamburger .bar {
+    background-color: transparent;
+  }
+
+  .hamburgerToggle:checked ~ .hamburger .bar::after {
+    transform: rotate(-45deg);
+  }
+}
+
+@media (max-width: 550px) {
+}

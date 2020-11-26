@@ -6,26 +6,14 @@ import { connect } from "react-redux";
 import Button from "../../ui/Button/Button";
 import * as actions from "../../store/actions/index";
 import Logo from "../../assets/—Pngtree—game control line icon vector_5209084.png";
-import { act } from "react-dom/test-utils";
-import pp from "../../assets/Singer-Selena-Gomez-Background-Wallpapers-44158.jpg";
 
 const toolbar = (props) => {
+  console.log(props.profileURL);
   return (
     <div className={classes.Toolbar}>
-      <NavLink to="/">
-        <div className={classes.Logo}>
-          <img src={Logo} alt="logo" />
-        </div>
-      </NavLink>
-      <div className={classes.BorderLine}></div>
       <div className={classes.ToolbarContent}>
         <div className={classes.NavItems}>
           <NavItems className={classes.NavItems} />
-        </div>
-        <div className={classes.NavItemsDrop}>
-          <div className={classes.Dot}></div>
-          <div className={classes.Dot}></div>
-          <div className={classes.Dot}></div>
         </div>
         <div className={classes.RightContainer}>
           <NavLink
@@ -33,7 +21,7 @@ const toolbar = (props) => {
             style={{ display: props.userId ? "block" : "none" }}
           >
             <div className={classes.Profile} onClick={() => props.onLogout()}>
-              <img src={pp} alt="pp" />
+              <img src={props.profileURL} alt="pp" />
             </div>
           </NavLink>
           <NavLink
@@ -53,6 +41,8 @@ const toolbar = (props) => {
 const matchStateToProps = (state) => {
   return {
     userId: state.userId,
+    username: state.username,
+    profileURL: state.profileURL,
   };
 };
 const matchDispatchToProps = (dispatch) => {

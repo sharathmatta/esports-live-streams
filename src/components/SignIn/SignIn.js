@@ -3,11 +3,17 @@ import Logo from "../../assets/—Pngtree—game control line icon vector_520908
 import Login from "./Login/Login";
 import Signup from "./Signup/Signup";
 import classes from "./SignIn.module.css";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 class SignIn extends Component {
   state = {
     logIn: true,
   };
+  componentDidUpdate() {
+    if (this.props.token) {
+    }
+  }
   loginClickHandler = () => {
     this.setState({ logIn: true });
   };
@@ -15,12 +21,17 @@ class SignIn extends Component {
     this.setState({ logIn: false });
   };
   render() {
+    let authRedirect = null;
+    if (this.props.token) {
+      authRedirect = <Redirect to="/" />;
+    }
     const signInOption = this.state.logIn ? <Login /> : <Signup />;
     const message = this.state.logIn
       ? "Login To EsportsLive"
       : "Join EsportsLive Today";
     return (
       <div className={classes.SignIn}>
+        {authRedirect}
         <div className={classes.Header}>
           <div className={classes.Logo}>
             <img src={Logo} alt="logo" />
@@ -44,4 +55,10 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn;
+const matchStateToProps = (state) => {
+  return {
+    token: state.token,
+  };
+};
+
+export default connect(matchStateToProps)(SignIn);

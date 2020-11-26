@@ -1,7 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-
+import "firebase/storage";
 var firebaseConfig = {
   apiKey: "AIzaSyA62an2yCTIIw8oXRrUfxrrK1HG_nthqnk",
   authDomain: "esports-live-streams.firebaseapp.com",
@@ -15,10 +15,8 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const auth = firebase.auth();
-const db = firebase.firestore();
+export const auth = firebase.auth();
+export const db = firebase.firestore();
+export const storage = firebase.storage();
 
-export default {
-  db: db,
-  auth: auth,
-};
+export default firebase;
