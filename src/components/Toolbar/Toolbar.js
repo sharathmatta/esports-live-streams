@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./Toolbar.module.css";
 import NavItems from "../NavigationItems/NavigationItems";
 import { NavLink } from "react-router-dom";
@@ -7,8 +7,9 @@ import Button from "../../ui/Button/Button";
 import * as actions from "../../store/actions/index";
 import Logo from "../../assets/—Pngtree—game control line icon vector_5209084.png";
 
-const toolbar = (props) => {
+const Toolbar = (props) => {
   console.log(props.profileURL);
+
   return (
     <div className={classes.Toolbar}>
       <div className={classes.ToolbarContent}>
@@ -51,4 +52,4 @@ const matchDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(matchStateToProps, matchDispatchToProps)(toolbar);
+export default connect(matchStateToProps, matchDispatchToProps)(Toolbar);

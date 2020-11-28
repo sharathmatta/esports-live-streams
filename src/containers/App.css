@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+::-webkit-scrollbar {
+  height: 8px; /* height of horizontal scrollbar ← You're missing this */
+  width: 4px; /* width of vertical scrollbar */
+}
+::-webkit-scrollbar-track {
+  border-radius: 4;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 15px;
+  background: #346c81;
+}

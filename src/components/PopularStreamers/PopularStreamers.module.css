@@ -1,0 +1,33 @@
+.PopularStreamers {
+  overflow: auto;
+  white-space: nowrap;
+  box-sizing: border-box;
+  border-bottom: 1px solid #38444d;
+  font-size: 20px;
+  padding: 10px 0;
+  margin: 10px auto;
+}
+.PopularStreamers a {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  padding: 10px 10px;
+  font-size: 16px;
+}
+.PopularStreamers a:hover,
+.PopularStreamers a:active {
+  transform: scale(1.05, 1.05);
+}
+.Streamer {
+  height: fit-content;
+  width: fit-content;
+}
+.Streamer img {
+  height: 140px;
+  width: 140px;
+  border-radius: 3px;
+}
+.PopularStreamers span {
+  font-weight: bold;
+  color: #1da1f2;
+}

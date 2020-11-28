@@ -9,7 +9,10 @@
   left: 150px;
   position: absolute;
   height: 100%;
-  background-color: #09111f;
+  background-color: #15202b;
+  overflow: scroll;
+
+  border: 1px solid #38444d;
 }
 @media (max-width: 600px) {
   .MainContent {

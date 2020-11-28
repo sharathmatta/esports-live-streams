@@ -6,6 +6,7 @@ import Following from "../components/Following/Following";
 import Profile from "../components/Profile/Profile";
 import Recommended from "../components/Recommended/Recommended";
 import Browse from "../components/Browse/Browse.js";
+import AddGameOrStream from "../components/AddGameOrStreams/AddGameOrStream";
 const App = () => {
   return (
     <BrowserRouter>
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="/Recommended" exact component={Recommended} />
           <Route path="/Browse" exact component={Browse} />
           <Route path="/Profile" exact component={Profile} />
+          <Route path="/add" component={AddGameOrStream} />
         </Layout>
       </div>
     </BrowserRouter>
