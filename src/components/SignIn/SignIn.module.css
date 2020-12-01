@@ -56,3 +56,8 @@
   padding: 10px 0;
   text-align: center;
 }
+@media (max-width: 600px) {
+  .Message {
+    font-size: 16px;
+  }
+}

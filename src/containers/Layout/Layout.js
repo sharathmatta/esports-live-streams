@@ -7,7 +7,6 @@ import SignIn from "../../components/SignIn/SignIn";
 import classes from "./Layout.module.css";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import Toolbar2 from "../../components/Toolbar/Toolbar2/Toolbar2";
 import * as actions from "../../store/actions/index";
 
 class Layout extends Component {
@@ -15,6 +14,9 @@ class Layout extends Component {
     SigningIn: false,
     users: null,
   };
+  componentDidMount() {
+    this.props.onCheckAuthState();
+  }
   componentDidUpdate() {
     if (this.props.userId) {
       this.props.onInit(this.props.userId);
@@ -29,7 +31,10 @@ class Layout extends Component {
   };
   render() {
     let redirect = null;
-    redirect = this.props.token ? null : <SignIn />;
+    redirect = this.props.token ? <Redirect to="/" /> : <SignIn />;
+    if (!this.state.SigningIn) {
+      redirect = <Redirect to="/" />;
+    }
     let showModal = this.props.token ? false : this.state.SigningIn;
     return (
       <Aux>
@@ -53,6 +58,7 @@ const matchStateToProps = (state) => {
 };
 const matchDispatchToProps = (dispatch) => {
   return {
+    onCheckAuthState: () => dispatch(actions.checkAuthState()),
     onInit: (userId) => dispatch(actions.checkLoginStatus(userId)),
   };
 };

@@ -1,11 +1,16 @@
+.PopularStreamersContainer {
+  font-size: 20px;
+  margin: 8px 0;
+  padding: 10px 0;
+}
+
 .PopularStreamers {
   overflow: auto;
   white-space: nowrap;
   box-sizing: border-box;
   border-bottom: 1px solid #38444d;
-  font-size: 20px;
   padding: 10px 0;
-  margin: 10px auto;
+  margin: 2px auto;
 }
 .PopularStreamers a {
   display: inline-block;

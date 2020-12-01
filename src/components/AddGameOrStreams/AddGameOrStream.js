@@ -46,7 +46,7 @@ class AddGameOrStream extends Component {
             .getDownloadURL()
             .then((url) => {
               db.collection("game")
-                .doc(Name)
+                .doc(Name.toLowerCase().replace(/\s/g, ""))
                 .set({
                   id: Name,
                   logo: url,
@@ -99,6 +99,14 @@ class AddGameOrStream extends Component {
       streamermessage = <p>Adding. . .</p>;
     } else if (this.state.added) {
       streamermessage = <p>Added</p>;
+    }
+    let addStreamertoGame = null;
+    if (this.state.uploaded) {
+      addStreamertoGame = (
+        <div>
+          <input type="text" />
+        </div>
+      );
     }
     return (
       <div>

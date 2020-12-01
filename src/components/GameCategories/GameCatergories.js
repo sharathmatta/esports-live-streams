@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import classes from "./GameCategories.module.css";
 import { NavLink } from "react-router-dom";
-import GameLogo from "../../assets/330c424f4045aa91b8893043ce7dacaa.jpg";
 import { db } from "../../firebase";
 
 class GameCategories extends Component {
@@ -24,26 +23,30 @@ class GameCategories extends Component {
     if (this.state.games) {
       const games = this.state.games;
       Games = Object.keys(this.state.games).map((key) => {
-        console.log(key);
         return (
-          <NavLink to="/" key={games[key].username}>
+          <NavLink to="/" key={games[key].id}>
             <div className={classes.Game}>
               <img src={games[key].logo} alt="gamelogo" />
             </div>
-            <div className={classes.GameId}>
-              <span>{games[key].id}</span>
+            <div className={classes.GameDetails}>
+              <div className={classes.GameId}>
+                <span>{games[key].id}</span>
+              </div>
+              <div className={classes.GameViewers}>
+                {Math.round(80000 + Math.random() * 10000).toLocaleString()}{" "}
+                viewers
+              </div>
             </div>
           </NavLink>
         );
       });
     }
-    console.log(Games);
     return (
-      <div className={classes.GameCategories}>
-        <div>
+      <div>
+        <div className={classes.GameCategories}>
           <span>Game </span>Categories
         </div>
-        {Games}
+        <div className={classes.GameContainer}>{Games}</div>
       </div>
     );
   }

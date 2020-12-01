@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import classes from "./PopularStreamers.module.css";
 import { NavLink } from "react-router-dom";
-import StreamerLogo from "../../assets/Singer-Selena-Gomez-Background-Wallpapers-44158.jpg";
+
 import { db } from "../../firebase";
 
 class PopularStreamers extends Component {
@@ -24,7 +24,6 @@ class PopularStreamers extends Component {
     if (this.state.streamers) {
       const streamers = this.state.streamers;
       PopularStreamers = Object.keys(this.state.streamers).map((key) => {
-        console.log(key);
         return (
           <NavLink to="/" key={streamers[key].username}>
             <div className={classes.Streamer}>
@@ -36,11 +35,11 @@ class PopularStreamers extends Component {
       });
     }
     return (
-      <div className={classes.PopularStreamers}>
+      <div className={classes.PopularStreamersContainer}>
         <div>
           Popular <span>Streamers</span>
         </div>
-        {PopularStreamers}
+        <div className={classes.PopularStreamers}>{PopularStreamers}</div>
       </div>
     );
   }

@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import classes from "./Toolbar.module.css";
 import NavItems from "../NavigationItems/NavigationItems";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import Button from "../../ui/Button/Button";
 import * as actions from "../../store/actions/index";
-import Logo from "../../assets/—Pngtree—game control line icon vector_5209084.png";
 
 const Toolbar = (props) => {
-  console.log(props.profileURL);
-
   return (
     <div className={classes.Toolbar}>
       <div className={classes.ToolbarContent}>
@@ -21,7 +18,7 @@ const Toolbar = (props) => {
             to="/Profile"
             style={{ display: props.userId ? "block" : "none" }}
           >
-            <div className={classes.Profile} onClick={() => props.onLogout()}>
+            <div className={classes.Profile}>
               <img src={props.profileURL} alt="pp" />
             </div>
           </NavLink>

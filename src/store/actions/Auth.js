@@ -1,7 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import { db, storage } from "../../firebase";
-import Signup from "../../components/SignIn/Signup/Signup";
 
 export const clearError = () => {
   return {
@@ -14,7 +13,13 @@ export const authStart = () => {
     type: actionTypes.AUTH_START,
   };
 };
-export const authSuccess = (token, userId, username) => {
+export const authSuccess = (token, userId, expiresIn) => {
+  const expirationTime = new Date(new Date().getTime() + expiresIn * 1000);
+  console.log(expirationTime);
+  localStorage.setItem("token", token);
+  localStorage.setItem("expirationTime", expiresIn);
+  localStorage.setItem("userId", userId);
+
   return {
     type: actionTypes.AUTH_SUCCESS,
     idToken: token,
@@ -32,6 +37,9 @@ export const authFail = (error) => {
 };
 
 export const logout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("expirationTime");
+  localStorage.removeItem("userId");
   return {
     type: actionTypes.AUTH_LOGOUT,
   };
@@ -86,16 +94,26 @@ export const auth = (userData, isSignUp) => {
                     username: userData.username,
                     profilePicURL: url,
                   });
-                  console.log(url);
+
                   dispatch(
-                    authSuccess(response.data.idToken, response.data.localId)
+                    authSuccess(
+                      response.data.idToken,
+                      response.data.localId,
+                      response.data.expiresIn
+                    )
                   );
                 });
             }
           );
         }
         if (!isSignUp) {
-          dispatch(authSuccess(response.data.idToken, response.data.localId));
+          dispatch(
+            authSuccess(
+              response.data.idToken,
+              response.data.localId,
+              response.data.expiresIn
+            )
+          );
         }
       })
       .catch((err) => {
@@ -111,12 +129,13 @@ export const checkAuthState = () => {
     if (!token) {
       dispatch(logout());
     } else {
-      const expirationTime = new Date(localStorage.getItem("expirationTime"));
+      const expiresIn = localStorage.getItem("expirationTime");
+      const expirationTime = new Date(expiresIn);
       if (expirationTime < new Date()) {
         dispatch(logout());
       } else {
         const userId = localStorage.getItem("userId");
-        dispatch(authSuccess(token, userId));
+        dispatch(authSuccess(token, userId, expiresIn));
         dispatch(
           checkAuthTimeout(Math.round((expirationTime - new Date()) / 1000))
         );
@@ -134,7 +153,6 @@ export const checkLoginStatus = (userId) => {
       .get();
     const snapshot = query.docs[0];
     userPersonalData = snapshot.data();
-    console.log(userPersonalData);
     dispatch(init(userPersonalData));
   };
 };

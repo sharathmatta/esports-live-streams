@@ -1,6 +1,126 @@
-.Profile {
-  width: 80%;
+.ProfileContainer {
+  margin: 20px auto;
+  width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.ProfileAndMainVid{
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  padding: 5px 10px;
+  margin-bottom: 30px;
+}
+.Profile{
+  display: flex;
+  padding-top: 15px;
+  flex-direction: column;
+}
+.ProfilePicture{
+  width: fit-content;
+  height: fit-content;
+}
+.ProfilePicture img{
+width: 200px;
+height: 200px;
+border-radius: 50%;
+}
+
+.StreamerDetails{
+  width: 200px;
+  height: fit-content;
+  padding: 5px 10px;
+  
+}
+.UserName{
+  width: 100%;
   text-align: center;
-  margin: auto;
+  padding: 10px 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: #1DA1F2;
+  cursor: pointer;
+}
+.UserName:hover{
+  text-decoration: underline;
+}
+.Games{
+  
+  width: 100%;
+  height: fit-content;
+}
+.GameList{
+  display: flex;
+  flex-wrap: wrap;
+}
+.GameList li{
+  background-color: rgb(19, 53, 42);
+  border-radius: 20px;
+  width: fit-content;
+ list-style: none;
+ margin: 3px;
+ font-size: 12px;
+ padding: 0px 6px 4px;
+}
+
+.FollowerCount{
+  width: 100%;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #187bb9;
+  font-size: 12px;
+}
+.PlayerWrapper{
+  width:630px;
+  position: relative;
+}
+
+.ReactPlayer{
+  border: 1px solid #4c89c7;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+
+
+
+
+.PastBroadcasts{
+  
+}
+
+@media(min-width:1220px){
+  .PlayerWrapper{
+    height: calc(630px * 0.5625);
+  }
+}
+@media(max-width:1220px){
+  .ProfileAndMainVid{
+    
+    flex-direction: column;
+  }
+  .Profile{
+    align-self: center;
+  }
+  .PlayerWrapper{
+    width:100%;
+    position: relative; 
+  padding-bottom: 56.25%;
+  }
+  .ReactPlayer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+ 
 }
