@@ -12,12 +12,13 @@
   display: flex;
   justify-content: space-around;
   flex-direction: row;
-  padding: 5px 10px;
+  background-color: #020911;
+  padding: 10px 10px;
   margin-bottom: 30px;
 }
 .Profile{
   display: flex;
-  padding-top: 15px;
+  padding-top: 10px;
   flex-direction: column;
 }
 .ProfilePicture{
@@ -40,7 +41,7 @@ border-radius: 50%;
   width: 100%;
   text-align: center;
   padding: 10px 0;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
   color: #1DA1F2;
   cursor: pointer;
@@ -75,6 +76,7 @@ border-radius: 50%;
   font-size: 12px;
 }
 .PlayerWrapper{
+  margin-top: 10px;
   width:630px;
   position: relative;
 }
@@ -88,17 +90,43 @@ border-radius: 50%;
   bottom: 0;
 }
 
-
-
-
-
-.PastBroadcasts{
-  
+.SubVideosContainer{
+  width: 100%;
+  margin: 10px 0;
+  height: fit-content;
+  background-color: #020911;
+  padding: 10px;
 }
-
+.SubVideosHeader{
+  
+  font-size: 18px;
+  font-weight: bold;
+}
+.SubVideosHeader span{
+  color:  #4c89c7;
+}
+.SubVideosFlexDiv{
+  
+  display: flex;
+  flex-direction: row;
+  padding: 10px 5px;
+  overflow: auto;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+.SubVideosVideo{
+  margin: 10px 20px;
+}
+.SubVideosPlayerWrapper{
+  width:330px;
+  position: relative;
+}
 @media(min-width:1220px){
   .PlayerWrapper{
     height: calc(630px * 0.5625);
+  }
+  .SubVideosPlayerWrapper{
+    height: calc(330px * 0.5625);
   }
 }
 @media(max-width:1220px){
@@ -114,6 +142,15 @@ border-radius: 50%;
     position: relative; 
   padding-bottom: 56.25%;
   }
+  .VideoContainer{
+    width: 200px;
+    height: calc(200px * 0.5625);
+  }
+  .SubVideosPlayerWrapper{
+    width:100%;
+    position: relative; 
+    padding-bottom: 56.25%;
+  }
   .ReactPlayer{
     position: absolute;
     top: 0;
@@ -121,6 +158,5 @@ border-radius: 50%;
     right: 0;
     bottom: 0;
   }
-  
- 
+
 }

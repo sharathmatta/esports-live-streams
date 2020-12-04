@@ -2,10 +2,52 @@ import React from "react";
 import classes from "./Profile.module.css";
 import { connect } from "react-redux";
 import ReactPlayer from "react-player";
-import videoa from "../../assets/Selena Gomez - Feel Me (Live from the Revival Tour)_8N_Yro5QeCE_1080p.mp4";
 
 const profile = (props) => {
-  console.log(props.userId);
+  let gameList = null;
+  let clips = null;
+  let pastBroadcasts = null;
+  if (props.pastbroadcasts) {
+    gameList = Object.keys(props.gamelist).map((key) => {
+      return <li key={props.gamelist[key].id}>{props.gamelist[key].name}</li>;
+    });
+    pastBroadcasts = Object.keys(props.pastbroadcasts).map((key) => {
+      return (
+        <div key={key} className={classes.SubVideosVideo}>
+          <div className={classes.VideoContainer}>
+            <div className={classes.SubVideosPlayerWrapper}>
+              <ReactPlayer
+                className={classes.ReactPlayer}
+                width="inherit"
+                height="inherit"
+                url={props.pastbroadcasts[key].link}
+                playing={false}
+                controls={true}
+              />
+            </div>
+          </div>
+        </div>
+      );
+    });
+    clips = Object.keys(props.clips).map((key) => {
+      return (
+        <div key={key} className={classes.SubVideosVideo}>
+          <div className={classes.VideoContainer}>
+            <div className={classes.SubVideosPlayerWrapper}>
+              <ReactPlayer
+                className={classes.ReactPlayer}
+                width="inherit"
+                height="inherit"
+                url={props.clips[key].link}
+                playing={false}
+                controls={true}
+              />
+            </div>
+          </div>
+        </div>
+      );
+    });
+  }
   return (
     <div className={classes.ProfileContainer}>
       <div className={classes.ProfileAndMainVid}>
@@ -14,16 +56,15 @@ const profile = (props) => {
             <img src={props.ProfilePicture} alt="dff" />
           </div>
           <div className={classes.StreamerDetails}>
-            <div className={classes.UserName}>Ninja</div>
-            <div className={classes.FollowerCount}>23482 Followers</div>
+            <div className={classes.UserName}>{props.username}</div>
+            <div className={classes.FollowerCount}>
+              {Math.round(
+                props.followercount + Math.random() * (props.followercount / 10)
+              )}{" "}
+              Followers
+            </div>
             <div className={classes.Games}>
-              <ul className={classes.GameList}>
-                <li>fortnite</li>
-                <li>fortnite</li>
-                <li>fortnite</li>
-                <li>fortnite</li>
-                <li>fortnite</li>
-              </ul>
+              <ul className={classes.GameList}>{gameList}</ul>
             </div>
           </div>
         </div>
@@ -32,25 +73,40 @@ const profile = (props) => {
             className={classes.ReactPlayer}
             width="inherit"
             height="inherit"
-            url={videoa}
+            url={props.mainvideo}
             playing={false}
             controls={true}
           />
         </div>
       </div>
 
-      <div className={classes.PastBroadcasts}>past broadcasts</div>
-      <div className={classes.Clips}>clips</div>
+      <div className={classes.SubVideosContainer}>
+        <div className={classes.SubVideosHeader}>
+          Past <span>Broadcasts</span> :
+        </div>
+        <div className={classes.SubVideosFlexDiv}>{pastBroadcasts}</div>
+      </div>
+      <div className={classes.SubVideosContainer}>
+        <div className={classes.SubVideosHeader}>
+          Popular <span>Clips</span> :
+        </div>
+        <div className={classes.SubVideosFlexDiv}>{clips}</div>
+      </div>
       <div className={classes.Socials}>socials</div>
-      <h1>Profile Component</h1>
     </div>
   );
 };
 
 const matchPropsToState = (state) => {
   return {
-    userId: state.userId,
-    ProfilePicture: state.profileURL,
+    username: state.auth.username,
+    userId: state.auth.userId,
+    ProfilePicture: state.auth.profileURL,
+    followercount: state.streamer.followercount,
+    mainvideo: state.streamer.mainvideo,
+    pastbroadcasts: state.streamer.pastbroadcasts,
+    clips: state.streamer.clips,
+    gamelist: state.streamer.gamelist,
   };
 };
 

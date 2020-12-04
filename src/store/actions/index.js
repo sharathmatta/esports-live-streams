@@ -5,3 +5,4 @@ export {
   clearError,
   checkLoginStatus,
 } from "./Auth";
+export { initializeProfile } from "./Streamer";

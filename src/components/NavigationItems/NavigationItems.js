@@ -20,7 +20,7 @@ const NavigationItems = (props) => {
         <span className={classes.bar}></span>
       </label>
       <ul className={classes.NavigationItems}>
-        <NavItem link="/" NavItemClicked={navClickHandler}>
+        <NavItem link="/home" NavItemClicked={navClickHandler}>
           Home
         </NavItem>
         <NavItem link="/add" NavItemClicked={navClickHandler}>

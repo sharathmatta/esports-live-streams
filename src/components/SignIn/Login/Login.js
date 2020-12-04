@@ -110,9 +110,9 @@ class Login extends Component {
 
 const matchStateToProps = (state) => {
   return {
-    loading: state.loading,
-    error: state.error,
-    token: state.token,
+    loading: state.auth.loading,
+    error: state.auth.error,
+    token: state.auth.token,
   };
 };
 

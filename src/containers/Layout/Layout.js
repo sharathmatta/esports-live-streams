@@ -52,8 +52,8 @@ class Layout extends Component {
 }
 const matchStateToProps = (state) => {
   return {
-    token: state.token,
-    userId: state.userId,
+    token: state.auth.token,
+    userId: state.auth.userId,
   };
 };
 const matchDispatchToProps = (dispatch) => {

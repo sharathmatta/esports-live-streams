@@ -7,17 +7,19 @@ import thunk from "redux-thunk";
 import App from "./containers/App";
 import reportWebVitals from "./reportWebVitals";
 import authReducer from "./store/Reducers/Auth";
+import streamerReducer from "./store/Reducers/Streamer";
 
-// const rootReducer = combineReducers({
-
-// });
+const rootReducer = combineReducers({
+  auth: authReducer,
+  streamer: streamerReducer,
+});
 const composeEnhancers =
   process.env.NODE_ENV === "development"
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     : null || compose;
 
 const store = createStore(
-  authReducer,
+  rootReducer,
   composeEnhancers(applyMiddleware(thunk))
 );
 

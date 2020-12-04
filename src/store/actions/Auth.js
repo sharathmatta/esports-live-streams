@@ -14,8 +14,6 @@ export const authStart = () => {
   };
 };
 export const authSuccess = (token, userId, expiresIn) => {
-  const expirationTime = new Date(new Date().getTime() + expiresIn * 1000);
-  console.log(expirationTime);
   localStorage.setItem("token", token);
   localStorage.setItem("expirationTime", expiresIn);
   localStorage.setItem("userId", userId);

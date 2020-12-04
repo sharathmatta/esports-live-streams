@@ -12,12 +12,13 @@ const App = () => {
     <BrowserRouter>
       <div>
         <Layout>
-          <Route path="/" exact component={Profile} />
+          <Route path="/" exact component={Home} />
           <Route path="/Following" exact component={Following} />
           <Route path="/Recommended" exact component={Recommended} />
           <Route path="/Browse" exact component={Browse} />
           <Route path="/Profile" exact component={Profile} />
           <Route path="/add" component={AddGameOrStream} />
+          <Route path="/home" component={Home} />
         </Layout>
       </div>
     </BrowserRouter>

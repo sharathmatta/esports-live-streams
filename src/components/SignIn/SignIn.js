@@ -57,7 +57,7 @@ class SignIn extends Component {
 
 const matchStateToProps = (state) => {
   return {
-    token: state.token,
+    token: state.auth.token,
   };
 };
 

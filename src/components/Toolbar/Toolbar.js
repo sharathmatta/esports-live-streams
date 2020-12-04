@@ -7,6 +7,9 @@ import Button from "../../ui/Button/Button";
 import * as actions from "../../store/actions/index";
 
 const Toolbar = (props) => {
+  const profileClickHandler = () => {
+    props.onProfileInit(props.username);
+  };
   return (
     <div className={classes.Toolbar}>
       <div className={classes.ToolbarContent}>
@@ -17,6 +20,7 @@ const Toolbar = (props) => {
           <NavLink
             to="/Profile"
             style={{ display: props.userId ? "block" : "none" }}
+            onClick={() => profileClickHandler()}
           >
             <div className={classes.Profile}>
               <img src={props.profileURL} alt="pp" />
@@ -38,13 +42,14 @@ const Toolbar = (props) => {
 
 const matchStateToProps = (state) => {
   return {
-    userId: state.userId,
-    username: state.username,
-    profileURL: state.profileURL,
+    userId: state.auth.userId,
+    username: state.auth.username,
+    profileURL: state.auth.profileURL,
   };
 };
 const matchDispatchToProps = (dispatch) => {
   return {
+    onProfileInit: (username) => dispatch(actions.initializeProfile(username)),
     onLogout: () => dispatch(actions.logout()),
   };
 };
