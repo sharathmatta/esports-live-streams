@@ -1,57 +1,35 @@
 import * as actionTypes from "./actionTypes";
 import { db } from "../../firebase";
 
-export const profileInit = (streamerData) => {
+export const profileInitSuccess = (streamerData) => {
   return {
-    type: actionTypes.PROFILE_INIT,
+    type: actionTypes.PROFILE_INIT_SUCCESS,
     followercount: streamerData.followercount,
     mainvideo: streamerData.mainvideo,
-    pastbroadcasts: streamerData.pastbroadcasts,
-    clips: streamerData.clips,
+    uploads: streamerData.uploads,
     gamelist: streamerData.gamelist,
+    username: streamerData.username,
+    userId: streamerData.userId,
+    profileURL: streamerData.profileURL,
   };
 };
-
-// export const initializeProfile = (username) => {
-//   return (dispatch) => {
-//     let streamerData = null;
-//     db.collection("streamers")
-//       .doc(username)
-//       .get()
-//       .then((snapshot) => {
-//         const data = snapshot.data();
-//         console.log(snapshot.data().followercount);
-//         streamerData = {
-//           ...streamerData,
-//           followercount: data.followercount,
-//           mainvideo: data.mainvideo,
-//         };
-//         let pastBroadcasts = [];
-//         db.collection("streamers")
-//           .doc(username)
-//           .collection("past-broadcasts")
-//           .get()
-//           .then((snapshot) => {
-//             snapshot.forEach((doc) => {
-//               pastBroadcasts.push(doc.data().link);
-//             });
-//             streamerData = {
-//               ...streamerData,
-//               pastbroadcasts: pastBroadcasts,
-//             };
-//             dispatch(profileInit(streamerData));
-//           });
-//       });\
-//   };
-// };
+export const profileInitStart = () => {
+  return {
+    type: actionTypes.PROFILE_INIT_START,
+  };
+};
 export const initializeProfile = (username) => {
   return async (dispatch) => {
+    dispatch(profileInitStart());
     let streamerData = null;
     let query = await db.collection("streamers").doc(username).get();
     let snapshot = query.data();
     streamerData = {
+      userId: snapshot.id,
       followercount: snapshot.followercount,
       mainvideo: snapshot.mainvideo,
+      profileURL: snapshot.profilePicURL,
+      username: snapshot.username,
     };
     query = await db
       .collection("streamers")
@@ -64,12 +42,12 @@ export const initializeProfile = (username) => {
     });
     query = await db
       .collection("streamers")
-      .doc(username)
+      .doc("Sharath")
       .collection("clips")
       .get();
-    let clips = [];
+    let uploads = [];
     query.forEach((element) => {
-      clips.push(element.data());
+      uploads.push(element.data());
     });
     query = await db
       .collection("streamers")
@@ -83,9 +61,9 @@ export const initializeProfile = (username) => {
     streamerData = {
       ...streamerData,
       pastbroadcasts: pastbroadcasts,
-      clips: clips,
+      uploads: uploads,
       gamelist: gameList,
     };
-    dispatch(profileInit(streamerData));
+    dispatch(profileInitSuccess(streamerData));
   };
 };

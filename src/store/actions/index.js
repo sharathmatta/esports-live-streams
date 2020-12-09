@@ -6,3 +6,5 @@ export {
   checkLoginStatus,
 } from "./Auth";
 export { initializeProfile } from "./Streamer";
+
+export { initializePlayer } from "./Player";

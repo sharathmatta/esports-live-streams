@@ -1,15 +1,49 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classes from "./Toolbar.module.css";
 import NavItems from "../NavigationItems/NavigationItems";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import Button from "../../ui/Button/Button";
 import * as actions from "../../store/actions/index";
 
 const Toolbar = (props) => {
-  const profileClickHandler = () => {
-    props.onProfileInit(props.username);
+  const [open, setOpen] = useState(false);
+
+  const useOutsideAlerter = (ref) => {
+    useEffect(() => {
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setOpen(false);
+        }
+      }
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
   };
+
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef);
+
+  const dropdown = (
+    <div className={classes.Dropdown} ref={wrapperRef}>
+      <Link to={"/Profile/" + props.username} className={classes.MenuItem}>
+        Profile
+      </Link>
+      <Link
+        to="/"
+        className={classes.MenuItem}
+        onClick={() => {
+          props.onLogout();
+          props.SignInClicked();
+        }}
+      >
+        Logout
+      </Link>
+    </div>
+  );
+
   return (
     <div className={classes.Toolbar}>
       <div className={classes.ToolbarContent}>
@@ -17,23 +51,22 @@ const Toolbar = (props) => {
           <NavItems className={classes.NavItems} />
         </div>
         <div className={classes.RightContainer}>
-          <NavLink
-            to="/Profile"
+          <div
             style={{ display: props.userId ? "block" : "none" }}
-            onClick={() => profileClickHandler()}
+            onClick={() => setOpen(!open)}
           >
             <div className={classes.Profile}>
               <img src={props.profileURL} alt="pp" />
             </div>
-          </NavLink>
-          <NavLink
-            to="/signin"
+            {open && dropdown}
+          </div>
+          <div
+            className={classes.SignIn}
+            onClick={props.SignInClicked}
             style={{ display: props.userId ? "none" : "block" }}
           >
-            <div className={classes.SignIn} onClick={props.SignInClicked}>
-              <Button>Sign In</Button>
-            </div>
-          </NavLink>
+            <Button>Sign In</Button>
+          </div>
         </div>
       </div>
     </div>

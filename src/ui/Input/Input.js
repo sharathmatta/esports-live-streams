@@ -53,6 +53,19 @@ const input = (props) => {
         </div>
       );
       break;
+    case "file":
+      inputElement = (
+        <div>
+          <input
+            type="file"
+            className={classes.FileInput}
+            value={props.value}
+            onChange={props.changed}
+          ></input>
+          <p>{props.errorMessage}</p>
+        </div>
+      );
+      break;
     default:
       inputElement = (
         <input

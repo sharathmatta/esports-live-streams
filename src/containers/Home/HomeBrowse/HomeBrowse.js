@@ -8,7 +8,6 @@ const homeBrowse = () => {
     <div className={classes.HomeBrowse}>
       <GameCategories />
       <PopularStreamers />
-      <div>{"dj oijf ij oijef".replace(/\s/g, "")}</div>
     </div>
   );
 };

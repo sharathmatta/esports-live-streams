@@ -30,6 +30,32 @@
   width: 43px;
   height: 43px;
   border-radius: 50%;
+  cursor: pointer;
+}
+.Dropdown{
+  position: absolute;
+  top: 58px;
+  width: 200px;
+  right: 0;
+  background-color: #15253d;
+  padding: 1rem;
+  overflow: hidden;
+  z-index: 15;
+  border-radius: 10px;
+}
+.MenuItem{
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  padding: 0.5rem;
+  color: #989EA7;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.MenuItem:hover{
+  background-color: #2c4974;
 }
 .ToolbarContent nav {
   margin-top: 5px;

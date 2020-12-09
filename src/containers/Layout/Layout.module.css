@@ -3,20 +3,33 @@
   height: 100%;
   position: fixed;
   margin-top: 3px;
+  z-index: 10;
 }
 .MainContent {
-  width: calc(100% - 150px);
-  left: 150px;
+  width: calc(100% - 250px);
+  left: 250px;
   position: absolute;
   height: 100%;
   background-color: #15202b;
   overflow: scroll;
-
+  
+  padding-bottom: 50px;
   border: 1px solid #38444d;
 }
+.SideContent {
+  background-color: #1f3455;
+  position: absolute;
+  height: 100%;
+  width: 250px;
+}
+
+
 @media (max-width: 600px) {
   .MainContent {
     width: calc(100% - 60px);
     left: 60px;
+  }
+  .SideContent {
+    width: 60px;
   }
 }

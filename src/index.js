@@ -7,11 +7,13 @@ import thunk from "redux-thunk";
 import App from "./containers/App";
 import reportWebVitals from "./reportWebVitals";
 import authReducer from "./store/Reducers/Auth";
+import playerReducer from "./store/Reducers/Player";
 import streamerReducer from "./store/Reducers/Streamer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   streamer: streamerReducer,
+  player: playerReducer,
 });
 const composeEnhancers =
   process.env.NODE_ENV === "development"

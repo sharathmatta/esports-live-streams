@@ -10,9 +10,7 @@ class SignIn extends Component {
   state = {
     logIn: true,
   };
-  componentDidUpdate() {
-    console.log(this.props.token);
-  }
+
   loginClickHandler = () => {
     this.setState({ logIn: true });
   };
@@ -21,7 +19,6 @@ class SignIn extends Component {
   };
   render() {
     let authRedirect = null;
-    console.log(this.props.token);
     if (this.props.token) {
       authRedirect = <Redirect to="/" />;
     }

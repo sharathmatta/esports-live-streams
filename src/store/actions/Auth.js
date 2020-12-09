@@ -151,6 +151,34 @@ export const checkLoginStatus = (userId) => {
       .get();
     const snapshot = query.docs[0];
     userPersonalData = snapshot.data();
+    const username = userPersonalData.username;
+    console.log(username);
+    query = await db
+      .collection("streamers")
+      .doc("Sharath")
+      .collection("following")
+      .get();
+    let following = [];
+    query.forEach((el) => {
+      following.push(el.data());
+    });
+    userPersonalData = {
+      ...userPersonalData,
+      following: following,
+    };
+    query = await db
+      .collection("streamers")
+      .doc("Sharath")
+      .collection("recommende")
+      .get();
+    let recommended = [];
+    query.forEach((el) => {
+      recommended.push(el.data());
+    });
+    userPersonalData = {
+      ...userPersonalData,
+      recommended: recommended,
+    };
     dispatch(init(userPersonalData));
   };
 };
@@ -159,5 +187,7 @@ export const init = (userPersonalData) => {
     type: actionTypes.CHECK_LOGIN_STATUS,
     profileURL: userPersonalData.profilePicURL,
     username: userPersonalData.username,
+    following: userPersonalData.following,
+    recommended: userPersonalData.recommended,
   };
 };

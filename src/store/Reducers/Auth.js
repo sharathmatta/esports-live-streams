@@ -8,6 +8,8 @@ const initialState = {
   loading: false,
   username: null,
   profileURL: null,
+  following: null,
+  recommended: null,
 };
 
 const authStart = (state, action) => {
@@ -35,6 +37,8 @@ const authLogout = (state, action) => {
     userId: null,
     username: null,
     profileURL: null,
+    following: null,
+    recommended: null,
   });
 };
 const clearError = (state, action) => {
@@ -44,6 +48,8 @@ const checkLoginStatus = (state, action) => {
   return updateObject(state, {
     profileURL: action.profileURL,
     username: action.username,
+    following: action.following,
+    recommended: action.recommended,
   });
 };
 const reducer = (state = initialState, action) => {

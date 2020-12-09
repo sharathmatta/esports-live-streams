@@ -137,10 +137,10 @@ class Signup extends Component {
       <div className={classes.Signup}>
         <strong style={{ color: "#4879cf" }}>{errMessage}</strong>
         {form}
-        <input
-          type="file"
-          onChange={this.profileChangeHandler}
-          style={{ color: "white" }}
+        <Input
+          elementType="file"
+          changed={this.profileChangeHandler}
+          label={"Profile Picture :"}
         />
         <div className={classes.Button}>
           <Button clicked={this.SignupHandler}>Sign Up</Button>

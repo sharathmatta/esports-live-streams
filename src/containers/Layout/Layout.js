@@ -24,26 +24,24 @@ class Layout extends Component {
   }
 
   SignInHandler = () => {
-    this.setState({ SigningIn: true });
+    const status = this.state.SigningIn;
+    this.setState({ SigningIn: !status });
   };
   SignInCancelHandler = () => {
     this.setState({ SigningIn: false });
   };
   render() {
-    let redirect = null;
-    redirect = this.props.token ? <Redirect to="/" /> : <SignIn />;
-    if (!this.state.SigningIn) {
-      redirect = <Redirect to="/" />;
-    }
     let showModal = this.props.token ? false : this.state.SigningIn;
     return (
       <Aux>
         <Modal show={showModal} backDropClick={this.SignInCancelHandler}>
-          {redirect}
+          <SignIn />
         </Modal>
         <Toolbar SignInClicked={this.SignInHandler} />
         <div className={classes.MainContainer}>
-          <SideContent className={classes.SideContent} />
+          <div className={classes.SideContent}>
+            <SideContent />
+          </div>
           <div className={classes.MainContent}>{this.props.children}</div>
         </div>
       </Aux>

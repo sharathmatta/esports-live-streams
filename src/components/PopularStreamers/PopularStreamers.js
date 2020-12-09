@@ -25,7 +25,10 @@ class PopularStreamers extends Component {
       const streamers = this.state.streamers;
       PopularStreamers = Object.keys(this.state.streamers).map((key) => {
         return (
-          <NavLink to="/" key={streamers[key].username}>
+          <NavLink
+            to={"/profile/" + streamers[key].username}
+            key={streamers[key].username}
+          >
             <div className={classes.Streamer}>
               <img src={streamers[key].profilePicURL} alt="streamerlogo" />
             </div>
