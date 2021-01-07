@@ -1,10 +1,11 @@
 import React from "react";
+import SignInMessage from "../SignInMessage/SignInMessage";
 import classes from "./Following.module.css";
 
 const following = () => {
   return (
     <div className={classes.Following}>
-      <h1>Following Component</h1>
+      <SignInMessage />
     </div>
   );
 };

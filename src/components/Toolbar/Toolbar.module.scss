@@ -1,0 +1,88 @@
+@import '../../colors';
+
+.Toolbar {
+    width: 100%;
+    height: 60px;
+    position: relative;
+    display: flex;
+    margin: 0;
+    top: 0;
+    left: 0;
+    background-color:$secondaryBackground;
+    box-shadow: 0px 2px #080809;
+    .ToolbarContent {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        margin: auto;
+        padding: 0 10px;
+        justify-content: space-between;
+        nav {
+            margin-top: 5px;
+          }
+        .RightContainer {
+            margin: auto 0px;
+            div{
+                .Profile {
+                    width: 43px;
+                    height: 43px;
+                    border-radius: 50%;
+                    img {
+                        width: 43px;
+                        height: 43px;
+                        border-radius: 50%;
+                        cursor: pointer;
+                      }
+                  }
+                  .Dropdown{
+                    position: absolute;
+                    top: 58px;
+                    width: 200px;
+                    right: 0;
+                    background-color: $lightBackground;
+                    padding: 1rem;
+                    overflow: hidden;
+                    z-index: 15;
+                    border-radius: 10px;
+                    .MenuItem{
+                        height: 50px;
+                        display: flex;
+                        align-items: center;
+                        border-radius: 10px;
+                        padding: 0.5rem;
+                        color: #989EA7;
+                        font-weight: bold;
+                        text-decoration: none;
+                        &:hover{
+                            background-color: #0E0E10;
+                          }
+                      }
+                  }
+            }
+          }
+      }
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+
+  @media (max-width: 600px) {
+    .NavItemsDrop {
+      display: flex;
+    }
+    
+    .BorderLine {
+      margin: auto 0;
+    }
+    .Profile {
+      width: 403px;
+      height: 40px;
+    }
+    
+  }
+  

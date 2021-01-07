@@ -4,35 +4,49 @@
   padding: 10px 0;
 }
 
-.PopularStreamers {
+.PopularStreamersContainer .PopularStreamersHeader span {
+  color: #A970FF;
+}
+
+.PopularStreamersContainer .PopularStreamers {
   overflow: auto;
   white-space: nowrap;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   border-bottom: 1px solid #38444d;
   padding: 10px 0;
   margin: 2px auto;
 }
-.PopularStreamers a {
+
+.PopularStreamersContainer .PopularStreamers a {
   display: inline-block;
   text-align: center;
   text-decoration: none;
   padding: 10px 10px;
   font-size: 16px;
 }
-.PopularStreamers a:hover,
-.PopularStreamers a:active {
-  transform: scale(1.05, 1.05);
+
+.PopularStreamersContainer .PopularStreamers a:hover, .PopularStreamersContainer .PopularStreamers a:active {
+  -webkit-transform: scale(1.05, 1.05);
+          transform: scale(1.05, 1.05);
 }
-.Streamer {
+
+.PopularStreamersContainer .PopularStreamers a span {
+  color: #adadad;
+}
+
+.PopularStreamersContainer .PopularStreamers a .Streamer {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
   height: fit-content;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
   width: fit-content;
 }
-.Streamer img {
+
+.PopularStreamersContainer .PopularStreamers a .Streamer img {
   height: 140px;
   width: 140px;
   border-radius: 3px;
 }
-.PopularStreamers span {
-  font-weight: bold;
-  color: #1da1f2;
-}
+/*# sourceMappingURL=PopularStreamers.module.css.map */

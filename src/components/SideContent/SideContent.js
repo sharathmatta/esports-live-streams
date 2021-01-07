@@ -3,7 +3,8 @@ import classes from "./SideContent.module.css";
 import logo from "../../assets/Singer-Selena-Gomez-Background-Wallpapers-44158.jpg";
 import SideNavItems from "./SideNav/SideNavItems";
 import { connect } from "react-redux";
-import Spinner from "../../ui/spinner/Spinner";
+import SigninMessage from "../SignInMessage/SignInMessage";
+import Spinner from "../../ui/Spinner2/Spinner2";
 
 const SideContent = (props) => {
   let followingComp = <Spinner />;
@@ -11,6 +12,9 @@ const SideContent = (props) => {
   if (props.token) {
     followingComp = <Spinner />;
     recommendedComp = <Spinner />;
+  } else {
+    followingComp = null;
+    recommendedComp = null;
   }
   if (props.following) {
     followingComp = (

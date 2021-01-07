@@ -8,6 +8,18 @@ export const clearError = () => {
   };
 };
 
+export const showSignIn = () => {
+  return {
+    type: actionTypes.SHOW_SIGNIN,
+  };
+};
+
+export const hideSignIn = () => {
+  return {
+    type: actionTypes.HIDE_SIGNIN,
+  };
+};
+
 export const authStart = () => {
   return {
     type: actionTypes.AUTH_START,
@@ -46,8 +58,8 @@ export const logout = () => {
 export const checkAuthTimeout = (expirationTime) => {
   return (dispatch) => {
     setTimeout(() => {
-      dispatch(logout());
-    }, expirationTime * 1000);
+      // dispatch(logout());
+    }, expirationTime);
   };
 };
 
@@ -80,6 +92,7 @@ export const auth = (userData, isSignUp) => {
             (error) => {
               console.log(error);
             },
+
             () => {
               storage
                 .ref("Profile Pictures")
@@ -152,7 +165,6 @@ export const checkLoginStatus = (userId) => {
     const snapshot = query.docs[0];
     userPersonalData = snapshot.data();
     const username = userPersonalData.username;
-    console.log(username);
     query = await db
       .collection("streamers")
       .doc("Sharath")

@@ -39,7 +39,7 @@ class PopularStreamers extends Component {
     }
     return (
       <div className={classes.PopularStreamersContainer}>
-        <div>
+        <div className={classes.PopularStreamersHeader}>
           Popular <span>Streamers</span>
         </div>
         <div className={classes.PopularStreamers}>{PopularStreamers}</div>

@@ -1,68 +1,101 @@
-.SubVideosContainer{
+.SubVideosContainer {
+  width: 100%;
+  margin: 10px 0;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: #18181A;
+  padding: 20px;
+}
+
+.SubVideosContainer .SubVideosHeader {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.SubVideosContainer .SubVideosHeader span {
+  color: #A970FF;
+  font-weight: bold;
+}
+
+.SubVideosContainer .SubVideosFlexDiv {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  overflow: scroll;
+  padding: 10px 5px;
+}
+
+.SubVideosContainer .SubVideosFlexDiv .VideoContent {
+  margin: 15px auto;
+  padding: 0 10px;
+}
+
+.SubVideosContainer .SubVideosFlexDiv .VideoContent .SubVideosVideo .VideoContainer {
+  width: 200px;
+  height: calc(200px * 0.5625);
+}
+
+.SubVideosContainer .SubVideosFlexDiv .VideoContent .SubVideosVideo .VideoContainer .SubVideosPlayerWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: black;
+}
+
+.SubVideosContainer .SubVideosFlexDiv .VideoContent .SubVideosVideo .VideoContainer .SubVideosPlayerWrapper .ReactPlayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.SubVideosContainer .SubVideosFlexDiv .VideoContent .SubVideosVideo .VideoTitle {
+  width: 190px;
+  max-height: 3em;
+  font-weight: 600;
+  margin: 5px;
+  color: #adadad;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.SubVideosContainer .SubVideosFlexDiv .VideoContent .SubVideosVideo .VideoUploadedOn {
+  margin: 0 5px;
+}
+
+.SubVideosContainer .SubVideosFlexDiv .VideoContent .SubVideosVideo .VideoUploadedOn span {
+  font-size: 10px;
+  font-weight: 400;
+}
+
+@media (max-width: 380px) {
+  .SubVideosContainer {
+    padding: 10px 5px;
     width: 100%;
-    margin: 10px 0;
-    height: fit-content;
-    background-color: #020911;
-    padding: 20px;
   }
-.SubVideosHeader{
-    
-    font-size: 18px;
-    font-weight: bold;
+  .SubVideosContainer .SubVideosFlexDiv {
+    overflow: scroll;
   }
-.SubVideosHeader span{
-    color:  #4c89c7;
+  .SubVideosContainer .SubVideosFlexDiv .VideoContent {
+    width: 180px;
+    padding: 0;
+    margin: 10px;
   }
-.SubVideosFlexDiv{
-      display: flex;
-      flex-wrap: wrap;
-      padding: 15px 5px;
+  .SubVideosContainer .SubVideosFlexDiv .VideoContent .SubVideosVideo {
+    width: 100%;
   }
-.SubVideosVideo{
-    margin: 20px auto;
-    padding: 0 10px;
+  .SubVideosContainer .SubVideosFlexDiv .VideoContent .SubVideosVideo .VideoContainer {
+    width: 100%;
   }
-.SubVideosPlayerWrapper{
-    width:200px;
-    position: relative;
+  .SubVideosContainer .SubVideosFlexDiv .VideoContent .SubVideosVideo .VideoContainer .SubVideosPlayerWrapper {
+    width: 100%;
   }
-  
-  @media(min-width:1220px){
-    .PlayerWrapper{
-      height: calc(630px * 0.5625);
-    }
-    .SubVideosPlayerWrapper{
-      height: calc(200px * 0.5625);
-    }
-  }
-  @media(max-width:1220px){
-    
-    
-    .PlayerWrapper{
-      width:100%;
-      position: relative; 
-    padding-bottom: 56.25%;
-    }
-    .VideoContainer{
-      width: 200px;
-      height: calc(200px * 0.5625);
-    }
-    .SubVideosPlayerWrapper{
-      width:100%;
-      position: relative; 
-      padding-bottom: 56.25%;
-    }
-    .ReactPlayer{
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-  
-  }
-  @media(max-width:380px){
-      .SubVideosContainer{
-          width: fit-content;
-      }
-  }
+}
+/*# sourceMappingURL=VideoList.module.css.map */

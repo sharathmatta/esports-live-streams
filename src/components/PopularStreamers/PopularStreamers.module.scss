@@ -1,0 +1,49 @@
+@import '../../colors';
+
+.PopularStreamersContainer {
+    font-size: 20px;
+    margin: 8px 0;
+    padding: 10px 0;
+    
+    .PopularStreamersHeader{
+        span{
+            color:$primaryText;
+          }
+      }
+      .PopularStreamers {
+        overflow: auto;
+        white-space: nowrap;
+        box-sizing: border-box;
+        border-bottom: 1px solid #38444d;
+        padding: 10px 0;
+        margin: 2px auto;
+        a {
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            padding: 10px 10px;
+            font-size: 16px;
+            &:hover, &:active{
+                transform: scale(1.05, 1.05);
+            }
+            span{
+                color: $lightText;
+            }
+            .Streamer {
+                height: fit-content;
+                width: fit-content;
+                img {
+                    height: 140px;
+                    width: 140px;
+                    border-radius: 3px;
+                  }
+              }
+          }
+      }
+      
+  }
+ 
+  
+ 
+  
+  

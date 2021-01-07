@@ -59,7 +59,6 @@ const input = (props) => {
           <input
             type="file"
             className={classes.FileInput}
-            value={props.value}
             onChange={props.changed}
           ></input>
           <p>{props.errorMessage}</p>

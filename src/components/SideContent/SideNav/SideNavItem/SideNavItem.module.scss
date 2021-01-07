@@ -1,0 +1,32 @@
+@import '../../../../colors';
+
+.SideNavItem{
+    width: 100%;
+    height: fit-content;
+    margin: 5px 0;
+    padding: 2px;
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    .ProfileContainer{
+        width:40px;
+        height: 40px;
+        img{
+            width: inherit;
+            height: inherit;
+            border-radius: 50%;
+        }
+    }
+    .UserName{
+        width: 100%;
+        overflow: hidden;
+        margin: auto 10px;
+        color:$lightText;
+        font-size: 18px;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+}
+
+

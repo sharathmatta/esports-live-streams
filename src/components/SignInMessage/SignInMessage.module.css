@@ -1,0 +1,20 @@
+.SigninMessage {
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  margin: 10px auto;
+}
+
+.SigninMessage .Content {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+}
+
+.SigninMessage .Content .Message {
+  color: white;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-align: center;
+}
+/*# sourceMappingURL=SignInMessage.module.css.map */

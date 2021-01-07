@@ -1,43 +1,31 @@
-import React, { Component } from "react";
+import React, { Component, useRef } from "react";
 import Toolbar from "../../components/Toolbar/Toolbar";
 import SideContent from "../../components/SideContent/SideContent";
 import Aux from "../../hoc/Auxiliary";
 import Modal from "../../ui/modal/modal";
 import SignIn from "../../components/SignIn/SignIn";
 import classes from "./Layout.module.css";
-import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 
 class Layout extends Component {
   state = {
-    SigningIn: false,
+    SigningIn: this.props.signingIn,
     users: null,
   };
-  componentDidMount() {
-    this.props.onCheckAuthState();
-  }
-  componentDidUpdate() {
-    if (this.props.userId) {
-      this.props.onInit(this.props.userId);
-    }
-  }
-
   SignInHandler = () => {
     const status = this.state.SigningIn;
     this.setState({ SigningIn: !status });
   };
-  SignInCancelHandler = () => {
-    this.setState({ SigningIn: false });
-  };
+  SignInCancelHandler = () => {};
   render() {
-    let showModal = this.props.token ? false : this.state.SigningIn;
+    let showModal = this.props.token ? false : this.props.signingIn;
     return (
       <Aux>
-        <Modal show={showModal} backDropClick={this.SignInCancelHandler}>
+        <Modal show={showModal} backDropClick={this.props.onHideSignIn}>
           <SignIn />
         </Modal>
-        <Toolbar SignInClicked={this.SignInHandler} />
+        <Toolbar SignInClicked={this.props.onShowSignIn} />
         <div className={classes.MainContainer}>
           <div className={classes.SideContent}>
             <SideContent />
@@ -52,13 +40,13 @@ const matchStateToProps = (state) => {
   return {
     token: state.auth.token,
     userId: state.auth.userId,
+    signingIn: state.auth.showSignIn,
   };
 };
 const matchDispatchToProps = (dispatch) => {
   return {
-    onCheckAuthState: () => dispatch(actions.checkAuthState()),
-    onInit: (userId) => dispatch(actions.checkLoginStatus(userId)),
+    onShowSignIn: () => dispatch(actions.showSignIn()),
+    onHideSignIn: () => dispatch(actions.hideSignIn()),
   };
 };
-
 export default connect(matchStateToProps, matchDispatchToProps)(Layout);

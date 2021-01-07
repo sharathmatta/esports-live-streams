@@ -5,13 +5,13 @@ const initialState = {
   userId: null,
   username: null,
   profileURL: null,
-
   followercount: null,
   mainvideo: null,
   gamelist: null,
   uploads: null,
   socials: null,
   loading: false,
+  following: false,
 };
 
 const profileInitSuccess = (state, action) => {

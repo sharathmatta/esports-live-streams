@@ -31,23 +31,25 @@ export const initializeProfile = (username) => {
       profileURL: snapshot.profilePicURL,
       username: snapshot.username,
     };
+    // query = await db
+    //   .collection("streamers")
+    //   .doc(username)
+    //   .collection("past-broadcasts")
+    //   .get();
+    // let pastbroadcasts = [];
+    // query.forEach((element) => {
+    //   pastbroadcasts.push(element.data());
+    // });
     query = await db
-      .collection("streamers")
-      .doc(username)
-      .collection("past-broadcasts")
-      .get();
-    let pastbroadcasts = [];
-    query.forEach((element) => {
-      pastbroadcasts.push(element.data());
-    });
-    query = await db
-      .collection("streamers")
-      .doc("Sharath")
-      .collection("clips")
+      .collection("video-uploads")
+      .orderBy("timestamp", "desc")
       .get();
     let uploads = [];
+
     query.forEach((element) => {
-      uploads.push(element.data());
+      let vidData = null;
+      vidData = { ...element.data(), id: element.id };
+      uploads.push(vidData);
     });
     query = await db
       .collection("streamers")
@@ -60,7 +62,6 @@ export const initializeProfile = (username) => {
     });
     streamerData = {
       ...streamerData,
-      pastbroadcasts: pastbroadcasts,
       uploads: uploads,
       gamelist: gameList,
     };

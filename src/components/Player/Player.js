@@ -1,25 +1,58 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import * as actions from "../../store/actions/index";
 import classes from "./Player.module.css";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import VideoList from "../VideoList/VideoList";
 import ReactPlayer from "react-player";
 import logi from "../../assets/Singer-Selena-Gomez-Background-Wallpapers-44158.jpg";
 import vid from "../../assets/Selena Gomez - Feel Me (Live from the Revival Tour)_8N_Yro5QeCE_1080p.mp4";
 
 const Player = (props) => {
-  //   useEffect(() => {
-  //     const query = new URLSearchParams(props.location.search);
-  //     console.log(props.location.search);
-  //     let type = null;
-  //     let link = null;
-  //     for (let param of query.entries()) {
-  //       type = param[0];
-  //       link = param[1];
-  //     }
-  //   }, []);
-  let username = "Sharath";
+  const [creator, setCreator] = useState(null);
+  const [type, setType] = useState(null);
+  const [id, setId] = useState(null);
+  const myRef = useRef();
+  useEffect(() => {
+    myRef.current.scrollTo(0, 0);
+    const query = new URLSearchParams(props.location.search);
+    for (let param of query.entries()) {
+      setType(param[0]);
+      setId(param[1]);
+    }
+    setCreator(props.location.pathname.slice(1));
+    props.onPlayerInit(creator, type, id);
+  }, [creator, type, id, props.location]);
+  let date = null;
+  if (props.videoData.timestamp) {
+    date = (
+      <span>
+        {new Date(props.videoData.timestamp.seconds * 1000).getDate()}/
+        {new Date(props.videoData.timestamp.seconds * 1000).getMonth()}/
+        {new Date(props.videoData.timestamp.seconds * 1000).getFullYear()}
+      </span>
+    );
+  }
+  let moreVideos = null;
+  if (props.videoData.moreVideosCreator) {
+    moreVideos = (
+      <div>
+        <VideoList
+          preTitle={"More videos from "}
+          titleKeyword={creator}
+          list={props.videoData.moreVideosCreator.slice(0, 3)}
+        />
+        <VideoList
+          preTitle={"More "}
+          titleKeyword={"Apex Legends"}
+          postTitle={"videos"}
+          list={props.videoData.moreVideosGame.slice(0, 3)}
+        />
+      </div>
+    );
+  }
   return (
-    <div className={classes.PlayerComponent}>
+    <div className={classes.PlayerComponent} ref={myRef}>
       <div className={classes.PlayerContainer}>
         <div className={classes.VideoContainer}>
           <div className={classes.PlayerWrapper}>
@@ -27,7 +60,7 @@ const Player = (props) => {
               className={classes.ReactPlayer}
               height="inherit"
               width="inherit"
-              url={vid}
+              url={props.videoData.videoURL}
               playing={true}
               controls={true}
             />
@@ -35,30 +68,35 @@ const Player = (props) => {
         </div>
       </div>
       <div className={classes.VideoDetails}>
-        <div className={classes.UserDetails}>
+        <Link to={"/Profile/" + creator} className={classes.UserDetails}>
           <div className={classes.PPContainer}>
-            <img src={logi} alt="pp" />
+            <img src={props.videoData.profilePicURL} alt=" " />
           </div>
-          <div className={classes.UserName}>Sharath</div>
-        </div>
+          <div className={classes.UserName}>{creator}</div>
+        </Link>
         <div className={classes.VideoTitle}>
-          Title :{" "}
-          <span>
-            These metrics are estimates (updated every few hours) and are not an
-            accurate reflection of your bill
-          </span>
+          Title : <span>{props.videoData.title}</span>
         </div>
+        <div className={classes.UploadDate}>Uploaded On : {date}</div>
         <div className={classes.UploadDate}>
-          Uploaded On : <span>{new Date().toUTCString()}</span>
+          Game Category : <span>Apex Legends</span>
         </div>
+        {moreVideos}
       </div>
     </div>
   );
 };
-// const matchDispatchToProps = (dispatch) => {
-//   return {
-//     onPlayerInit: (type, link) =>
-//       dispatch(actions.initializePlayer(type, link)),
-//   };
-// };
-export default Player;
+
+const matchStateToProps = (state) => {
+  return {
+    videoData: state.player,
+  };
+};
+
+const matchDispatchToProps = (dispatch) => {
+  return {
+    onPlayerInit: (creator, type, id) =>
+      dispatch(actions.initializePlayer(creator, type, id)),
+  };
+};
+export default connect(matchStateToProps, matchDispatchToProps)(Player);

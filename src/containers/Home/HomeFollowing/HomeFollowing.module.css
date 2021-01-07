@@ -1,3 +1,7 @@
 .HomeFollowing {
-  height: 235px;
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
+/*# sourceMappingURL=HomeFollowing.module.css.map */

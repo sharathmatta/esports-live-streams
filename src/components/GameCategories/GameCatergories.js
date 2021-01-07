@@ -32,10 +32,6 @@ class GameCategories extends Component {
               <div className={classes.GameId}>
                 <span>{games[key].id}</span>
               </div>
-              <div className={classes.GameViewers}>
-                {Math.round(80000 + Math.random() * 10000).toLocaleString()}{" "}
-                viewers
-              </div>
             </div>
           </NavLink>
         );

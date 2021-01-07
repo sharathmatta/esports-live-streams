@@ -12,7 +12,7 @@
 .NavigationItem a:hover,
 .NavigationItem a:active,
 .NavigationItem a.active {
-  color: #1da1f2;
+  color: #A970FF;
 }
 @media (min-width: 600px) {
   .NavigationItem {

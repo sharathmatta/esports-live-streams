@@ -1,0 +1,44 @@
+@import '../../colors';
+
+.MainContainer {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 10;
+    .MainContent {
+        width: calc(100% - 250px);
+        left: 250px;
+        position: absolute;
+        height: 100%;
+        overflow: auto;
+        background-color:#0E0E10;
+        padding-bottom: 50px;
+      }
+      .SideContent {
+        background-color:#1F1F23;
+        position: absolute;
+        height: 100%;
+        width: 250px;
+      }
+      span {
+        font-weight: bold;
+        color: $primaryText;
+      }
+  }
+  
+  
+
+  
+  @media (max-width: 600px) {
+    .MainContainer{
+        .MainContent {
+            width: calc(100% - 60px);
+            left: 60px;
+            .SideContent {
+              width: 60px;
+            }
+          }
+    }
+    
+  }
+  

@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import classes from "./Profile.module.css";
 import { connect } from "react-redux";
 import ReactPlayer from "react-player";
-import { Link } from "react-router-dom";
 import * as actions from "../../store/actions/index";
 import VideoList from "../VideoList/VideoList";
 import Spinner from "../../ui/spinner/Spinner";
 import Button from "../../ui/Button/Button";
 import Modal from "../../ui/modal/modal";
 import Input from "../../ui/Input/Input";
+import { db, storage } from "../../firebase";
+import ProgressBar from "../../ui/ProgressBar/ProgressBar";
 
 const Profile = (props) => {
   const [videoDetails, setVideoDetails] = useState({
@@ -17,7 +18,7 @@ const Profile = (props) => {
       elementConfig: {
         type: "file",
       },
-      value: "",
+      value: null,
       label: "Choose Video",
     },
     title: {
@@ -39,14 +40,18 @@ const Profile = (props) => {
       label: "Description",
     },
   });
+  const [uploadVid, setUploadVid] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploaded, setUploaded] = useState(false);
+  const [uploadPercent, setUploadPercent] = useState(0);
   useEffect(() => {
-    props.onProfileInit(props.match.params.username);
-  }, [props.match.params.username]);
+    if (props.loginChecked) {
+      props.onProfileInit(props.match.params.username);
+    }
+  }, [props.match.params.username, props.loginChecked]);
 
-  const videoClickHandler = (type, link) => {
-    const queryParams =
-      encodeURIComponent(type) + "=" + encodeURIComponent(link);
+  const videoClickHandler = (type, id) => {
+    const queryParams = encodeURIComponent(type) + "=" + encodeURIComponent(id);
 
     props.history.push({
       pathname: "/" + props.username,
@@ -54,10 +59,12 @@ const Profile = (props) => {
     });
   };
   const inputChangedHandler = (event, type) => {
+    setUploaded(false);
+    setUploading(false);
     if (type === "video") {
       setVideoDetails({
         ...videoDetails,
-        video: { ...videoDetails.video, value: event.target.value },
+        video: { ...videoDetails.video, value: event.target.files[0] },
       });
     } else if (type === "title") {
       setVideoDetails({
@@ -71,12 +78,70 @@ const Profile = (props) => {
       });
     }
   };
+  const uploadCancelled = () => {
+    setUploadVid(false);
+    setUploading(false);
+    setVideoDetails({
+      ...videoDetails,
+      video: { ...videoDetails.video, value: null },
+      title: { ...videoDetails.title, value: "" },
+      desc: { ...videoDetails.desc, value: "" },
+    });
+    setUploaded(false);
+  };
+  const videoUploadHandler = () => {
+    setUploading(true);
+    const video = videoDetails.video.value;
+    const title = videoDetails.title.value;
+    const desc = videoDetails.desc.value;
+    const task = storage.ref("uploads/" + video.name).put(video);
+    task.on(
+      "state_changed",
+      (snapshot) => {
+        setUploadPercent(
+          Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+        );
+        if ((snapshot.bytesTransferred / snapshot.totalBytes) * 100 === 100) {
+          setUploaded(true);
+        }
+      },
+      (err) => {},
+      () => {
+        storage
+          .ref("uploads/" + video.name)
+          .getDownloadURL()
+          .then((url) => {
+            db.collection("video-uploads").add({
+              creator: props.currentuser,
+              videoURL: url,
+              timestamp: new Date(),
+              title: title,
+              desc: desc,
+            });
+          });
+      }
+    );
+  };
   let gameList = null;
   let uploads = null;
   let profile = null;
   let mainVideo = null;
   let uploadVideo = null;
   let videoUploader = null;
+  let uploadProgress = (
+    <Button
+      clicked={videoUploadHandler}
+      disable={
+        !(
+          videoDetails.video.value &&
+          videoDetails.title.value &&
+          videoDetails.desc.value
+        )
+      }
+    >
+      Upload
+    </Button>
+  );
 
   const formElementsArray = [];
   for (let key in videoDetails) {
@@ -95,22 +160,33 @@ const Profile = (props) => {
       changed={(event) => inputChangedHandler(event, formElement.id)}
     />
   ));
-
-  if (uploading) {
+  if (uploadVid) {
+    if (uploading) {
+      uploadProgress = <ProgressBar percentage={uploadPercent} />;
+    }
+    if (uploaded) {
+      uploadProgress = "Video Uploaded!";
+    }
     videoUploader = (
-      <Modal show backDropClick={() => setUploading(false)}>
+      <Modal show backDropClick={uploadCancelled}>
         <div className={classes.UploadVideoContainer}>
           <div className={classes.UploadVideoHeader}>Upload Video</div>
           <div className={classes.UploadFormContainer}>
             {form}
-            <Button>Upload</Button>
+            <div className={classes.UploadProgress}>{uploadProgress}</div>
           </div>
         </div>
       </Modal>
     );
   }
   if (props.currentuser === props.username) {
-    uploadVideo = <Button clicked={() => setUploading(true)}>+ Upload</Button>;
+    uploadVideo = <Button clicked={() => setUploadVid(true)}>+ Upload</Button>;
+  } else {
+    if (props.following) {
+      uploadVideo = <Button>Following</Button>;
+    } else {
+      uploadVideo = <Button>Follow</Button>;
+    }
   }
   if (props.uploads) {
     gameList = Object.keys(props.gamelist).map((key) => {
@@ -120,7 +196,7 @@ const Profile = (props) => {
       <div className={classes.Profile}>
         {videoUploader}
         <div className={classes.ProfilePicture}>
-          <img src={props.ProfilePicture} alt="dff" />
+          <img src={props.ProfilePicture} alt=" " />
         </div>
         <div className={classes.StreamerDetails}>
           <div className={classes.UserName}>
@@ -156,6 +232,7 @@ const Profile = (props) => {
     );
     uploads = (
       <VideoList
+        className={classes.VideoList}
         list={props.uploads}
         preTitle="Video"
         titleKeyword={"Uploads"}
@@ -166,11 +243,18 @@ const Profile = (props) => {
     );
   }
   if (props.loading) {
-    mainVideo = <Spinner />;
+    mainVideo = (
+      <div className={classes.Loading}>
+        <Spinner />
+      </div>
+    );
     uploads = <Spinner />;
-    profile = <Spinner />;
+    profile = (
+      <div className={classes.Loading}>
+        <Spinner />
+      </div>
+    );
   }
-
   return (
     <div className={classes.ProfileContainer}>
       <div className={classes.ProfileAndMainVid}>
@@ -188,12 +272,13 @@ const matchPropsToState = (state) => {
     username: state.streamer.username,
     userId: state.streamer.userId,
     ProfilePicture: state.streamer.profileURL,
-
     followercount: state.streamer.followercount,
     mainvideo: state.streamer.mainvideo,
     uploads: state.streamer.uploads,
     gamelist: state.streamer.gamelist,
     loading: state.streamer.loading,
+    following: state.streamer.following,
+    loginChecked: state.auth.loginChecked,
   };
 };
 const matchDispatchToProps = (dispatch) => {

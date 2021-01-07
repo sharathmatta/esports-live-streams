@@ -8,7 +8,7 @@
   font-weight: 500;
   display: block;
   text-align: left;
-  color:  rgb(119, 142, 163);
+  color:  #9765E5;
   margin: 10px 0;
 
 }
@@ -16,9 +16,9 @@
 .InputElement {
   color: rgb(119, 142, 163);
   outline: none;
-  background-color: #09152b;
+  background-color: #000000;
   border: none;
-  border-bottom: 1px solid #4d5d7a;
+  border-bottom: 1px solid #1c2535;
   font: inherit;
   padding: 6px 10px;
   display: block;
@@ -28,7 +28,8 @@
 
 .InputElement:focus {
   outline: none;
-  background-color: #09152b;
+  background-color: #292525;
+  color: #b9b8b8;
 }
 p {
   margin: 0;
@@ -50,8 +51,8 @@ p {
 .FileInput::before {
   content: 'Select file';
   display: inline-block;
-  background: #09152b;
-  border: 1px solid #999;
+  background:#000000;
+  border: 1px solid rgb(34, 32, 32);
   border-radius: 2px;
   padding: 5px 8px;
   outline: none;
@@ -63,7 +64,7 @@ p {
   color: rgb(119, 142, 163);
 }
 .FileInput:hover::before {
-  border-color: black;
+  border-color: rgb(80, 71, 71);
 }
 .FileInput:active::before {
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);

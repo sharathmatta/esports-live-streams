@@ -2,34 +2,38 @@
   width: 100%;
   height: 100%;
   position: fixed;
-  margin-top: 3px;
   z-index: 10;
 }
-.MainContent {
+
+.MainContainer .MainContent {
   width: calc(100% - 250px);
   left: 250px;
   position: absolute;
   height: 100%;
-  background-color: #15202b;
-  overflow: scroll;
-  
+  overflow: auto;
+  background-color: #0E0E10;
   padding-bottom: 50px;
-  border: 1px solid #38444d;
 }
-.SideContent {
-  background-color: #1f3455;
+
+.MainContainer .SideContent {
+  background-color: #1F1F23;
   position: absolute;
   height: 100%;
   width: 250px;
 }
 
+.MainContainer span {
+  font-weight: bold;
+  color: #A970FF;
+}
 
 @media (max-width: 600px) {
-  .MainContent {
+  .MainContainer .MainContent {
     width: calc(100% - 60px);
     left: 60px;
   }
-  .SideContent {
+  .MainContainer .MainContent .SideContent {
     width: 60px;
   }
 }
+/*# sourceMappingURL=Layout.module.css.map */

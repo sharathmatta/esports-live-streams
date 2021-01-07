@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import classes from "./Toolbar.module.css";
 import NavItems from "../NavigationItems/NavigationItems";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Button from "../../ui/Button/Button";
 import * as actions from "../../store/actions/index";
@@ -48,7 +48,7 @@ const Toolbar = (props) => {
     <div className={classes.Toolbar}>
       <div className={classes.ToolbarContent}>
         <div className={classes.NavItems}>
-          <NavItems className={classes.NavItems} />
+          <NavItems />
         </div>
         <div className={classes.RightContainer}>
           <div
@@ -56,7 +56,7 @@ const Toolbar = (props) => {
             onClick={() => setOpen(!open)}
           >
             <div className={classes.Profile}>
-              <img src={props.profileURL} alt="pp" />
+              <img src={props.profileURL} alt=" " />
             </div>
             {open && dropdown}
           </div>

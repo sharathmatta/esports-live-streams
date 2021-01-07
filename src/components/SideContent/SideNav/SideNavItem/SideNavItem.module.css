@@ -1,28 +1,38 @@
-.SideNavItem{
-    width: 100%;
-    height: fit-content;
-    margin: 5px 0;
-    padding: 2px;
-    display: flex;
-    flex-direction: row;
-    text-decoration: none;
+.SideNavItem {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 5px 0;
+  padding: 2px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  text-decoration: none;
+}
 
+.SideNavItem .ProfileContainer {
+  width: 40px;
+  height: 40px;
 }
-.ProfileContainer{
-    width:40px;
-    height: 40px;
+
+.SideNavItem .ProfileContainer img {
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
 }
-.ProfileContainer img{
-    width: inherit;
-    height: inherit;
-    border-radius: 50%;
+
+.SideNavItem .UserName {
+  width: 100%;
+  overflow: hidden;
+  margin: auto 10px;
+  color: #adadad;
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
 }
-.UserName{
-    width: 100%;
-    overflow: hidden;
-    margin: auto 10px;
-    color: rgb(187, 192, 216);
-    font-size: 18px;
-    font-weight: 500;
-    text-decoration: none;
-}
+/*# sourceMappingURL=SideNavItem.module.css.map */

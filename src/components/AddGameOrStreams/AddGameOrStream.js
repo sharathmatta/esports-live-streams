@@ -1,4 +1,4 @@
-import react, { Component } from "react";
+import { Component } from "react";
 import { connect } from "react-redux";
 import { db, storage } from "../../firebase";
 
@@ -172,9 +172,6 @@ class AddGameOrStream extends Component {
   addStreamertoGame = () => {
     console.log(this.state.gamename, this.state.streamer);
     this.setState({ Uploading: true, uploaded: false });
-    const gamename = this.state.gamename;
-    const streamer = this.state.streamer;
-    db.collection();
   };
   gameListHandler = (event) => {
     console.log(event.target.value);

@@ -1,81 +1,127 @@
-.PlayerComponent{
-    display: flex;
-    flex-direction: column;
+.PlayerComponent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
-.PlayerContainer{
-    width: 100%;
-    height: fit-content;
-    background-color: #040b13;
+
+.PlayerComponent .PlayerContainer {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: #040b13;
 }
-.VideoContainer{
-    width: 100%;
+
+.PlayerComponent .PlayerContainer .VideoContainer {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  position: relative;
+  padding-bottom: 56.25%;
+}
+
+.PlayerComponent .PlayerContainer .VideoContainer .PlayerWrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.PlayerComponent .PlayerContainer .VideoContainer .PlayerWrapper .ReactPlayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.PlayerComponent .VideoDetails {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 20px 0;
+  padding: 0 20px;
+}
+
+.PlayerComponent .VideoDetails .UserDetails {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.PlayerComponent .VideoDetails .UserDetails .UserName {
+  margin: auto 0px;
+  padding: 10px;
+  color: #A970FF;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.PlayerComponent .VideoDetails .UserDetails .UserName:hover {
+  text-decoration: underline;
+}
+
+.PlayerComponent .VideoDetails .UserDetails .PPContainer {
+  width: 60px;
+  height: 60px;
+}
+
+.PlayerComponent .VideoDetails .UserDetails .PPContainer img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.PlayerComponent .VideoDetails .VideoTitle {
+  width: 80%;
+  overflow: hidden;
+  padding: 8px 0;
+  color: #A970FF;
+}
+
+.PlayerComponent .VideoDetails .VideoTitle span {
+  font-weight: 600;
+  color: #adadad;
+}
+
+.PlayerComponent .VideoDetails .UploadDate {
+  padding: 8px 0;
+  color: #A970FF;
+}
+
+.PlayerComponent .VideoDetails .UploadDate span {
+  font-weight: 600;
+  color: #adadad;
+}
+
+@media (min-width: 1120px) {
+  .VideoContainer {
+    width: 960px;
+    margin: auto;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
     height: fit-content;
     position: relative;
-    padding-bottom: 56.25%;
+    height: calc(960px * 0.5625);
+    padding: 0;
+  }
 }
-.PlayerWrapper{
-    height: 100%;
-    width: 100%;
+
+a {
+  text-decoration: none;
 }
-.ReactPlayer{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-.VideoDetails{
-    width: 100%;
-    height: fit-content;
-    margin: 20px 0;
-    padding: 0 20px;
-}
-.UserDetails{
-    width: fit-content;
-    height: fit-content;
-    display: flex;
-    flex-direction: row;
-}
-.UserName{
-    margin: auto 0px;
-    padding: 10px;
-    color: #4c89c7;
-    font-size: 24px;
-    font-weight: bold;
-}
-.UserName:hover{
-    text-decoration: underline;
-}
-.PPContainer{
-    width: 60px;
-    height: 60px;
-}
-.PPContainer img{
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-}
-.VideoTitle {
-    width: 80%;
-    overflow: hidden;
-    padding: 8px 0;
-    color: rgb(175, 181, 185);
-}
-.VideoDetails span{
-    font-weight: 600;
-    color: #94b5d6;
-}
-.UploadDate{
-    padding: 8px 0;
-    color: rgb(175, 181, 185);
-}
-@media(min-width:1120px){
-    .VideoContainer{
-        width: 960px;
-        margin: auto;
-        height: fit-content;
-        position: relative;
-        height: calc(960px * 0.5625);
-        padding: 0;
-    }
-}
+/*# sourceMappingURL=Player.module.css.map */

@@ -1,0 +1,53 @@
+@import '../../colors';
+
+.GameCategories {
+    font-size: 20px;
+    margin: 8px 0;
+    color: white;
+  }
+  .GameId span{
+    color: $lightText;
+  }
+  .GameContainer {
+    overflow: auto;
+    box-sizing: border-box;
+    border-bottom: 1px solid #38444d;
+    padding: 10px 0;
+    white-space: nowrap;
+    margin: 2px 0;
+  }
+  
+  .GameContainer a {
+    display: inline-block;
+    text-align: left;
+    text-decoration: none;
+    width: 160px;
+    margin: 10px 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  .GameContainer a:hover,
+  .GameContainer a:active {
+    transform: scale(1.05, 1.05);
+  }
+  .Game {
+    height: fit-content;
+    width: 100px;
+  }
+  .GameDetails {
+    width: 90%;
+    margin: auto;
+  }
+  .GameId {
+    height: fit-content;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .Game img {
+    width: 160px;
+    height: 170px;
+    align-self: center;
+    border-radius: 3px;
+  }
+  
+  

@@ -54,7 +54,7 @@ nav {
   display: inline-block;
   width: 25px;
   height: 2px;
-  background-color: #1e52a0;
+  background-color: #A970FF;
   position: absolute;
   transition: all 0.3s;
 }
@@ -64,7 +64,7 @@ nav {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #1e52a0;
+  background-color: #A970FF;
   transition: alt 0.3s;
 }
 
@@ -83,7 +83,7 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #15253d;
+    background-color: #18181A;
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -23,7 +23,7 @@ const NavigationItems = (props) => {
         <NavItem link="/" NavItemClicked={navClickHandler}>
           Home
         </NavItem>
-        <NavItem link="/following" NavItemClicked={navClickHandler}>
+        <NavItem link="/following/" NavItemClicked={navClickHandler}>
           Following
         </NavItem>
         <NavItem link="/recommended" NavItemClicked={navClickHandler}>

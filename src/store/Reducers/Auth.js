@@ -8,6 +8,7 @@ const initialState = {
   loading: false,
   username: null,
   profileURL: null,
+  showSignIn: false,
   following: null,
   recommended: null,
 };
@@ -22,6 +23,7 @@ const authSuccess = (state, action) => {
     userId: action.userId,
     error: null,
     loading: false,
+    loginChecked: false,
   });
 };
 
@@ -50,10 +52,22 @@ const checkLoginStatus = (state, action) => {
     username: action.username,
     following: action.following,
     recommended: action.recommended,
+    loginChecked: true,
   });
+};
+
+const showSignIn = (state, action) => {
+  return updateObject(state, { showSignIn: true });
+};
+const hideSignIn = (state, action) => {
+  return updateObject(state, { showSignIn: false });
 };
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.SHOW_SIGNIN:
+      return showSignIn(state, action);
+    case actionTypes.HIDE_SIGNIN:
+      return hideSignIn(state, action);
     case actionTypes.AUTH_START:
       return authStart(state, action);
     case actionTypes.AUTH_FAIL:

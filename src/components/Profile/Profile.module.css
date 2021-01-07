@@ -1,90 +1,165 @@
 .ProfileContainer {
   margin: 20px auto;
   width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
   height: fit-content;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   padding: 20px;
 }
-.ProfileAndMainVid{
+
+.ProfileContainer .ProfileAndMainVid {
   width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
   height: fit-content;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  background-color: #05182e;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  background-color: #18181A;
   padding: 10px 10px;
   margin-bottom: 30px;
 }
-.Profile{
+
+.ProfileContainer .ProfileAndMainVid .Profile {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   padding-top: 10px;
   text-align: center;
-  flex-direction: column;
-}
-.ProfilePicture{
-  width: fit-content;
-  height: fit-content;
-}
-.ProfilePicture img{
-width: 200px;
-height: 200px;
-border-radius: 50%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
-.StreamerDetails{
+.ProfileContainer .ProfileAndMainVid .Profile .ProfilePicture {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.ProfileContainer .ProfileAndMainVid .Profile .ProfilePicture img {
   width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.ProfileContainer .ProfileAndMainVid .Profile .StreamerDetails {
+  width: 200px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
   height: fit-content;
   padding: 5px 10px;
-  
 }
-.UserName{
+
+.ProfileContainer .ProfileAndMainVid .Profile .StreamerDetails .UserName {
   width: 100%;
   text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   padding: 10px 0;
   font-size: 24px;
   font-weight: bold;
-  color: #1DA1F2;
+  color: #9147FF;
   cursor: pointer;
 }
 
-.Games{
-  
-  width: 100%;
-  height: fit-content;
-}
-.GameList{
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0px;
-}
-.GameList li{
-  background-color: rgb(19, 53, 42);
-  border-radius: 20px;
-  width: fit-content;
- list-style: none;
- margin: 3px 3px 3px 0px;
- font-size: 12px;
- padding: 0px 6px 4px;
-}
-
-.FollowerCount{
+.ProfileContainer .ProfileAndMainVid .Profile .StreamerDetails .FollowerCount {
   width: 100%;
   margin-bottom: 10px;
   text-align: center;
-  color: #187bb9;
+  color: #96aed8;
   font-size: 12px;
 }
-.PlayerWrapper{
+
+.ProfileContainer .ProfileAndMainVid .Profile .StreamerDetails .Games {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.ProfileContainer .ProfileAndMainVid .Profile .StreamerDetails .Games .GameList {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding: 0px;
+}
+
+.ProfileContainer .ProfileAndMainVid .Profile .StreamerDetails .Games .GameList li {
+  background-color: #2a3532;
+  border-radius: 20px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  list-style: none;
+  margin: 3px 3px 3px 0px;
+  font-size: 12px;
+  padding: 0px 6px 4px;
+}
+
+.ProfileContainer .ProfileAndMainVid .UploadVideoContainer {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: #18181a;
+  padding: 10px;
+}
+
+.ProfileContainer .ProfileAndMainVid .UploadVideoContainer .UploadVideoHeader {
+  color: #88A3D2;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.ProfileContainer .ProfileAndMainVid .UploadVideoContainer .UploadFormContainer {
+  width: 90%;
+  margin: auto;
+  padding-bottom: 20px;
+}
+
+.ProfileContainer .ProfileAndMainVid .UploadVideoContainer .UploadProgress {
+  width: 80%;
+  margin: auto;
+  padding: 10px;
+  text-align: center;
+  color: #96aed8;
+}
+
+.ProfileContainer .ProfileAndMainVid .PlayerWrapper {
   margin-top: 10px;
-  width:630px;
+  width: 630px;
   position: relative;
 }
 
-.ReactPlayer{
+.ProfileContainer .ProfileAndMainVid .PlayerWrapper .ReactPlayer {
   border: 1px solid #4c89c7;
   position: absolute;
   top: 0;
@@ -93,122 +168,85 @@ border-radius: 50%;
   bottom: 0;
 }
 
-.SubVideosContainer{
-  width: 100%;
-  margin: 10px 0;
-  height: fit-content;
-  background-color: #020911;
-  padding: 10px;
-}
-.SubVideosHeader{
-  
-  font-size: 18px;
-  font-weight: bold;
-}
-.SubVideosHeader span{
-  color:  #4c89c7;
-}
-.SubVideosFlexDiv{
-  
-  display: flex;
-  flex-direction: row;
-  padding: 10px 5px;
-  overflow: auto;
-  box-sizing: border-box;
-  white-space: nowrap;
-}
-.SubVideosVideo{
-  margin: 10px 20px;
-}
-.SubVideosPlayerWrapper{
-  width:330px;
-  position: relative;
-}
-.UploadVideoContainer{
-  width: 100%;
-  height: fit-content;
-  background-color: #0F1E37;
-  padding: 10px;
+@media (max-width: 310px) {
+  .ProfileContainer {
+    width: 240px;
   }
-  .UploadVideoHeader{
-    color: #88A3D2;
-    font-size: 25px;
-    font-weight: bold;
-  }
-  .UploadFormContainer{
-    width: 90%;
-    margin: auto;
-    padding-bottom: 20px;
-  }
+}
 
-@media(min-width:1220px){
-  .PlayerWrapper{
-    height: calc(630px * 0.5625);
+@media (max-width: 1220px) {
+  .ProfileContainer .ProfileAndMainVid {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
-  .SubVideosPlayerWrapper{
-    height: calc(330px * 0.5625);
+  .ProfileContainer .ProfileAndMainVid .Profile {
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
   }
-}
-@media(max-width:1220px){
-  .ProfileAndMainVid{
-    
-    flex-direction: column;
-  }
-  .ProfilePicture{
+  .ProfileContainer .ProfileAndMainVid .Profile .ProfilePicture {
     padding: 0px 10px;
-  }
-  .ProfilePicture {
     width: 180px;
     height: 180px;
     padding: 0;
     text-align: center;
-    }
-  .ProfilePicture img{
+  }
+  .ProfileContainer .ProfileAndMainVid .Profile .ProfilePicture img {
     width: 90%;
     height: 90%;
     border-radius: 50%;
-    }
-  .StreamerDetails{
+  }
+  .ProfileContainer .ProfileAndMainVid .Profile .StreamerDetails {
     width: 100%;
   }
-  .UserName{
+  .ProfileContainer .ProfileAndMainVid .Profile .StreamerDetails .UserName {
     text-align: left;
-    flex-direction: row;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
   }
-  .FollowerCount{
-    
+  .ProfileContainer .ProfileAndMainVid .Profile .StreamerDetails .FollowerCount {
     text-align: left;
-    
   }
-  
-  .Profile{
-    align-self: center;
-  }
-  .PlayerWrapper{
-    width:100%;
-    position: relative; 
-  padding-bottom: 56.25%;
-  }
-  .VideoContainer{
-    width: 200px;
-    height: calc(200px * 0.5625);
-  }
-  .SubVideosPlayerWrapper{
-    width:100%;
-    position: relative; 
+  .ProfileContainer .ProfileAndMainVid .PlayerWrapper {
+    width: 100%;
+    position: relative;
     padding-bottom: 56.25%;
   }
-  .ReactPlayer{
+  .ProfileContainer .ProfileAndMainVid .PlayerWrapper .ReactPlayer {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
   }
-
 }
-@media(max-width:380px){
-  .ProfileAndMainVid{
+
+@media (max-width: 380px) {
+  .ProfileAndMainVid {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
+    margin: auto;
+  }
+  .Loading {
+    width: 200px;
+    margin: auto;
+  }
+  .VideoList {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin: auto;
   }
 }
+
+@media (min-width: 1220px) {
+  .PlayerWrapper {
+    height: calc(630px * 0.5625);
+  }
+}
+/*# sourceMappingURL=Profile.module.css.map */
