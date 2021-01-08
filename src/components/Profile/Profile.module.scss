@@ -1,4 +1,4 @@
-
+@import '../../colors';
 
 .ProfileContainer {
     margin: 20px auto;
@@ -80,9 +80,10 @@
             background-color: #18181a;
             padding: 10px;
             .UploadVideoHeader{
-                color: #88A3D2;
-                font-size: 25px;
-                font-weight: bold;
+                color: $lightText;
+                font-size: 20px;
+                margin-top: 10px;
+                font-weight: 600;
               }
               .UploadFormContainer{
                 width: 90%;

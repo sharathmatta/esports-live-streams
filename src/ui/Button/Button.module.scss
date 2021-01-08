@@ -1,0 +1,25 @@
+.Button {
+    width: fit-content;
+    height: fit-content;
+    padding: 5px 15px;
+    font-size: 16px;
+    font-weight: 600;
+    border: 1px solid #703cbe;
+    border-radius: 5px;
+    margin: auto 10px;
+    color:white;
+    background-color: #9147FF;
+    &:hover,&:active{
+        background-color:  #5C16C5;
+    }
+    &:disabled{
+        cursor: not-allowed;
+        background-color: gray;
+    }
+  }
+  
+  @media(min-width:1220px){
+    .Button{
+      margin: auto;
+    }
+  }

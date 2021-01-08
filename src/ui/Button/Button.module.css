@@ -1,20 +1,32 @@
 .Button {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
   width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
   height: fit-content;
   padding: 5px 15px;
   font-size: 16px;
   font-weight: 600;
   border: 1px solid #703cbe;
   border-radius: 5px;
-  margin: auto;
-  color:white;
+  margin: auto 10px;
+  color: white;
   background-color: #9147FF;
 }
-button:hover,
-button:active {
-  background-color:  #5C16C5;
+
+.Button:hover, .Button:active {
+  background-color: #5C16C5;
 }
-button:disabled{
+
+.Button:disabled {
   cursor: not-allowed;
   background-color: gray;
 }
+
+@media (min-width: 1220px) {
+  .Button {
+    margin: auto;
+  }
+}
+/*# sourceMappingURL=Button.module.css.map */

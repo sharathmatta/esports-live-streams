@@ -10,3 +10,5 @@ export {
 export { initializeProfile } from "./Streamer";
 
 export { initializePlayer } from "./Player";
+
+export { initializeGame } from "./Game";

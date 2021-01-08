@@ -9,11 +9,13 @@ import reportWebVitals from "./reportWebVitals";
 import authReducer from "./store/Reducers/Auth";
 import playerReducer from "./store/Reducers/Player";
 import streamerReducer from "./store/Reducers/Streamer";
+import gameReducer from "./store/Reducers/Game";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   streamer: streamerReducer,
   player: playerReducer,
+  game: gameReducer,
 });
 const composeEnhancers =
   process.env.NODE_ENV === "development"

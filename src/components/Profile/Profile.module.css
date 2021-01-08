@@ -134,9 +134,10 @@
 }
 
 .ProfileContainer .ProfileAndMainVid .UploadVideoContainer .UploadVideoHeader {
-  color: #88A3D2;
-  font-size: 25px;
-  font-weight: bold;
+  color: #adadad;
+  font-size: 20px;
+  margin-top: 10px;
+  font-weight: 600;
 }
 
 .ProfileContainer .ProfileAndMainVid .UploadVideoContainer .UploadFormContainer {

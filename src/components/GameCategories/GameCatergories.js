@@ -13,7 +13,9 @@ class GameCategories extends Component {
       .get()
       .then((snapshot) => {
         snapshot.forEach((doc) => {
-          gameList.push(doc.data());
+          gameList[doc.id] = {
+            ...doc.data(),
+          };
         });
         this.setState({ games: gameList });
       });
@@ -24,7 +26,7 @@ class GameCategories extends Component {
       const games = this.state.games;
       Games = Object.keys(this.state.games).map((key) => {
         return (
-          <NavLink to="/" key={games[key].id}>
+          <NavLink to={"/Game/" + key} key={key}>
             <div className={classes.Game}>
               <img src={games[key].logo} alt="gamelogo" />
             </div>

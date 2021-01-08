@@ -1,0 +1,75 @@
+.GameProfileContainer {
+  width: 90%;
+  margin: auto;
+  padding: 10px 0;
+}
+
+.GameProfileContainer div .FavGameStreamerCont {
+  margin: 20px auto;
+}
+
+.GameProfileContainer div .PopGameStreamerCont {
+  margin: 20px auto;
+}
+
+.GameProfileContainer div .StreamerVideoList {
+  margin: 20px auto;
+}
+
+.GameProfileContainer div div .Header {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.GameProfileContainer div div .Header span {
+  color: #A970FF;
+  font-weight: 600;
+}
+
+.GameProfileContainer div div .StreamerList {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  overflow: scroll;
+  padding: 10px 5px;
+}
+
+.GameProfileContainer div div .StreamerList a {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  text-align: center;
+  padding: 5px;
+}
+
+.GameProfileContainer div div .StreamerList a span {
+  color: #adadad;
+}
+
+.GameProfileContainer div div .StreamerList a .Streamer {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 5px 10px;
+}
+
+.GameProfileContainer div div .StreamerList a .Streamer img {
+  height: 140px;
+  width: 140px;
+  border-radius: 3px;
+}
+/*# sourceMappingURL=GameProfile.module.css.map */

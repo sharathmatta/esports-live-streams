@@ -180,7 +180,7 @@ const Profile = (props) => {
     );
   }
   if (props.currentuser === props.username) {
-    uploadVideo = <Button clicked={() => setUploadVid(true)}>+ Upload</Button>;
+    uploadVideo = <Button clicked={() => setUploadVid(true)}>+Upload</Button>;
   } else {
     if (props.following) {
       uploadVideo = <Button>Following</Button>;

@@ -20,6 +20,7 @@ const playerInitSuccess = (videoData, moreVideos, profilePicURL) => {
 };
 
 const getHighlights = (id) => {};
+
 const getVideo = (creator, id) => {
   return async (dispatch) => {
     let videoData = null;

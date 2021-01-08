@@ -12,6 +12,7 @@ import Player from "../components/Player/Player";
 import AddGameOrStream from "../components/AddGameOrStreams/AddGameOrStream";
 import * as actions from "../store/actions/index";
 import withLoginCheck from "../hoc/withLoginCheck";
+import GameProfile from "../components/GameProfile/GameProfile";
 const App = (props) => {
   useEffect(() => {
     props.onCheckAuthState();
@@ -28,6 +29,7 @@ const App = (props) => {
             <Route path="/Recommended" component={Recommended} />
             <Route path="/Browse" t component={Browse} />
             <Route path="/Profile/:username" component={Profile} />
+            <Route path="/Game/:gameid" component={GameProfile} />
             <Route path="/add" component={AddGameOrStream} />
             <Route path="/" exact component={Home} />
             <Route path="/:username" component={Player} />
