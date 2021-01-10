@@ -2,8 +2,8 @@
     "version": 3,
     "mappings": "AAAA,AAAA,cAAc,CAAC;EACX,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,WAAW;CACpB",
     "sources": [
-        "HomeFollowing.module.scss"
+        "VideosFollowing.module.scss"
     ],
     "names": [],
-    "file": "HomeFollowing.module.css"
+    "file": "VideosFollowing.module.css"
 }

@@ -11,11 +11,6 @@
           }
       }
       .PopularStreamers {
-        overflow: auto;
-        white-space: nowrap;
-        box-sizing: border-box;
-        border-bottom: 1px solid #38444d;
-        padding: 10px 0;
         margin: 2px auto;
         .DummyList{
             height: fit-content;
@@ -33,16 +28,17 @@
                     width: 140px;
                     border-radius: 3px;
                     background-color: $secondaryBackground;
+                    margin: 5px;
                     .ForAnimation{
                         height: 100%;
                         width: 100%;
                         overflow: hidden;
                         &:before{
                           content: '';
-                          background-image:  linear-gradient(#1f1f22,$secondaryBackground);
+                          background-color:  #1f1f22;
                     
                           height: inherit;
-                          width: 50%;
+                          width: 5em;
                           display: block;
                           left: -2.5em;
                           animation: mymove 4s;
@@ -60,29 +56,7 @@
                 }
             }
         }
-        a {
-            display: inline-block;
-            text-align: center;
-            text-decoration: none;
-            padding: 10px 10px;
-            font-size: 16px;
-            &:hover, &:active{
-                transform: scale(1.05, 1.05);
-            }
-            span{
-                color: $lightText;
-            }
-            .Streamer {
-                height: fit-content;
-                width: fit-content;
-                img {
-                    height: 140px;
-                    width: 140px;
-                    border-radius: 3px;
-                    background-color: $secondaryBackground;
-                  }
-              }
-          }
+        
       }
       
   }

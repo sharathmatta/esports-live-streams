@@ -1,0 +1,20 @@
+@import '../../../colors';
+
+a{
+    width: fit-content;
+    height: fit-content;
+    .Streamer{
+        text-align: center;
+        padding: 10px;
+        img{
+            margin: 5px;
+            width: $streamerWidth;
+            height: $streamerHeight;
+            background-color: $secondaryBackground;
+            border-radius: 3px;
+        }
+        span{
+            color: $lightText;
+        }
+    }
+}

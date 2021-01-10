@@ -19,6 +19,7 @@
 .Button:hover, .Button:active {
   background-image: -webkit-gradient(linear, left top, left bottom, from(#690af7), to(#8739fc));
   background-image: linear-gradient(#690af7, #8739fc);
+  border: 1px solid #703cbe;
   opacity: 0.8;
 }
 

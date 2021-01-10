@@ -1,8 +1,8 @@
 import React from "react";
 import classes from "./Home.module.css";
 import HomeBrowse from "./HomeBrowse/HomeBrowse";
-import HomeFollowing from "./HomeFollowing/HomeFollowing";
-import HomeRecommended from "./HomeRecommended/HomeRecommended";
+import HomeFollowing from "../../components/VideosFollowing/VideosFollowing";
+import HomeRecommended from "../../components/VideosRecommended/VideosRecommended";
 
 const home = () => {
   return (

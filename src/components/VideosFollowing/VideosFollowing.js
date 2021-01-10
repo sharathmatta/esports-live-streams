@@ -1,10 +1,10 @@
 import React from "react";
-import VideoList from "../../../components/VideoList/VideoList";
+import VideoList from "../VideoList/VideoList";
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { db } from "../../../firebase";
-import SignInMessage from "../../../components/SignInMessage/SignInMessage";
-import classes from "./HomeFollowing.module.css";
+import { db } from "../../firebase";
+import SignInMessage from "../SignInMessage/SignInMessage";
+import classes from "./VideosFollowing.module.css";
 
 const HomeFollowing = (props) => {
   const [following, setFollowing] = useState(["Ninja", "Sykunno", "Brookeab"]);

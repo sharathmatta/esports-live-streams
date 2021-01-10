@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,CAAC,CAAA;EACG,KAAK,EAAE,WAAW;EAClB,MAAM,EAAE,WAAW;CAetB;;AAjBD,AAGI,CAHH,CAGG,SAAS,CAAA;EACL,UAAU,EAAE,MAAM;EAClB,OAAO,EAAE,IAAI;CAWhB;;AAhBL,AAMQ,CANP,CAGG,SAAS,CAGL,GAAG,CAAA;EACC,MAAM,EAAE,GAAG;EACX,KAAK,ECHA,KAAK;EDIV,MAAM,ECHF,KAAK;EDIT,gBAAgB,ECXL,OAAO;EDYlB,aAAa,EAAE,GAAG;CACrB;;AAZT,AAaQ,CAbP,CAGG,SAAS,CAUL,IAAI,CAAA;EACA,KAAK,ECZJ,OAAkB;CDatB",
+    "sources": [
+        "StreamerBlock.module.scss",
+        "../../../_colors.scss"
+    ],
+    "names": [],
+    "file": "StreamerBlock.module.css"
+}

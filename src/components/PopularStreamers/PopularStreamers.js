@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import classes from "./PopularStreamers.module.css";
-import blankStreamer from "../../assets/—Pngtree—profile glyph black icon_4008321.png";
-import { NavLink } from "react-router-dom";
-
 import { db } from "../../firebase";
+import StreamerList from "../StreamerList/StreamerList";
 
 class PopularStreamers extends Component {
   state = {
@@ -69,25 +67,7 @@ class PopularStreamers extends Component {
     );
     if (this.state.streamers) {
       const streamers = this.state.streamers;
-      PopularStreamers = Object.keys(this.state.streamers).map((key) => {
-        return (
-          <NavLink
-            to={"/profile/" + streamers[key].username}
-            key={streamers[key].username}
-          >
-            <div className={classes.Streamer}>
-              <img
-                src={streamers[key].profilePicURL}
-                alt="streamerlogo"
-                onError={(e) => {
-                  e.target.src = blankStreamer;
-                }}
-              />
-            </div>
-            <span>{streamers[key].username}</span>
-          </NavLink>
-        );
-      });
+      PopularStreamers = <StreamerList list={streamers} />;
     }
     return (
       <div className={classes.PopularStreamersContainer}>

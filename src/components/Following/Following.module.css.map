@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,mBAAmB,CAAA;EACf,KAAK,EAAE,GAAG;EACV,MAAM,EAAE,IAAI;EACZ,MAAM,EAAE,WAAW;EACnB,OAAO,EAAE,IAAI;CAWhB;;AAfD,AAKI,mBALe,CAKf,cAAc,CAAA;EACV,MAAM,EAAE,WAAW;EACnB,KAAK,EAAE,WAAW;EAClB,MAAM,EAAE,QAAQ;CACnB;;AATL,AAUI,mBAVe,CAUf,UAAU,CAAA;EACN,MAAM,EAAE,WAAW;EACnB,KAAK,EAAE,IAAI;CACd",
+    "sources": [
+        "Following.module.scss",
+        "../../_colors.scss"
+    ],
+    "names": [],
+    "file": "Following.module.css"
+}

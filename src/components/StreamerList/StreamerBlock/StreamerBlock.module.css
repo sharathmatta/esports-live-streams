@@ -1,0 +1,26 @@
+a {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+a .Streamer {
+  text-align: center;
+  padding: 10px;
+}
+
+a .Streamer img {
+  margin: 5px;
+  width: 140px;
+  height: 140px;
+  background-color: #18181A;
+  border-radius: 3px;
+}
+
+a .Streamer span {
+  color: #adadad;
+}
+/*# sourceMappingURL=StreamerBlock.module.css.map */

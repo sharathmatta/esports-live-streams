@@ -2,9 +2,9 @@
     "version": 3,
     "mappings": "AAEA,AAAA,gBAAgB,CAAA;EACZ,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,WAAW;CACtB",
     "sources": [
-        "HomeRecommended.module.scss",
-        "../../../_colors.scss"
+        "VideosRecommended.module.scss",
+        "../../_colors.scss"
     ],
     "names": [],
-    "file": "HomeRecommended.module.css"
+    "file": "VideosRecommended.module.css"
 }

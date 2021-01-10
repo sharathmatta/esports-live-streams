@@ -1,6 +1,9 @@
 .Recommended {
-  width: 80%;
-  height: 100%;
-  text-align: center;
+  width: 90%;
   margin: auto;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 10px;
 }
+/*# sourceMappingURL=Recommended.module.css.map */

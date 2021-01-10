@@ -1,9 +1,9 @@
 import React from "react";
-import VideoList from "../../../components/VideoList/VideoList";
+import VideoList from "../VideoList/VideoList";
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { db } from "../../../firebase";
-import classes from "./HomeRecommended.module.css";
+import { db } from "../../firebase";
+import classes from "./VideosRecommended.module.css";
 
 const HomeRecommended = (props) => {
   const [gameTypes, setGameTypes] = useState([
