@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { db } from "../../firebase";
 import { connect } from "react-redux";
 import VideoList from "../../components/VideoList/VideoList";
+import blankStreamer from "../../assets/—Pngtree—profile glyph black icon_4008321.png";
 import * as actions from "../../store/actions/index";
 import Spinner from "../../ui/spinner/Spinner";
 import classes from "./GameProfile.module.css";
@@ -45,7 +46,13 @@ const GameProfile = (props) => {
           key={streamerList[key].username}
         >
           <div className={classes.Streamer}>
-            <img src={streamerList[key].profilePicURL} alt="streamerlogo" />
+            <img
+              src={streamerList[key].profilePicURL}
+              alt="streamerlogo"
+              onError={(e) => {
+                e.target.src = blankStreamer;
+              }}
+            />
           </div>
           <span>{streamerList[key].username}</span>
         </NavLink>
@@ -59,7 +66,13 @@ const GameProfile = (props) => {
           key={streamerList[key].username}
         >
           <div className={classes.Streamer}>
-            <img src={streamerList[key].profilePicURL} alt="streamerlogo" />
+            <img
+              src={streamerList[key].profilePicURL}
+              alt="streamerlogo"
+              onError={(e) => {
+                e.target.src = blankStreamer;
+              }}
+            />
           </div>
           <span>{streamerList[key].username}</span>
         </NavLink>
@@ -71,13 +84,13 @@ const GameProfile = (props) => {
       <div>
         <div className={classes.FavGameStreamerCont}>
           <div className={classes.Header}>
-            Your favourite <span>{props.gameDetails.gamename}</span> streamers:
+            Your favourite <span>{props.gameDetails.gamename}</span> streamers :
           </div>
           <div className={classes.StreamerList}>{FavouriteStreamers}</div>
         </div>
         <div className={classes.PopGameStreamerCont}>
           <div className={classes.Header}>
-            Popular <span>{props.gameDetails.gamename}</span> streamers:
+            Popular <span>{props.gameDetails.gamename}</span> streamers :
           </div>
           <div className={classes.StreamerList}>{PopularStreamers}</div>
         </div>

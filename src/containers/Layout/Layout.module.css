@@ -5,7 +5,7 @@
   z-index: 10;
 }
 
-.MainContainer .MainContent {
+.MainContainer .MainContentToken {
   width: calc(100% - 250px);
   left: 250px;
   position: absolute;
@@ -15,11 +15,24 @@
   padding-bottom: 50px;
 }
 
-.MainContainer .SideContent {
+.MainContainer .SideContentToken {
   background-color: #1F1F23;
   position: absolute;
   height: 100%;
   width: 250px;
+}
+
+.MainContainer .MainContent {
+  width: 100%;
+  position: absolute;
+  height: 100%;
+  overflow: auto;
+  background-color: #0E0E10;
+  padding-bottom: 50px;
+}
+
+.MainContainer .SideContent {
+  display: none;
 }
 
 .MainContainer span {
@@ -28,11 +41,11 @@
 }
 
 @media (max-width: 600px) {
-  .MainContainer .MainContent {
+  .MainContainer .MainContentToken {
     width: calc(100% - 60px);
     left: 60px;
   }
-  .MainContainer .MainContent .SideContent {
+  .MainContainer .MainContentToken .SideContentToken {
     width: 60px;
   }
 }

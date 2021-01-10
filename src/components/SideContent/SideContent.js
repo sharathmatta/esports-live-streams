@@ -9,9 +9,51 @@ import Spinner from "../../ui/Spinner2/Spinner2";
 const SideContent = (props) => {
   let followingComp = <Spinner />;
   let recommendedComp = <Spinner />;
+  let DummyList = (
+    <div className={classes.DummyList}>
+      <div className={classes.DummyStreamer}>
+        <div className={classes.DummyStreamerImg}></div>
+        <div className={classes.DummyStreamerName}></div>
+      </div>
+      <div className={classes.DummyStreamer}>
+        <div className={classes.DummyStreamerImg}></div>
+        <div className={classes.DummyStreamerName}></div>
+      </div>
+      <div className={classes.DummyStreamer}>
+        <div className={classes.DummyStreamerImg}></div>
+        <div className={classes.DummyStreamerName}></div>
+      </div>
+      <div className={classes.DummyStreamer}>
+        <div className={classes.DummyStreamerImg}></div>
+        <div className={classes.DummyStreamerName}></div>
+      </div>
+      <div className={classes.DummyStreamer}>
+        <div className={classes.DummyStreamerImg}></div>
+        <div className={classes.DummyStreamerName}></div>
+      </div>
+      <div className={classes.DummyStreamer}>
+        <div className={classes.DummyStreamerImg}></div>
+        <div className={classes.DummyStreamerName}></div>
+      </div>
+      <div className={classes.DummyStreamer}>
+        <div className={classes.DummyStreamerImg}></div>
+        <div className={classes.DummyStreamerName}></div>
+      </div>
+    </div>
+  );
   if (props.token) {
-    followingComp = <Spinner />;
-    recommendedComp = <Spinner />;
+    followingComp = (
+      <div className={classes.SideSubBlock1}>
+        <div className={classes.Header}>Following : </div>
+        {DummyList}
+      </div>
+    );
+    recommendedComp = (
+      <div className={classes.SideSubBlock2}>
+        <div className={classes.Header}>Recommended : </div>
+        {DummyList}
+      </div>
+    );
   } else {
     followingComp = null;
     recommendedComp = null;

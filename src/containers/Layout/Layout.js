@@ -27,10 +27,20 @@ class Layout extends Component {
         </Modal>
         <Toolbar SignInClicked={this.props.onShowSignIn} />
         <div className={classes.MainContainer}>
-          <div className={classes.SideContent}>
+          <div
+            className={
+              this.props.token ? classes.SideContentToken : classes.SideContent
+            }
+          >
             <SideContent />
           </div>
-          <div className={classes.MainContent}>{this.props.children}</div>
+          <div
+            className={
+              this.props.token ? classes.MainContentToken : classes.MainContent
+            }
+          >
+            {this.props.children}
+          </div>
         </div>
       </Aux>
     );

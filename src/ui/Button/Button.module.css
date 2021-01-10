@@ -11,12 +11,15 @@
   border: 1px solid #703cbe;
   border-radius: 5px;
   margin: auto 10px;
-  color: white;
-  background-color: #9147FF;
+  color: #d8d7d7;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#9147FF), to(#4606a5));
+  background-image: linear-gradient(#9147FF, #4606a5);
 }
 
 .Button:hover, .Button:active {
-  background-color: #5C16C5;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#690af7), to(#8739fc));
+  background-image: linear-gradient(#690af7, #8739fc);
+  opacity: 0.8;
 }
 
 .Button:disabled {

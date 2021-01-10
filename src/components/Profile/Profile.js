@@ -6,6 +6,7 @@ import * as actions from "../../store/actions/index";
 import VideoList from "../VideoList/VideoList";
 import Spinner from "../../ui/spinner/Spinner";
 import Button from "../../ui/Button/Button";
+import blankProfile from "../../assets/blank-profile-picture-973460_1280.png";
 import Modal from "../../ui/modal/modal";
 import Input from "../../ui/Input/Input";
 import { db, storage } from "../../firebase";
@@ -196,7 +197,13 @@ const Profile = (props) => {
       <div className={classes.Profile}>
         {videoUploader}
         <div className={classes.ProfilePicture}>
-          <img src={props.ProfilePicture} alt=" " />
+          <img
+            src={props.ProfilePicture}
+            alt=" "
+            onError={(e) => {
+              e.target.src = blankProfile;
+            }}
+          />
         </div>
         <div className={classes.StreamerDetails}>
           <div className={classes.UserName}>

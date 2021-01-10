@@ -4,6 +4,7 @@ import NavItems from "../NavigationItems/NavigationItems";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Button from "../../ui/Button/Button";
+import blankPic from "../../assets/blank-profile-picture-973460_1280.png";
 import * as actions from "../../store/actions/index";
 
 const Toolbar = (props) => {
@@ -56,7 +57,14 @@ const Toolbar = (props) => {
             onClick={() => setOpen(!open)}
           >
             <div className={classes.Profile}>
-              <img src={props.profileURL} alt=" " />
+              <img
+                src={props.profileURL}
+                alt=" "
+                onError={(e) => {
+                  e.target.onError = null;
+                  e.target.src = blankPic;
+                }}
+              />
             </div>
             {open && dropdown}
           </div>

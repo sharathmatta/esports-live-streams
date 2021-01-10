@@ -5,7 +5,7 @@
     height: 100%;
     position: fixed;
     z-index: 10;
-    .MainContent {
+    .MainContentToken {
         width: calc(100% - 250px);
         left: 250px;
         position: absolute;
@@ -14,11 +14,22 @@
         background-color:#0E0E10;
         padding-bottom: 50px;
       }
-      .SideContent {
+      .SideContentToken {
         background-color:#1F1F23;
         position: absolute;
         height: 100%;
         width: 250px;
+      }
+      .MainContent{
+        width: 100%;
+        position: absolute;
+        height: 100%;
+        overflow: auto;
+        background-color:#0E0E10;
+        padding-bottom: 50px;
+      }
+      .SideContent{
+        display: none;
       }
       span {
         font-weight: bold;
@@ -31,10 +42,10 @@
   
   @media (max-width: 600px) {
     .MainContainer{
-        .MainContent {
+        .MainContentToken {
             width: calc(100% - 60px);
             left: 60px;
-            .SideContent {
+            .SideContentToken {
               width: 60px;
             }
           }

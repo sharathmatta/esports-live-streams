@@ -15,6 +15,48 @@
     padding: 10px 0;
     white-space: nowrap;
     margin: 2px 0;
+    .DummyList{
+      height: fit-content;
+      width: fit-content;
+      display: flex;
+      flex-direction: row;
+      .DummyGame{
+        height: fit-content;
+        width: fit-content;
+        margin: 10px 10px;
+        .DummyGameImg{
+          width: 160px;
+          height: 170px;
+          align-self: center;
+          border-radius: 3px;
+          background-color: $secondaryBackground;
+          .ForAnimation{
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            &:before{
+              content: '';
+              background-color:  #1f1f22;
+        
+              height: inherit;
+              width: 5em;
+              display: block;
+              left: -2.5em;
+              animation: mymove 4s;
+              animation-iteration-count: infinite;
+              transition: all 0.5s ease-in-out;
+            }
+          }
+          
+        }
+        .DummyGameName{
+          width: 120px;
+          height: 15px;
+          margin: 7px 2px;
+          background-color: $secondaryBackground;
+        }
+      }
+    }
   }
   
   .GameContainer a {
@@ -48,6 +90,19 @@
     height: 170px;
     align-self: center;
     border-radius: 3px;
+    background-color: $secondaryBackground;
   }
   
-  
+  @keyframes mymove{
+    0%{
+        transform: skewX(-45deg) translateX(-5em);
+        opacity: 0.1;
+    }
+    50%{
+      opacity: 0.3;
+    }
+    100%{
+      opacity: 0.1;
+        transform: skewX(-45deg) translateX(15.5em);
+    }
+}

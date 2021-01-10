@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import classes from "./PopularStreamers.module.css";
+import blankStreamer from "../../assets/—Pngtree—profile glyph black icon_4008321.png";
 import { NavLink } from "react-router-dom";
 
 import { db } from "../../firebase";
@@ -20,7 +21,52 @@ class PopularStreamers extends Component {
       });
   }
   render() {
-    let PopularStreamers = null;
+    let PopularStreamers = (
+      <div className={classes.DummyList}>
+        <div className={classes.DummyStreamer}>
+          <div className={classes.DummyStreamerImg}>
+            <div className={classes.ForAnimation}></div>
+          </div>
+          <div className={classes.DummyStreamerName}></div>
+        </div>
+        <div className={classes.DummyStreamer}>
+          <div className={classes.DummyStreamerImg}>
+            <div className={classes.ForAnimation}></div>
+          </div>
+          <div className={classes.DummyStreamerName}></div>
+        </div>
+        <div className={classes.DummyStreamer}>
+          <div className={classes.DummyStreamerImg}>
+            <div className={classes.ForAnimation}></div>
+          </div>
+          <div className={classes.DummyStreamerName}></div>
+        </div>
+        <div className={classes.DummyStreamer}>
+          <div className={classes.DummyStreamerImg}>
+            <div className={classes.ForAnimation}></div>
+          </div>
+          <div className={classes.DummyStreamerName}></div>
+        </div>
+        <div className={classes.DummyStreamer}>
+          <div className={classes.DummyStreamerImg}>
+            <div className={classes.ForAnimation}></div>
+          </div>
+          <div className={classes.DummyStreamerName}></div>
+        </div>
+        <div className={classes.DummyStreamer}>
+          <div className={classes.DummyStreamerImg}>
+            <div className={classes.ForAnimation}></div>
+          </div>
+          <div className={classes.DummyStreamerName}></div>
+        </div>
+        <div className={classes.DummyStreamer}>
+          <div className={classes.DummyStreamerImg}>
+            <div className={classes.ForAnimation}></div>
+          </div>
+          <div className={classes.DummyStreamerName}></div>
+        </div>
+      </div>
+    );
     if (this.state.streamers) {
       const streamers = this.state.streamers;
       PopularStreamers = Object.keys(this.state.streamers).map((key) => {
@@ -30,7 +76,13 @@ class PopularStreamers extends Component {
             key={streamers[key].username}
           >
             <div className={classes.Streamer}>
-              <img src={streamers[key].profilePicURL} alt="streamerlogo" />
+              <img
+                src={streamers[key].profilePicURL}
+                alt="streamerlogo"
+                onError={(e) => {
+                  e.target.src = blankStreamer;
+                }}
+              />
             </div>
             <span>{streamers[key].username}</span>
           </NavLink>
