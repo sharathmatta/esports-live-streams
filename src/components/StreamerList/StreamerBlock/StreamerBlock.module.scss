@@ -3,6 +3,8 @@
 a{
     width: fit-content;
     height: fit-content;
+    text-decoration: none;
+    transition: all 0.1s ease-in;
     .Streamer{
         text-align: center;
         padding: 10px;
@@ -16,5 +18,8 @@ a{
         span{
             color: $lightText;
         }
+    }
+    &:hover,&:active{
+        transform: scale(1.05);
     }
 }

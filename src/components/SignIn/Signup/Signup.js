@@ -6,6 +6,7 @@ import Button from "../../../ui/Button/Button";
 import * as actions from "../../../store/actions/index";
 import Input from "../../../ui/Input/Input";
 import { db, auth } from "../../../firebase";
+import spinner from "../../../ui/spinner/Spinner";
 
 class Signup extends Component {
   state = {

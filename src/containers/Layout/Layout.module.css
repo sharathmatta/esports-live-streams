@@ -23,6 +23,7 @@
 }
 
 .MainContainer .MainContent {
+  display: none;
   width: 100%;
   position: absolute;
   height: 100%;
@@ -45,7 +46,7 @@
     width: calc(100% - 60px);
     left: 60px;
   }
-  .MainContainer .MainContentToken .SideContentToken {
+  .MainContainer .SideContentToken {
     width: 60px;
   }
 }

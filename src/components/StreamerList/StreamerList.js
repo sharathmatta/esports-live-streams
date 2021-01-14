@@ -6,6 +6,7 @@ const streamerList = (props) => {
   let blocks = Object.keys(props.list).map((key) => {
     return (
       <StreamerBlock
+        key={key}
         profilePic={props.list[key].profilePicURL}
         username={props.list[key].username}
       />

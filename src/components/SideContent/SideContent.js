@@ -5,6 +5,7 @@ import SideNavItems from "./SideNav/SideNavItems";
 import { connect } from "react-redux";
 import SigninMessage from "../SignInMessage/SignInMessage";
 import Spinner from "../../ui/Spinner2/Spinner2";
+import { NavLink } from "react-router-dom";
 
 const SideContent = (props) => {
   let followingComp = <Spinner />;

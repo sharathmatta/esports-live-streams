@@ -59,7 +59,7 @@
   width: 100%;
   height: 45%;
   margin: 10px auto;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .SideContainer .SideSubBlock1 .Header {
@@ -72,7 +72,7 @@
   width: 100%;
   height: 45%;
   margin: 10px auto;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .SideContainer .SideSubBlock2 .Header {

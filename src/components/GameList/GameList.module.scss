@@ -1,10 +1,14 @@
-.StreamerList{
+.GameListWrap{
+    display: flex;
+    flex-wrap: wrap;
+}
+.GameListRow{
     width: 100%;
     height: fit-content;
     display: flex;
     flex-direction: row;
-    
     overflow: auto;
     padding: 5px;
+    
     border-bottom: 1px solid #38444d;
 }

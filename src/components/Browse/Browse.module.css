@@ -1,6 +1,74 @@
 .Browse {
-  width: 80%;
-  height: 100%;
-  text-align: center;
+  width: 90%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   margin: auto;
 }
+
+.Browse .BrowseContainer {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 10px auto;
+  padding: 10px;
+}
+
+.Browse .BrowseContainer .Header {
+  margin-bottom: 10px;
+  font-size: 26px;
+}
+
+.Browse .BrowseContainer .SortandFilter {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 5px 10px;
+  border-bottom: 3px solid #18181A;
+  font-size: 17px;
+  font-weight: 600;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.Browse .BrowseContainer .SortandFilter select {
+  margin: 0 10px;
+  background-color: #18181A;
+  color: #adadad;
+  width: 100px;
+  height: 30px;
+  border-radius: 3px;
+}
+
+.Browse .BrowseContainer .GamesContainer {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+@media (max-width: 730px) {
+  .Browse .BrowseContainer .SortandFilter {
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .Browse .BrowseContainer .SortandFilter .Sort {
+    width: 45%;
+  }
+  .Browse .BrowseContainer .SortandFilter .Filter {
+    width: 45%;
+  }
+  .Browse .BrowseContainer .SortandFilter select {
+    width: 100%;
+    margin: 3px 3px 0 0;
+  }
+}
+/*# sourceMappingURL=Browse.module.css.map */

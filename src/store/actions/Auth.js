@@ -104,6 +104,9 @@ export const auth = (userData, isSignUp) => {
                     id: response.data.localId,
                     username: userData.username,
                     profilePicURL: url,
+                    followercount: 0,
+                    mainvideo:
+                      "https://firebasestorage.googleapis.com/v0/b/esports-live-streams.appspot.com/o/Main%20Video%2FSelena%20Gomez%20-%20Feel%20Me%20(Live%20from%20the%20Revival%20Tour)_8N_Yro5QeCE_1080p.mp4?alt=media&token=ffc37414-6812-4ca1-9352-ed3ae427b44b",
                   });
 
                   dispatch(

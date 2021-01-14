@@ -6,6 +6,7 @@ class AddGameOrStream extends Component {
   state = {
     streamers: null,
     gamename: null,
+    gametype: "fps",
     gameLogo: null,
     streamer: null,
     pastBroad: null,
@@ -46,6 +47,7 @@ class AddGameOrStream extends Component {
   addGame = () => {
     const Name = this.state.gamename;
     const gamelogo = this.state.gameLogo;
+    const gametype = this.state.gametype;
     if (Name && gamelogo) {
       this.setState({ Uploading: true });
       const uploadtask = storage.ref(`Game Logos/${Name}`).put(gamelogo);
@@ -66,6 +68,7 @@ class AddGameOrStream extends Component {
                 .set({
                   id: Name,
                   logo: url,
+                  type: gametype,
                 })
                 .then((snapshot) => {
                   console.log("uploaded");
@@ -197,7 +200,12 @@ class AddGameOrStream extends Component {
         .catch((error) => {});
     });
   };
+  gameTypeChange = (e) => {
+    this.setState({ gametype: e.target.value });
+  };
+
   render() {
+    console.log(this.state.gametype);
     let message = null;
     if (this.state.Uploading) {
       message = <p>Uploading. . .</p>;
@@ -220,6 +228,15 @@ class AddGameOrStream extends Component {
           <h2>add new game</h2>
           <input type="text" onChange={this.gameNameChangeHandler} />
           <input type="file" onChange={this.gameLogoHandler} />
+          <select onChange={this.gameTypeChange}>
+            <option value="fps">fps</option>
+            <option value="br">br</option>
+            <option value="story">story</option>
+            <option value="sports">sports</option>
+            <option value="simulation">simu</option>
+            <option value="puzzle">puzzle</option>
+            <option value="strategy">strat</option>
+          </select>
           {message}
           <button onClick={this.addGame}>Add Game</button>
         </div>

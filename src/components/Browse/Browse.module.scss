@@ -1,0 +1,66 @@
+@import '../../colors';
+
+.Browse{
+    width: 90%;
+    height: fit-content;
+    margin: auto;
+    .BrowseContainer{
+        width: 100%;
+        height: fit-content;
+        margin: 10px auto;
+        padding: 10px;
+        .Header{
+            margin-bottom: 10px;
+            font-size: 26px;
+        }
+        .SortandFilter{
+            width: 100%;
+            height: fit-content;
+            padding: 5px 10px;
+            border-bottom: 3px solid $secondaryBackground;
+            font-size: 17px;
+            font-weight: 600;
+            display: flex;
+            flex-direction: row;
+            .Sort{
+                
+            }
+            select{
+                margin: 0 10px;
+                background-color: $secondaryBackground;
+                color: $lightText;
+                width: 100px;
+                height: 30px;
+                border-radius: 3px;
+                option{
+                    
+                }
+            }
+        }
+        .GamesContainer{
+            width: 100%;
+            height: fit-content;
+            
+        }
+    }
+}
+
+@media(max-width:730px){
+    .Browse{
+        .BrowseContainer{
+            .SortandFilter{
+                justify-content: space-between;
+                .Sort{
+                    width: 45%;
+                }
+                .Filter{
+                    width: 45%;
+                }
+                select{
+                    width: 100%;
+                    margin:3px 3px 0 0;
+                }
+            }
+        }
+    }
+}

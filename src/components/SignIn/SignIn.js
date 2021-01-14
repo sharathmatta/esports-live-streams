@@ -30,9 +30,6 @@ class SignIn extends Component {
       <div className={classes.SignIn}>
         {authRedirect}
         <div className={classes.Header}>
-          <div className={classes.Logo}>
-            <img src={Logo} alt="logo" />
-          </div>
           <div className={classes.Message}>{message}</div>
         </div>
         <div className={classes.SignInOptions}>

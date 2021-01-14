@@ -27,10 +27,12 @@
                     width: 43px;
                     height: 43px;
                     border-radius: 50%;
+                    background-color: $secondaryBackground;
                     img {
                         width: 43px;
                         height: 43px;
                         border-radius: 50%;
+                        background-color: $secondaryBackground;
                         cursor: pointer;
                       }
                   }
@@ -45,6 +47,7 @@
                     z-index: 15;
                     border-radius: 10px;
                     .MenuItem{
+                      width: 100%;
                         height: 50px;
                         display: flex;
                         align-items: center;

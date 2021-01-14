@@ -24,6 +24,7 @@
   width: inherit;
   height: inherit;
   border-radius: 50%;
+  background-color: #18181A;
 }
 
 .SideNavItem .UserName {

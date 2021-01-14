@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAA;EACT,OAAO,EAAE,IAAI;EACb,SAAS,EAAE,IAAI;CAClB;;AACD,AAAA,YAAY,CAAA;EACR,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,WAAW;EACnB,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,GAAG;EACnB,QAAQ,EAAE,IAAI;EACd,OAAO,EAAE,GAAG;EAEZ,aAAa,EAAE,iBAAiB;CACnC",
+    "sources": [
+        "GameList.module.scss"
+    ],
+    "names": [],
+    "file": "GameList.module.css"
+}

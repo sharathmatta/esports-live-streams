@@ -4,15 +4,29 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import Layout from "./Layout/Layout";
 import Home from "./Home/Home";
-import Following from "../components/Following/Following";
-import Profile from "../components/Profile/Profile";
-import Recommended from "../components/Recommended/Recommended";
-import Browse from "../components/Browse/Browse.js";
-import Player from "../components/Player/Player";
 import AddGameOrStream from "../components/AddGameOrStreams/AddGameOrStream";
 import * as actions from "../store/actions/index";
-import withLoginCheck from "../hoc/withLoginCheck";
-import GameProfile from "../components/GameProfile/GameProfile";
+import asyncComponent from "../hoc/asyncComponent";
+
+const asyncProfile = asyncComponent(() => {
+  return import("../components/Profile/Profile");
+});
+const asyncFollowing = asyncComponent(() => {
+  return import("../components/Following/Following");
+});
+const asyncRecommended = asyncComponent(() => {
+  return import("../components/Recommended/Recommended");
+});
+const asyncBrowse = asyncComponent(() => {
+  return import("../components/Browse/Browse");
+});
+const asyncGameProfile = asyncComponent(() => {
+  return import("../components/GameProfile/GameProfile");
+});
+const asyncPlayer = asyncComponent(() => {
+  return import("../components/Player/Player");
+});
+
 const App = (props) => {
   useEffect(() => {
     props.onCheckAuthState();
@@ -25,14 +39,14 @@ const App = (props) => {
       <div>
         <Layout>
           <Switch>
-            <Route path="/Following/" component={Following} />
-            <Route path="/Recommended" component={Recommended} />
-            <Route path="/Browse" t component={Browse} />
-            <Route path="/Profile/:username" component={Profile} />
-            <Route path="/Game/:gameid" component={GameProfile} />
+            <Route path="/Following/" component={asyncFollowing} />
+            <Route path="/Recommended" component={asyncRecommended} />
+            <Route path="/Browse" t component={asyncBrowse} />
+            <Route path="/Profile/:username" component={asyncProfile} />
+            <Route path="/Game/:gameid" component={asyncGameProfile} />
             <Route path="/add" component={AddGameOrStream} />
             <Route path="/" exact component={Home} />
-            <Route path="/:username" component={Player} />
+            <Route path="/:username" component={asyncPlayer} />
           </Switch>
         </Layout>
       </div>

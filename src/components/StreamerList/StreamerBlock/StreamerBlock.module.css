@@ -5,6 +5,9 @@ a {
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
+  text-decoration: none;
+  -webkit-transition: all 0.1s ease-in;
+  transition: all 0.1s ease-in;
 }
 
 a .Streamer {
@@ -22,5 +25,10 @@ a .Streamer img {
 
 a .Streamer span {
   color: #adadad;
+}
+
+a:hover, a:active {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
 }
 /*# sourceMappingURL=StreamerBlock.module.css.map */
