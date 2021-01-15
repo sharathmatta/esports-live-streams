@@ -36,10 +36,6 @@ const SideContent = (props) => {
         <div className={classes.DummyStreamerImg}></div>
         <div className={classes.DummyStreamerName}></div>
       </div>
-      <div className={classes.DummyStreamer}>
-        <div className={classes.DummyStreamerImg}></div>
-        <div className={classes.DummyStreamerName}></div>
-      </div>
     </div>
   );
   if (props.token) {
@@ -68,6 +64,14 @@ const SideContent = (props) => {
     );
     recommendedComp = (
       <div className={classes.SideSubBlock2}>
+        <div className={classes.Header}>Recommended : </div>
+        <SideNavItems list={props.recommended} />
+      </div>
+    );
+  } else {
+    followingComp = null;
+    recommendedComp = (
+      <div className={classes.SideSubBlockFull}>
         <div className={classes.Header}>Recommended : </div>
         <SideNavItems list={props.recommended} />
       </div>

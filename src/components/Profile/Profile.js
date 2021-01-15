@@ -47,7 +47,7 @@ const Profile = (props) => {
   const [uploadPercent, setUploadPercent] = useState(0);
   useEffect(() => {
     if (props.loginChecked) {
-      props.onProfileInit(props.match.params.username);
+      props.onProfileInit(props.currentuser, props.match.params.username);
     }
   }, [props.match.params.username, props.loginChecked]);
 
@@ -123,6 +123,12 @@ const Profile = (props) => {
       }
     );
   };
+  const unfollowClicked = () => {
+    props.onUnfollowInit(props.currentuser, props.username);
+  };
+  const followClicked = () => {
+    props.onFollowInit(props.currentuser, props.username);
+  };
   let gameList = null;
   let uploads = null;
   let profile = null;
@@ -184,9 +190,9 @@ const Profile = (props) => {
     uploadVideo = <Button clicked={() => setUploadVid(true)}>+Upload</Button>;
   } else {
     if (props.following) {
-      uploadVideo = <Button>Following</Button>;
+      uploadVideo = <Button clicked={unfollowClicked}>Following</Button>;
     } else {
-      uploadVideo = <Button>Follow</Button>;
+      uploadVideo = <Button clicked={followClicked}>Follow</Button>;
     }
   }
   if (props.uploads) {
@@ -290,7 +296,12 @@ const matchPropsToState = (state) => {
 };
 const matchDispatchToProps = (dispatch) => {
   return {
-    onProfileInit: (username) => dispatch(actions.initializeProfile(username)),
+    onUnfollowInit: (user, creator) =>
+      dispatch(actions.initializeUnfollow(user, creator)),
+    onFollowInit: (user, creator) =>
+      dispatch(actions.initializeFollow(user, creator)),
+    onProfileInit: (user, creator) =>
+      dispatch(actions.initializeProfile(user, creator)),
   };
 };
 export default connect(matchPropsToState, matchDispatchToProps)(Profile);

@@ -7,7 +7,11 @@ export {
   showSignIn,
   hideSignIn,
 } from "./Auth";
-export { initializeProfile } from "./Streamer";
+export {
+  initializeProfile,
+  initializeUnfollow,
+  initializeFollow,
+} from "./Streamer";
 
 export { initializePlayer } from "./Player";
 

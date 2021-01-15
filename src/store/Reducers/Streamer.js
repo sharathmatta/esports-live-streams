@@ -12,6 +12,7 @@ const initialState = {
   socials: null,
   loading: false,
   following: false,
+  followloading: false,
 };
 
 const profileInitSuccess = (state, action) => {
@@ -24,6 +25,7 @@ const profileInitSuccess = (state, action) => {
     uploads: action.uploads,
     gamelist: action.gamelist,
     loading: false,
+    following: action.following,
   });
 };
 const profileInitStart = (state, action) => {
@@ -31,12 +33,43 @@ const profileInitStart = (state, action) => {
     loading: true,
   });
 };
+const unfollowInit = (state, action) => {
+  return updateObject(state, {
+    followloading: true,
+  });
+};
+const unfollowSuccess = (state, action) => {
+  return updateObject(state, {
+    followloading: false,
+    following: false,
+  });
+};
+const followInit = (state, action) => {
+  return updateObject(state, {
+    followloading: true,
+  });
+};
+const followSuccess = (state, action) => {
+  return updateObject(state, {
+    followloading: false,
+    following: true,
+  });
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.PROFILE_INIT_SUCCESS:
       return profileInitSuccess(state, action);
     case actionTypes.PROFILE_INIT_START:
       return profileInitStart(state, action);
+    case actionTypes.UNFOLLOW_INIT:
+      return unfollowInit(state, action);
+    case actionTypes.UNFOLLOW_SUCCESS:
+      return unfollowSuccess(state, action);
+    case actionTypes.FOLLOW_INIT:
+      return followInit(state, action);
+    case actionTypes.FOLLOW_SUCCESS:
+      return followSuccess(state, action);
     default:
       return state;
   }

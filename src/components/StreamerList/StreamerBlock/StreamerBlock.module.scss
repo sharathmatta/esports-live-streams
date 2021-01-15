@@ -4,10 +4,13 @@ a{
     width: fit-content;
     height: fit-content;
     text-decoration: none;
+    
     transition: all 0.1s ease-in;
     .Streamer{
         text-align: center;
         padding: 10px;
+        display: flex;
+    flex-direction: column;
         img{
             margin: 5px;
             width: $streamerWidth;

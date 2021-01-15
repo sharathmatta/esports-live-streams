@@ -170,17 +170,19 @@ export const checkLoginStatus = (userId) => {
     const username = userPersonalData.username;
     query = await db
       .collection("streamers")
-      .doc("Sharath")
+      .doc(username)
       .collection("following")
       .get();
     let following = [];
     query.forEach((el) => {
       following.push(el.data());
     });
-    userPersonalData = {
-      ...userPersonalData,
-      following: following,
-    };
+    if (following.length > 0) {
+      userPersonalData = {
+        ...userPersonalData,
+        following: following,
+      };
+    }
     query = await db
       .collection("streamers")
       .doc("Sharath")
