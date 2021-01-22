@@ -35,6 +35,7 @@ const Player = (props) => {
   }
   let moreVideos = null;
   if (props.videoData.moreVideosCreator) {
+    const game = props.videoData.game;
     moreVideos = (
       <div>
         <VideoList
@@ -44,7 +45,7 @@ const Player = (props) => {
         />
         <VideoList
           preTitle={"More "}
-          titleKeyword={"Apex Legends"}
+          titleKeyword={game}
           postTitle={"videos"}
           list={props.videoData.moreVideosGame.slice(0, 3)}
         />
@@ -79,7 +80,7 @@ const Player = (props) => {
         </div>
         <div className={classes.UploadDate}>Uploaded On : {date}</div>
         <div className={classes.UploadDate}>
-          Game Category : <span>Apex Legends</span>
+          Game Category : <span>{props.videoData.game}</span>
         </div>
         {moreVideos}
       </div>

@@ -20,6 +20,7 @@ a{
         }
         span{
             color: $lightText;
+            width: $streamerWidth;
         }
     }
     &:hover,&:active{

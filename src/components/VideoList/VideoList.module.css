@@ -9,6 +9,8 @@
 }
 
 .SubVideosContainer .SubVideosHeader {
+  overflow: hidden;
+  width: 100%;
   font-size: 18px;
   font-weight: 400;
 }
@@ -16,6 +18,7 @@
 .SubVideosContainer .SubVideosHeader span {
   color: #A970FF;
   font-weight: bold;
+  text-transform: capitalize;
 }
 
 .SubVideosContainer .SubVideosFlexDiv {

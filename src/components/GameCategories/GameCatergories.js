@@ -11,6 +11,7 @@ class GameCategories extends Component {
   componentDidMount() {
     let gameList = [];
     db.collection("game")
+      .limit(15)
       .get()
       .then((snapshot) => {
         snapshot.forEach((doc) => {

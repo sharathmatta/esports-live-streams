@@ -90,6 +90,12 @@
             display: none;
           }
       }
+      .SideSubBlockFull{
+        display: none;
+        .Header{
+          display: none;
+        }
+      }
     }
     .DummyStreamerName{
       display: none;

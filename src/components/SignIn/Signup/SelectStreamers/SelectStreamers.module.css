@@ -1,0 +1,62 @@
+.SelectStreamers {
+  text-align: center;
+  width: 90%;
+  margin: auto;
+}
+
+.SelectStreamers .Header {
+  color: #A970FF;
+  font-weight: 500;
+  font-size: 18px;
+  padding: 10px;
+}
+
+.SelectStreamers .Selected {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 4px 10px 6px;
+  margin: 10px;
+  border-radius: 5px;
+  display: inline-block;
+  background-color: #0E0E10;
+  cursor: pointer;
+}
+
+.SelectStreamers .Selected .StreamerName {
+  color: #adadad;
+}
+
+.SelectStreamers .NotSelected {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 4px 10px 6px;
+  margin: 10px;
+  border-radius: 5px;
+  display: inline-block;
+  background-color: #A970FF;
+  cursor: pointer;
+}
+
+.SelectStreamers .NotSelected .StreamerName {
+  color: white;
+}
+
+.SelectStreamers .Buttons {
+  margin: auto;
+}
+
+.SelectStreamers .Buttons .Skip {
+  font-size: 14px;
+  text-decoration: underline;
+  color: #A970FF;
+  cursor: pointer;
+}
+/*# sourceMappingURL=SelectStreamers.module.css.map */

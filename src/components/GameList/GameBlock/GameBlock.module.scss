@@ -39,7 +39,7 @@
         }
       }
     .Game {
-        height: fit-content;
+        height: fit-contents;
         width: fit-content;
         img {
             width: $gameWidth;
@@ -54,6 +54,7 @@
         margin: auto;
         .GameId {
             height: fit-content;
+            width: $gameWidth;
             overflow: hidden;
             text-overflow: ellipsis;
             span{

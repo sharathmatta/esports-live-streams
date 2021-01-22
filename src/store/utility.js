@@ -37,7 +37,7 @@ export const checkValidity = (value, rules, streamers) => {
       errMessage = "lenght >6 & should only contain a-z0-9_";
     }
     for (const i in streamers) {
-      if (streamers[i] === value) {
+      if (streamers[i].toLowerCase() === value.toLowerCase()) {
         isValid = false;
         errMessage = "Username already exists";
       }

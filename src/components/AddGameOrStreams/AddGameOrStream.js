@@ -71,7 +71,6 @@ class AddGameOrStream extends Component {
                   type: gametype,
                 })
                 .then((snapshot) => {
-                  console.log("uploaded");
                   this.setState({ uploaded: true, Uploading: false });
                 });
             });
@@ -205,7 +204,6 @@ class AddGameOrStream extends Component {
   };
 
   render() {
-    console.log(this.state.gametype);
     let message = null;
     if (this.state.Uploading) {
       message = <p>Uploading. . .</p>;

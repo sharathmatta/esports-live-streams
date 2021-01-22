@@ -1,4 +1,4 @@
-import React, { Component, useRef } from "react";
+import React, { Component } from "react";
 import Toolbar from "../../components/Toolbar/Toolbar";
 import SideContent from "../../components/SideContent/SideContent";
 import Aux from "../../hoc/Auxiliary";
@@ -19,7 +19,13 @@ class Layout extends Component {
   };
   SignInCancelHandler = () => {};
   render() {
-    let showModal = this.props.token ? false : this.props.signingIn;
+    let showModal =
+      this.props.token && !this.props.signUpComplete
+        ? false
+        : this.props.signingIn;
+    if (this.props.signUpComplete && this.props.loginComplete) {
+      showModal = false;
+    }
     return (
       <Aux>
         <Modal show={showModal} backDropClick={this.props.onHideSignIn}>
@@ -51,6 +57,8 @@ const matchStateToProps = (state) => {
     token: state.auth.token,
     userId: state.auth.userId,
     signingIn: state.auth.showSignIn,
+    loginComplete: state.auth.loginComplete,
+    signUpComplete: state.auth.signUpComplete,
   };
 };
 const matchDispatchToProps = (dispatch) => {

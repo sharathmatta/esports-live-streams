@@ -26,12 +26,12 @@ const gameInitFail = () => {
   };
 };
 
-export const initializeGame = (id, favStreamers, popStreamers) => {
+export const initializeGame = (id) => {
   return async (dispatch) => {
     dispatch(gameInitStart());
     console.log(id);
     let gameDetails = {};
-
+    console.log(id);
     let query = await db.collection("game").doc(id).get();
     const gameId = id;
     const gamename = query.data().id;
@@ -42,30 +42,30 @@ export const initializeGame = (id, favStreamers, popStreamers) => {
       gamename: gamename,
       gameLogo: gameLogo,
     };
-    let favStreamersList = [];
-    for (let i = 0; i < favStreamers.length; i++) {
-      let strName = favStreamers[i];
-      query = await db.collection("popular-streamers").doc(strName).get();
-      favStreamersList[strName] = query.data();
-      gameDetails = {
-        ...gameDetails,
-        favStreamers: {
-          ...favStreamersList,
-        },
-      };
-    }
-    let popStreamersList = [];
-    for (let i = 0; i < popStreamers.length; i++) {
-      let strName = popStreamers[i];
-      query = await db.collection("popular-streamers").doc(strName).get();
-      popStreamersList[strName] = query.data();
-      gameDetails = {
-        ...gameDetails,
-        popStreamers: {
-          ...popStreamersList,
-        },
-      };
-    }
+    // let favStreamersList = [];
+    // for (let i = 0; i < favStreamers.length; i++) {
+    //   let strName = favStreamers[i];
+    //   query = await db.collection("popular-streamers").doc(strName).get();
+    //   favStreamersList[strName] = query.data();
+    //   gameDetails = {
+    //     ...gameDetails,
+    //     favStreamers: {
+    //       ...favStreamersList,
+    //     },
+    //   };
+    // }
+    // let popStreamersList = [];
+    // for (let i = 0; i < popStreamers.length; i++) {
+    //   let strName = popStreamers[i];
+    //   query = await db.collection("popular-streamers").doc(strName).get();
+    //   popStreamersList[strName] = query.data();
+    //   gameDetails = {
+    //     ...gameDetails,
+    //     popStreamers: {
+    //       ...popStreamersList,
+    //     },
+    //   };
+    // }
     query = await db
       .collection("video-uploads")
       .orderBy("timestamp", "desc")

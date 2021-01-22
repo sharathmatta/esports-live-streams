@@ -34,9 +34,10 @@
                 width: 200px;
                 height: fit-content;
                 padding: 5px 10px;
+                text-align: left;
                 .UserName{
                     width: 100%;
-                    text-align: center;
+                    text-transform: capitalize;
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
@@ -49,7 +50,6 @@
                   .FollowerCount{
                     width: 100%;
                     margin-bottom: 10px;
-                    text-align: center;
                     color: #96aed8;
                     font-size: 12px;
                   }
@@ -111,6 +111,32 @@
                 bottom: 0;
               }
           }
+          .NoMainVideo{
+            padding: 10px ;
+            margin: auto;
+            text-align: left;
+            .NoMainVideoMessage{
+              margin: 5px 0;
+              color: $lightText;
+              font-size: 18px;
+              font-weight: 700;
+            }
+          }
+      }
+      .NoUploads{
+        margin: auto;
+        width: fit-content;
+        height: fit-content;
+        text-align: center;
+        .NoUploadsMessage{
+          color: $lightText;
+          margin: 5px;
+          font-size: 18px;
+          font-weight: 600;
+        }
+        Button{
+          margin: auto;
+        }
       }
   }
  
@@ -151,7 +177,7 @@
                     width: 100%;
                     .UserName{
                         text-align: left;
-                        flex-direction: row;
+                        flex-direction: column;
                     }
                     .FollowerCount{
                         text-align: left;
@@ -177,6 +203,10 @@
                 right: 0;
                 bottom: 0;
               }
+            }
+            .NoMainVideo{
+              margin: 0;
+              text-align: left;
             }
           }
 

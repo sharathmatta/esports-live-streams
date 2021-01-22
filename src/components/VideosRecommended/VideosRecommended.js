@@ -6,54 +6,114 @@ import { db } from "../../firebase";
 import classes from "./VideosRecommended.module.css";
 
 const HomeRecommended = (props) => {
-  const [gameTypes, setGameTypes] = useState([
-    "Minecraft",
-    "Fortnite",
-    "Call of Duty",
-  ]);
-  const [creators, setCreators] = useState(["Ninja", "Brookeab", "sykunno"]);
-  const [videos, setVideos] = useState(null);
-  useEffect(() => {
-    let videoCollection = [];
+  const [creatorVideos, setCreatorVideos] = useState(null);
+  const [gameVideos, setGameVideos] = useState(null);
+  const [recommended, setRecommended] = useState(null);
+  const [gamelist, setGamelist] = useState(null);
+  useEffect(async () => {
+    if (props.token) {
+      setRecommended(props.recommended);
+      setGamelist(props.gamelist);
+    } else {
+      let query = await db
+        .collection("streamers")
+        .orderBy("followercount", "desc")
+        .get();
+      let recom = [];
 
-    db.collection("video-uploads")
-      .get()
-      .then((snapshot) => {
-        snapshot.forEach((el) => {
+      query.forEach((el) => {
+        const data = el.data();
+        recom[el.id] = el.data();
+      });
+
+      setRecommended(recom);
+
+      query = await db
+        .collection("game")
+        .orderBy("playercount", "desc")
+        .limit(10)
+        .get();
+      let games = [];
+      query.forEach((el) => {
+        games.push(el.id);
+      });
+      setGamelist(games);
+    }
+  }, [props.recommended, props.gamelist]);
+  useEffect(() => {
+    let vidCollection = [];
+    if (recommended && gamelist) {
+      Object.keys(recommended).forEach(async (key) => {
+        let query = await db
+          .collection("streamers")
+          .doc(key)
+          .collection("video-uploads")
+          .get();
+        let videoCollection = [];
+        query.forEach((el) => {
           videoCollection.push({ id: el.id, ...el.data() });
         });
-        setVideos(videoCollection.slice(0, 4));
+        if (videoCollection.length > 0) {
+          vidCollection[key] = videoCollection;
+          setCreatorVideos((oldObj) => {
+            let newObj = { ...oldObj };
+            newObj = { ...newObj, [key]: videoCollection };
+            return newObj;
+          });
+        }
       });
-  }, []);
+      Object.keys(gamelist).forEach(async (key) => {
+        let query = await db
+          .collection("game")
+          .doc(gamelist[key])
+          .collection("videos")
+          .get();
+        let videoCollection = [];
+        query.forEach((el) => {
+          videoCollection.push({ id: el.id, ...el.data() });
+        });
+        if (videoCollection.length > 0) {
+          vidCollection[gamelist[key]] = videoCollection;
+          setGameVideos((oldObj) => {
+            let newObj = { ...oldObj };
+            newObj = { ...newObj, [gamelist[key]]: videoCollection };
+            return newObj;
+          });
+        }
+      });
+    }
+  }, [recommended, gamelist]);
 
   let gameTypeContent = null;
   let creatorContent = null;
-  if (videos) {
-    gameTypeContent = Object.keys(gameTypes).map((key) => {
+  if (gameVideos) {
+    gameTypeContent = Object.keys(gameVideos).map((key) => {
       return (
         <div className={classes.CreatorVideoList} key={key}>
           <VideoList
-            list={videos}
+            list={gameVideos[key]}
             preTitle={"Recommended"}
-            titleKeyword={gameTypes[key]}
+            titleKeyword={key}
+            postTitle={"videos"}
+          />
+        </div>
+      );
+    });
+  }
+  if (creatorVideos) {
+    creatorContent = Object.keys(creatorVideos).map((key) => {
+      return (
+        <div className={classes.CreatorVideoList} key={key}>
+          <VideoList
+            list={creatorVideos[key]}
+            preTitle={"Recommended"}
+            titleKeyword={key + "\u0027s"}
             postTitle={"videos"}
           />
         </div>
       );
     });
     if (props.token) {
-      creatorContent = Object.keys(creators).map((key) => {
-        return (
-          <div className={classes.CreatorVideoList} key={key}>
-            <VideoList
-              list={videos}
-              preTitle={""}
-              titleKeyword={creators[key] + "\u0027s"}
-              postTitle={"viewers also watch"}
-            />
-          </div>
-        );
-      });
     }
   }
   return (
@@ -66,6 +126,8 @@ const HomeRecommended = (props) => {
 const matchStateToProps = (state) => {
   return {
     token: state.auth.token,
+    recommended: state.auth.recommended,
+    gamelist: state.auth.gamelist,
   };
 };
 export default connect(matchStateToProps)(HomeRecommended);

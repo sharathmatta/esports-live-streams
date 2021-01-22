@@ -110,6 +110,12 @@
   .SideContainer .SideSubBlock2 .Header {
     display: none;
   }
+  .SideContainer .SideSubBlockFull {
+    display: none;
+  }
+  .SideContainer .SideSubBlockFull .Header {
+    display: none;
+  }
   .DummyStreamerName {
     display: none;
   }

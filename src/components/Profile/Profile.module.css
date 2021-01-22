@@ -66,11 +66,12 @@
   height: -moz-fit-content;
   height: fit-content;
   padding: 5px 10px;
+  text-align: left;
 }
 
 .ProfileContainer .ProfileAndMainVid .Profile .StreamerDetails .UserName {
   width: 100%;
-  text-align: center;
+  text-transform: capitalize;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -91,7 +92,6 @@
 .ProfileContainer .ProfileAndMainVid .Profile .StreamerDetails .FollowerCount {
   width: 100%;
   margin-bottom: 10px;
-  text-align: center;
   color: #96aed8;
   font-size: 12px;
 }
@@ -169,6 +169,41 @@
   bottom: 0;
 }
 
+.ProfileContainer .ProfileAndMainVid .NoMainVideo {
+  padding: 10px;
+  margin: auto;
+  text-align: left;
+}
+
+.ProfileContainer .ProfileAndMainVid .NoMainVideo .NoMainVideoMessage {
+  margin: 5px 0;
+  color: #adadad;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.ProfileContainer .NoUploads {
+  margin: auto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  text-align: center;
+}
+
+.ProfileContainer .NoUploads .NoUploadsMessage {
+  color: #adadad;
+  margin: 5px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.ProfileContainer .NoUploads Button {
+  margin: auto;
+}
+
 @media (max-width: 310px) {
   .ProfileContainer {
     width: 240px;
@@ -204,10 +239,10 @@
   }
   .ProfileContainer .ProfileAndMainVid .Profile .StreamerDetails .UserName {
     text-align: left;
-    -webkit-box-orient: horizontal;
+    -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
   .ProfileContainer .ProfileAndMainVid .Profile .StreamerDetails .FollowerCount {
     text-align: left;
@@ -223,6 +258,10 @@
     left: 0;
     right: 0;
     bottom: 0;
+  }
+  .ProfileContainer .ProfileAndMainVid .NoMainVideo {
+    margin: 0;
+    text-align: left;
   }
 }
 

@@ -1,6 +1,27 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
-import { db, storage } from "../../firebase";
+import firebase, { db, storage } from "../../firebase";
+
+const appInit = (allgames) => {
+  return {
+    type: actionTypes.INIT_APP,
+    allgames: allgames,
+  };
+};
+
+export const initializeApp = () => {
+  return async (dispatch) => {
+    let query = await db.collection("game").get();
+    let allgames = [{ value: "", displayValue: "Game Category" }];
+    query.forEach((el) => {
+      allgames.push({
+        value: el.id,
+        displayValue: el.data().id,
+      });
+    });
+    dispatch(appInit(allgames));
+  };
+};
 
 export const clearError = () => {
   return {
@@ -25,7 +46,7 @@ export const authStart = () => {
     type: actionTypes.AUTH_START,
   };
 };
-export const authSuccess = (token, userId, expiresIn) => {
+export const authSuccess = (token, userId, expiresIn, signedUp) => {
   localStorage.setItem("token", token);
   localStorage.setItem("expirationTime", expiresIn);
   localStorage.setItem("userId", userId);
@@ -34,6 +55,8 @@ export const authSuccess = (token, userId, expiresIn) => {
     type: actionTypes.AUTH_SUCCESS,
     idToken: token,
     userId: userId,
+    signUpComplete: signedUp,
+    loginComplete: !signedUp,
   };
 };
 export const uploadData = (userData) => {
@@ -72,11 +95,11 @@ export const auth = (userData, isSignUp) => {
       returnSecureToken: true,
     };
     let url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA62an2yCTIIw8oXRrUfxrrK1HG_nthqnk";
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDB2yqIZv-6Em7nE9ZPc7D4QgvYNWSOsXc";
 
     if (!isSignUp) {
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA62an2yCTIIw8oXRrUfxrrK1HG_nthqnk";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDB2yqIZv-6Em7nE9ZPc7D4QgvYNWSOsXc";
     }
 
     axios
@@ -105,15 +128,15 @@ export const auth = (userData, isSignUp) => {
                     username: userData.username,
                     profilePicURL: url,
                     followercount: 0,
-                    mainvideo:
-                      "https://firebasestorage.googleapis.com/v0/b/esports-live-streams.appspot.com/o/Main%20Video%2FSelena%20Gomez%20-%20Feel%20Me%20(Live%20from%20the%20Revival%20Tour)_8N_Yro5QeCE_1080p.mp4?alt=media&token=ffc37414-6812-4ca1-9352-ed3ae427b44b",
+                    mainvideo: null,
                   });
 
                   dispatch(
                     authSuccess(
                       response.data.idToken,
                       response.data.localId,
-                      response.data.expiresIn
+                      response.data.expiresIn,
+                      true
                     )
                   );
                 });
@@ -125,7 +148,8 @@ export const auth = (userData, isSignUp) => {
             authSuccess(
               response.data.idToken,
               response.data.localId,
-              response.data.expiresIn
+              response.data.expiresIn,
+              false
             )
           );
         }
@@ -149,7 +173,7 @@ export const checkAuthState = () => {
         dispatch(logout());
       } else {
         const userId = localStorage.getItem("userId");
-        dispatch(authSuccess(token, userId, expiresIn));
+        dispatch(authSuccess(token, userId, expiresIn, false));
         dispatch(
           checkAuthTimeout(Math.round((expirationTime - new Date()) / 1000))
         );
@@ -175,9 +199,9 @@ export const checkLoginStatus = (userId) => {
       .get();
     let following = [];
     query.forEach((el) => {
-      following.push(el.data());
+      following[el.id] = el.data();
     });
-    if (following.length > 0) {
+    if (following) {
       userPersonalData = {
         ...userPersonalData,
         following: following,
@@ -185,12 +209,42 @@ export const checkLoginStatus = (userId) => {
     }
     query = await db
       .collection("streamers")
-      .doc("Sharath")
-      .collection("recommende")
+      .doc(username)
+      .collection("game-list")
+      .get();
+    let gamelist = [];
+    if (query.size > 0) {
+      query.forEach((el) => {
+        gamelist.push(el.id);
+      });
+    } else {
+      query = await db
+        .collection("game")
+        .orderBy("playercount", "desc")
+        .limit(3)
+        .get();
+      query.forEach((el) => {
+        gamelist.push(el.id);
+      });
+    }
+    if (gamelist.length > 0) {
+      userPersonalData = {
+        ...userPersonalData,
+        gamelist: gamelist,
+      };
+    }
+    query = await db
+      .collection("streamers")
+      .orderBy("followercount", "desc")
       .get();
     let recommended = [];
     query.forEach((el) => {
-      recommended.push(el.data());
+      const data = el.data();
+      if (data.username !== username) {
+        if (!(data.username in following)) {
+          recommended[el.id] = el.data();
+        }
+      }
     });
     userPersonalData = {
       ...userPersonalData,
@@ -206,5 +260,146 @@ export const init = (userPersonalData) => {
     username: userPersonalData.username,
     following: userPersonalData.following,
     recommended: userPersonalData.recommended,
+    gamelist: userPersonalData.gamelist,
+  };
+};
+const streamersFollowStart = () => {
+  return {
+    type: actionTypes.STREAMERS_FOLLOW_START,
+  };
+};
+
+const streamersFollowSuccess = () => {
+  return {
+    type: actionTypes.STREAMERS_FOLLOW_SUCCESS,
+  };
+};
+const streamersFollowFail = () => {
+  return {
+    type: actionTypes.STREAMERS_FOLLOW_FAIL,
+  };
+};
+export const skippedStreamers = () => {
+  return {
+    type: actionTypes.STREAMERS_FOLLOW_SUCCESS,
+  };
+};
+
+export const initializeStreamerFollow = (user, streamers) => {
+  return async (dispatch) => {
+    dispatch(streamersFollowStart());
+    Object.keys(streamers).forEach(async (key) => {
+      const streamer = streamers[key];
+      let query = await db.collection("streamers").doc(streamer).get();
+      const streamerData = query.data();
+      console.log(streamerData);
+      query = await db
+        .collection("streamers")
+        .doc(user)
+        .collection("following")
+        .doc(streamer)
+        .set(streamerData);
+      const creatorRef = db.collection("streamers").doc(streamer);
+      creatorRef.update({
+        followercount: firebase.firestore.FieldValue.increment(1),
+      });
+    });
+    console.log(user, streamers);
+    dispatch(streamersFollowSuccess());
+  };
+};
+
+const gameFollowStart = () => {
+  return {
+    type: actionTypes.GAME_FOLLOW_START,
+  };
+};
+
+const gameFollowSuccess = () => {
+  return {
+    type: actionTypes.GAME_FOLLOW_SUCCESS,
+  };
+};
+const gameFollowFail = () => {
+  return {
+    type: actionTypes.GAME_FOLLOW_FAIL,
+  };
+};
+export const skippedGames = () => {
+  return {
+    type: actionTypes.GAME_FOLLOW_SUCCESS,
+  };
+};
+
+export const initializeGameFollow = (user, games) => {
+  return async (dispatch) => {
+    dispatch(gameFollowStart());
+    Object.keys(games).forEach(async (key) => {
+      const game = games[key];
+      let query = await db.collection("game").doc(game).get();
+      const gameData = query.data();
+      console.log(gameData);
+      query = await db
+        .collection("streamers")
+        .doc(user)
+        .collection("game-list")
+        .doc(game)
+        .set(gameData);
+      const gameRef = db.collection("game").doc(game);
+      gameRef.update({
+        playercount: firebase.firestore.FieldValue.increment(1),
+      });
+    });
+    console.log(user, games);
+    dispatch(gameFollowSuccess());
+  };
+};
+
+export const updateFollow = (user) => {
+  return async (dispatch) => {
+    let followData = null;
+    let query = await db
+      .collection("streamers")
+      .doc(user)
+      .collection("following")
+      .get();
+
+    let following = [];
+    query.forEach((el) => {
+      following[el.id] = el.data();
+    });
+    if (following) {
+      followData = {
+        ...followData,
+        following: following,
+      };
+    }
+
+    query = await db
+      .collection("streamers")
+      .orderBy("followercount", "desc")
+      .get();
+    let recommended = [];
+    query.forEach((el) => {
+      const data = el.data();
+      if (data.username !== user) {
+        if (!(data.username in following)) {
+          recommended[el.id] = el.data();
+        }
+      }
+    });
+    followData = {
+      ...followData,
+      recommended: recommended,
+    };
+    dispatch(followUpdateSuccess(followData));
+  };
+};
+
+const followUpdateSuccess = (followData) => {
+  return {
+    type: actionTypes.FOLLOW_UPDATE_SUCCESS,
+    following: followData.following,
+    recommended: followData.recommended,
   };
 };

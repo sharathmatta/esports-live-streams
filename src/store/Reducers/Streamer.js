@@ -7,6 +7,7 @@ const initialState = {
   profileURL: null,
   followercount: null,
   mainvideo: null,
+  mainVideoId: null,
   gamelist: null,
   uploads: null,
   socials: null,
@@ -22,6 +23,7 @@ const profileInitSuccess = (state, action) => {
     profileURL: action.profileURL,
     followercount: action.followercount,
     mainvideo: action.mainvideo,
+    mainvideoId: action.mainvideoId,
     uploads: action.uploads,
     gamelist: action.gamelist,
     loading: false,
@@ -42,6 +44,7 @@ const unfollowSuccess = (state, action) => {
   return updateObject(state, {
     followloading: false,
     following: false,
+    followercount: state.followercount - 1,
   });
 };
 const followInit = (state, action) => {
@@ -53,6 +56,7 @@ const followSuccess = (state, action) => {
   return updateObject(state, {
     followloading: false,
     following: true,
+    followercount: state.followercount + 1,
   });
 };
 

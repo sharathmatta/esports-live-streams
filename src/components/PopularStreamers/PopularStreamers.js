@@ -9,7 +9,8 @@ class PopularStreamers extends Component {
   };
   componentDidMount() {
     let streamerList = [];
-    db.collection("popular-streamers")
+    db.collection("streamers")
+      .limit(15)
       .get()
       .then((snapshot) => {
         snapshot.forEach((doc) => {
@@ -67,7 +68,7 @@ class PopularStreamers extends Component {
     );
     if (this.state.streamers) {
       const streamers = this.state.streamers;
-      PopularStreamers = <StreamerList list={streamers} />;
+      PopularStreamers = <StreamerList list={streamers.slice(0, 12)} />;
     }
     return (
       <div className={classes.PopularStreamersContainer}>

@@ -1,0 +1,69 @@
+@import '../../colors';
+
+.RecommendedStreamers{
+    .StreamerListHeader{
+        font-size: 20px;
+        padding: 5px 0;
+        span{
+            font-weight: 600;
+        }
+    }
+    .DummyList{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: fit-content;
+        padding: 5px 5px;
+        overflow: auto;
+        margin-bottom: 30px;
+        .DummyStreamer{
+            margin: 10px;
+            width: fit-content;
+            height: fit-content;
+            .DummyStreamerImg{
+                height: 140px;
+                width: 140px;
+                border-radius: 3px;
+                background-color: $secondaryBackground;
+                margin: 5px;
+                .ForAnimation{
+                    height: 100%;
+                    width: 100%;
+                    overflow: hidden;
+                    &:before{
+                      content: '';
+                      background-color:  #1f1f22;
+                
+                      height: inherit;
+                      width: 5em;
+                      display: block;
+                      left: -2.5em;
+                      animation: mymove 4s;
+                      animation-iteration-count: infinite;
+                      transition: all 0.5s ease-in-out;
+                    }
+                  }
+            }
+            .DummyStreamerName{
+                width: 100px;
+                height: 18px;
+                margin: 5px auto;
+                background-color: $secondaryBackground;
+                border-radius: 3px;
+            }
+        }
+    } 
+}
+@keyframes mymove{
+    0%{
+        transform: skewX(-45deg) translateX(-5em);
+        opacity: 0.1;
+    }
+    50%{
+      opacity: 0.3;
+    }
+    100%{
+      opacity: 0.1;
+        transform: skewX(-45deg) translateX(15.5em);
+    }
+}

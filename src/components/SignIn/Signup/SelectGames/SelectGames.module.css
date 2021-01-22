@@ -1,0 +1,62 @@
+.SelectGames {
+  text-align: center;
+  width: 90%;
+  margin: auto;
+}
+
+.SelectGames .Header {
+  color: #A970FF;
+  font-weight: 500;
+  font-size: 18px;
+  padding: 10px;
+}
+
+.SelectGames .Selected {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 4px 10px 6px;
+  margin: 10px;
+  border-radius: 5px;
+  display: inline-block;
+  background-color: #0E0E10;
+  cursor: pointer;
+}
+
+.SelectGames .Selected .StreamerName {
+  color: #adadad;
+}
+
+.SelectGames .NotSelected {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 4px 10px 6px;
+  margin: 10px;
+  border-radius: 5px;
+  display: inline-block;
+  background-color: #A970FF;
+  cursor: pointer;
+}
+
+.SelectGames .NotSelected .StreamerName {
+  color: white;
+}
+
+.SelectGames .Buttons {
+  margin: auto;
+}
+
+.SelectGames .Buttons .Skip {
+  font-size: 14px;
+  text-decoration: underline;
+  color: #A970FF;
+  cursor: pointer;
+}
+/*# sourceMappingURL=SelectGames.module.css.map */

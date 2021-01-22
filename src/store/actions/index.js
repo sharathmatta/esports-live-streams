@@ -1,4 +1,5 @@
 export {
+  initializeApp,
   auth,
   logout,
   checkAuthState,
@@ -6,6 +7,11 @@ export {
   checkLoginStatus,
   showSignIn,
   hideSignIn,
+  initializeStreamerFollow,
+  initializeGameFollow,
+  skippedGames,
+  skippedStreamers,
+  updateFollow,
 } from "./Auth";
 export {
   initializeProfile,

@@ -10,22 +10,12 @@ import classes from "./GameProfile.module.css";
 
 const GameProfile = (props) => {
   const [gameId, setGameId] = useState(null);
-  const [favGameStreamer, setFavGameStreamer] = useState([
-    "Ninja",
-    "Myth",
-    "Brookeab",
-  ]);
-  const [popGameStreamer, setPopGameStreamer] = useState([
-    "Mrsavage",
-    "Bugha",
-    "Sharath",
-    "Cloakzy",
-  ]);
+
   const [favList, setFavList] = useState(null);
   useEffect(() => {
     setGameId(props.match.params.gameid);
     if (gameId) {
-      props.onGameInit(gameId, favGameStreamer, popGameStreamer);
+      props.onGameInit(gameId, props.token);
     }
   }, [props.match.params.gameid, gameId]);
   const FavGameStreamers = <div></div>;
@@ -118,6 +108,7 @@ const GameProfile = (props) => {
 
 const mapStateToProps = (state) => {
   return {
+    token: state.auth.token,
     gameDetails: state.game,
   };
 };

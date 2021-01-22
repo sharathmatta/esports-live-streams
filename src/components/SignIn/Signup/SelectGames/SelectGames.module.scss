@@ -1,0 +1,50 @@
+@import '../../../../colors';
+
+.SelectGames{
+    text-align: center;
+    width: 90%;
+    margin: auto;
+    .Header{
+        color: $primaryText;
+        font-weight: 500;
+        font-size: 18px;
+        padding: 10px;
+    }
+    .Selected{
+        width: fit-content;
+        height: fit-content;
+        padding: 4px 10px 6px;
+        margin: 10px;
+        border-radius: 5px;
+        display: inline-block;
+        background-color: $primaryBackground;
+        cursor: pointer;
+        .StreamerName{
+            color: $lightText;
+            
+        }
+    }
+    .NotSelected{
+        width: fit-content;
+        height: fit-content;
+        padding: 4px 10px 6px;
+        margin: 10px;
+        border-radius: 5px;
+        display: inline-block;
+        background-color: $primaryText;
+        cursor: pointer;
+        .StreamerName{
+            color: white;
+            
+        }
+    }
+    .Buttons{
+        margin: auto;
+        .Skip{
+            font-size: 14px;
+            text-decoration: underline;
+            color: $primaryText;
+            cursor: pointer;
+        }
+    }
+}

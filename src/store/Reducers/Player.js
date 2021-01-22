@@ -8,6 +8,7 @@ const initialState = {
   title: null,
   desc: null,
   timestamp: null,
+  game: null,
   error: null,
   moreVideosCreator: null,
   moreVideosGame: null,
@@ -23,7 +24,7 @@ const playerInitStart = (state, action) => {
     profilePicURL: null,
     desc: null,
     timestamp: null,
-
+    game: null,
     error: null,
     moreVideosCreator: null,
     moreVideosGame: null,
@@ -37,8 +38,9 @@ const playerInitSuccess = (state, action) => {
     desc: action.desc,
     timestamp: action.timestamp,
     creator: action.creator,
-    moreVideosCreator: action.moreVideos,
-    moreVideosGame: action.moreVideos,
+    game: action.game,
+    moreVideosCreator: action.moreVideosCreator,
+    moreVideosGame: action.moreVideosGame,
     profilePicURL: action.profilePicURL,
   });
 };

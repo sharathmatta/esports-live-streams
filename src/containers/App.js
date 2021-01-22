@@ -29,8 +29,13 @@ const asyncPlayer = asyncComponent(() => {
 
 const App = (props) => {
   useEffect(() => {
-    props.onCheckAuthState();
-    if (props.token) {
+    if (!props.appinit) {
+      props.onAppInit();
+    }
+    if (!props.token) {
+      props.onCheckAuthState();
+    }
+    if (props.token && !props.loginChecked) {
       props.onInit(props.userId);
     }
   }, [props, props.token]);
@@ -58,12 +63,16 @@ const matchDispatchToProps = (dispatch) => {
   return {
     onCheckAuthState: () => dispatch(actions.checkAuthState()),
     onInit: (userId) => dispatch(actions.checkLoginStatus(userId)),
+    onAppInit: () => dispatch(actions.initializeApp()),
   };
 };
 const matchStateToProps = (state) => {
   return {
     token: state.auth.token,
     userId: state.auth.userId,
+    loginChecked: state.auth.loginChecked,
+    checkLogin: state.auth.checkLogin,
+    appinit: state.auth.appinit,
   };
 };
 export default connect(matchStateToProps, matchDispatchToProps)(App);

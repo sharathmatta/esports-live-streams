@@ -7,11 +7,15 @@
     background-color:$secondaryBackground;
     padding: 20px;
     .SubVideosHeader{
+      overflow: hidden;
+      width: 100%;
         font-size: 18px;
         font-weight: 400;
         span{
             color:  $primaryText;
             font-weight: bold;
+            text-transform: capitalize;
+            
           }
       }
       .SubVideosFlexDiv{

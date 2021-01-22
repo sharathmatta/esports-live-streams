@@ -6,6 +6,7 @@ import Button from "../../../ui/Button/Button";
 import * as actions from "../../../store/actions/index";
 import Input from "../../../ui/Input/Input";
 import { db, auth } from "../../../firebase";
+import Aux from "../../../hoc/Auxiliary";
 import spinner from "../../../ui/spinner/Spinner";
 
 class Signup extends Component {
@@ -96,11 +97,16 @@ class Signup extends Component {
 
   SignupHandler = (event) => {
     event.preventDefault();
+    const email = this.state.controls.email.value;
+    const password = this.state.controls.password.value;
+    let username = this.state.controls.username.value;
+    const profilePic = this.state.profile;
+    username = username.charAt(0).toUpperCase() + username.slice(1);
     const userData = {
-      email: this.state.controls.email.value,
-      password: this.state.controls.password.value,
-      username: this.state.controls.username.value,
-      profilePic: this.state.profile,
+      email: email,
+      password: password,
+      username: username,
+      profilePic: profilePic,
     };
     this.props.onSignUp(userData);
   };
@@ -109,6 +115,7 @@ class Signup extends Component {
       this.setState({ profile: event.target.files[0] });
     }
   };
+
   render() {
     let errMessage = null;
     if (this.props.error) {
@@ -134,9 +141,9 @@ class Signup extends Component {
         changed={(event) => this.inputChangedHandler(event, formElement.id)}
       />
     ));
-    return (
-      <div className={classes.Signup}>
-        <strong style={{ color: "#4879cf" }}>{errMessage}</strong>
+    const content = (
+      <Aux>
+        <strong style={{ color: " rgb(173, 173, 173)" }}>{errMessage}</strong>
         {form}
         <Input
           elementType="file"
@@ -146,8 +153,9 @@ class Signup extends Component {
         <div className={classes.Button}>
           <Button clicked={this.SignupHandler}>Sign Up</Button>
         </div>
-      </div>
+      </Aux>
     );
+    return <div className={classes.Signup}>{content}</div>;
   }
 }
 

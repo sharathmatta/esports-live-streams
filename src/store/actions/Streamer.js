@@ -1,11 +1,13 @@
 import * as actionTypes from "./actionTypes";
-import { db } from "../../firebase";
+import firebase, { db } from "../../firebase";
+import * as actions from "./index";
 
 export const profileInitSuccess = (streamerData) => {
   return {
     type: actionTypes.PROFILE_INIT_SUCCESS,
     followercount: streamerData.followercount,
     mainvideo: streamerData.mainvideo,
+    mainvideoId: streamerData.mainvideoId,
     uploads: streamerData.uploads,
     gamelist: streamerData.gamelist,
     username: streamerData.username,
@@ -28,7 +30,9 @@ export const initializeProfile = (user, creator) => {
     streamerData = {
       userId: snapshot.id,
       followercount: snapshot.followercount,
+
       mainvideo: snapshot.mainvideo,
+      mainvideoId: snapshot.mainvideoId,
       profileURL: snapshot.profilePicURL,
       username: snapshot.username,
     };
@@ -42,6 +46,8 @@ export const initializeProfile = (user, creator) => {
     //   pastbroadcasts.push(element.data());
     // });
     query = await db
+      .collection("streamers")
+      .doc(creator)
       .collection("video-uploads")
       .orderBy("timestamp", "desc")
       .get();
@@ -52,6 +58,13 @@ export const initializeProfile = (user, creator) => {
       vidData = { ...element.data(), id: element.id };
       uploads.push(vidData);
     });
+    if (uploads.length > 0) {
+      streamerData = {
+        ...streamerData,
+
+        uploads: uploads,
+      };
+    }
     query = await db
       .collection("streamers")
       .doc(creator)
@@ -62,18 +75,20 @@ export const initializeProfile = (user, creator) => {
       gameList.push(element.data());
     });
     let following = false;
-    query = await db
-      .collection("streamers")
-      .doc(user)
-      .collection("following")
-      .doc(creator)
-      .get();
-    if (query.data()) {
-      following = true;
+    if (user) {
+      query = await db
+        .collection("streamers")
+        .doc(user)
+        .collection("following")
+        .doc(creator)
+        .get();
+      if (query.data()) {
+        following = true;
+      }
     }
+
     streamerData = {
       ...streamerData,
-      uploads: uploads,
       gamelist: gameList,
       following: following,
     };
@@ -130,7 +145,13 @@ export const initializeUnfollow = (user, creator) => {
       .collection("following")
       .doc(creator)
       .delete();
+    const creatorRef = await db.collection("streamers").doc(creator);
+    creatorRef.update({
+      followercount: firebase.firestore.FieldValue.increment(-1),
+    });
+
     dispatch(unfollowSuccess());
+    dispatch(actions.updateFollow(user));
   };
 };
 export const initializeFollow = (user, creator) => {
@@ -145,6 +166,11 @@ export const initializeFollow = (user, creator) => {
       .collection("following")
       .doc(creator)
       .set(creatordata);
+    const creatorRef = await db.collection("streamers").doc(creator);
+    creatorRef.update({
+      followercount: firebase.firestore.FieldValue.increment(1),
+    });
     dispatch(followSuccess());
+    dispatch(actions.updateFollow(user));
   };
 };

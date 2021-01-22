@@ -98,7 +98,7 @@ class Login extends Component {
     ));
     return (
       <div className={classes.Login}>
-        <strong style={{ color: "#4879cf" }}>{errMessage}</strong>
+        <strong style={{ color: " rgb(173, 173, 173)" }}>{errMessage}</strong>
         {form}
         <div className={classes.Button}>
           <Button clicked={this.loginHandler}>Log In</Button>

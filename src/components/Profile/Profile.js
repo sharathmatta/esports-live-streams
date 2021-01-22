@@ -13,6 +13,7 @@ import { db, storage } from "../../firebase";
 import ProgressBar from "../../ui/ProgressBar/ProgressBar";
 
 const Profile = (props) => {
+  const [games, setGames] = useState(null);
   const [videoDetails, setVideoDetails] = useState({
     video: {
       elementType: "file",
@@ -40,17 +41,34 @@ const Profile = (props) => {
       value: "",
       label: "Description",
     },
+    gameCategory: {
+      elementType: "select",
+      elementConfig: {
+        options: [],
+      },
+      value: "",
+    },
   });
   const [uploadVid, setUploadVid] = useState(false);
+  const [selectMainVid, setSelectMainVid] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploaded, setUploaded] = useState(false);
   const [uploadPercent, setUploadPercent] = useState(0);
+
   useEffect(() => {
     if (props.loginChecked) {
       props.onProfileInit(props.currentuser, props.match.params.username);
+    } else {
+      props.onProfileInit(null, props.match.params.username);
     }
   }, [props.match.params.username, props.loginChecked]);
-
+  useEffect(() => {
+    setVideoDetails((oldObj) => {
+      const newObj = { ...oldObj };
+      newObj.gameCategory.elementConfig.options = props.allgames;
+      return newObj;
+    });
+  }, [props.allgames]);
   const videoClickHandler = (type, id) => {
     const queryParams = encodeURIComponent(type) + "=" + encodeURIComponent(id);
 
@@ -77,24 +95,36 @@ const Profile = (props) => {
         ...videoDetails,
         desc: { ...videoDetails.desc, value: event.target.value },
       });
+    } else if (type === "gameCategory") {
+      setVideoDetails({
+        ...videoDetails,
+        gameCategory: {
+          ...videoDetails.gameCategory,
+          value: event.target.value,
+        },
+      });
     }
   };
   const uploadCancelled = () => {
     setUploadVid(false);
+    setSelectMainVid(false);
     setUploading(false);
     setVideoDetails({
       ...videoDetails,
       video: { ...videoDetails.video, value: null },
       title: { ...videoDetails.title, value: "" },
       desc: { ...videoDetails.desc, value: "" },
+      gameCategory: { ...videoDetails.gameCategory, value: "" },
     });
     setUploaded(false);
   };
-  const videoUploadHandler = () => {
+  const videoUploadHandler = async () => {
     setUploading(true);
     const video = videoDetails.video.value;
     const title = videoDetails.title.value;
     const desc = videoDetails.desc.value;
+    const gameCategory = videoDetails.gameCategory.value;
+    const timestamp = new Date();
     const task = storage.ref("uploads/" + video.name).put(video);
     task.on(
       "state_changed",
@@ -112,23 +142,51 @@ const Profile = (props) => {
           .ref("uploads/" + video.name)
           .getDownloadURL()
           .then((url) => {
-            db.collection("video-uploads").add({
-              creator: props.currentuser,
-              videoURL: url,
-              timestamp: new Date(),
-              title: title,
-              desc: desc,
-            });
+            db.collection("streamers")
+              .doc(props.currentuser)
+              .collection("video-uploads")
+              .add({
+                creator: props.currentuser,
+                videoURL: url,
+                timestamp: timestamp,
+                title: title,
+                desc: desc,
+                game: gameCategory,
+              })
+              .then((snapshot) => {
+                db.collection("game")
+                  .doc(gameCategory)
+                  .collection("videos")
+                  .doc(snapshot.id)
+                  .set({
+                    creator: props.currentuser,
+                    videoURL: url,
+                    timestamp: timestamp,
+                    title: title,
+                    desc: desc,
+                    game: gameCategory,
+                  })
+                  .then((ss) => {
+                    if (selectMainVid) {
+                      db.collection("streamers").doc(props.currentuser).update({
+                        mainvideo: url,
+                        mainvideoId: snapshot.id,
+                      });
+                    }
+                  });
+              });
           });
       }
     );
   };
+
   const unfollowClicked = () => {
     props.onUnfollowInit(props.currentuser, props.username);
   };
   const followClicked = () => {
     props.onFollowInit(props.currentuser, props.username);
   };
+
   let gameList = null;
   let uploads = null;
   let profile = null;
@@ -142,14 +200,14 @@ const Profile = (props) => {
         !(
           videoDetails.video.value &&
           videoDetails.title.value &&
-          videoDetails.desc.value
+          videoDetails.desc.value &&
+          videoDetails.gameCategory.value
         )
       }
     >
       Upload
     </Button>
   );
-
   const formElementsArray = [];
   for (let key in videoDetails) {
     formElementsArray.push({
@@ -167,7 +225,7 @@ const Profile = (props) => {
       changed={(event) => inputChangedHandler(event, formElement.id)}
     />
   ));
-  if (uploadVid) {
+  if (uploadVid || selectMainVid) {
     if (uploading) {
       uploadProgress = <ProgressBar percentage={uploadPercent} />;
     }
@@ -186,18 +244,19 @@ const Profile = (props) => {
       </Modal>
     );
   }
+
   if (props.currentuser === props.username) {
     uploadVideo = <Button clicked={() => setUploadVid(true)}>+Upload</Button>;
-  } else {
+  } else if (props.token) {
     if (props.following) {
       uploadVideo = <Button clicked={unfollowClicked}>Following</Button>;
     } else {
       uploadVideo = <Button clicked={followClicked}>Follow</Button>;
     }
   }
-  if (props.uploads) {
+  if (props.username) {
     gameList = Object.keys(props.gamelist).map((key) => {
-      return <li key={props.gamelist[key].id}>{props.gamelist[key].name}</li>;
+      return <li key={key}>{props.gamelist[key].id}</li>;
     });
     profile = (
       <div className={classes.Profile}>
@@ -226,34 +285,63 @@ const Profile = (props) => {
             <ul className={classes.GameList}>{gameList}</ul>
           </div>
         </div>
+        {props.mainVideo ? null : (
+          <div className={classes.NoMainVideo}>
+            <div className={classes.NoMainVideoMessage}>
+              Add a Highlight video
+            </div>
+            <Button clicked={() => setSelectMainVid(true)}>Select</Button>
+          </div>
+        )}
       </div>
     );
-    mainVideo = (
-      <div
-        className={classes.PlayerWrapper}
-        onClick={() => videoClickHandler("highlights", "")}
-      >
-        <ReactPlayer
-          className={classes.ReactPlayer}
-          width="inherit"
-          height="inherit"
-          url={props.mainvideo}
-          playing={false}
-          controls={true}
+    if (props.mainvideo) {
+      mainVideo = (
+        <div
+          className={classes.PlayerWrapper}
+          onClick={() => videoClickHandler("watch", props.mainvideoId)}
+        >
+          <ReactPlayer
+            className={classes.ReactPlayer}
+            width="inherit"
+            height="inherit"
+            url={props.mainvideo}
+            playing={false}
+            controls={true}
+          />
+        </div>
+      );
+    } else if (props.currentuser === props.username) {
+      mainVideo = null;
+    }
+    if (props.uploads) {
+      uploads = (
+        <VideoList
+          className={classes.VideoList}
+          list={props.uploads}
+          preTitle="Video"
+          titleKeyword={"Uploads"}
+          postTitle=""
+          videoClicked={(type, link) => videoClickHandler(type, link)}
+          loading={props.loading}
         />
-      </div>
-    );
-    uploads = (
-      <VideoList
-        className={classes.VideoList}
-        list={props.uploads}
-        preTitle="Video"
-        titleKeyword={"Uploads"}
-        postTitle=""
-        videoClicked={(type, link) => videoClickHandler(type, link)}
-        loading={props.loading}
-      />
-    );
+      );
+    } else {
+      uploads = (
+        <div className={classes.NoUploads}>
+          <div className={classes.NoUploadsMessage}>No Video Uploads Yet</div>
+          {props.currentuser === props.username ? (
+            <Button
+              clicked={() => {
+                setUploadVid(true);
+              }}
+            >
+              +Upload
+            </Button>
+          ) : null}
+        </div>
+      );
+    }
   }
   if (props.loading) {
     mainVideo = (
@@ -281,17 +369,20 @@ const Profile = (props) => {
 
 const matchPropsToState = (state) => {
   return {
+    token: state.auth.token,
     currentuser: state.auth.username,
     username: state.streamer.username,
     userId: state.streamer.userId,
     ProfilePicture: state.streamer.profileURL,
     followercount: state.streamer.followercount,
     mainvideo: state.streamer.mainvideo,
+    mainvideoId: state.streamer.mainvideoId,
     uploads: state.streamer.uploads,
     gamelist: state.streamer.gamelist,
     loading: state.streamer.loading,
     following: state.streamer.following,
     loginChecked: state.auth.loginChecked,
+    allgames: state.auth.allgames,
   };
 };
 const matchDispatchToProps = (dispatch) => {
@@ -304,4 +395,7 @@ const matchDispatchToProps = (dispatch) => {
       dispatch(actions.initializeProfile(user, creator)),
   };
 };
-export default connect(matchPropsToState, matchDispatchToProps)(Profile);
+export default connect(
+  matchPropsToState,
+  matchDispatchToProps
+)(React.memo(Profile));
