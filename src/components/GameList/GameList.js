@@ -7,17 +7,20 @@ const GameList = (props) => {
   let gameList = Object.keys(arr).map((key) => {
     return <GameBlock key={key} />;
   });
-  if (props.list) {
-    gameList = Object.keys(props.list).map((key) => {
-      return (
-        <GameBlock
-          key={key}
-          id={key}
-          gamename={props.list[key].id}
-          logo={props.list[key].logo}
-        />
-      );
-    });
+  const list = { ...props.list };
+  if (list) {
+    if (Object.keys(list).length > 0) {
+      gameList = Object.keys(list).map((key) => {
+        return (
+          <GameBlock
+            key={key}
+            id={key}
+            gamename={list[key].id}
+            logo={list[key].logo}
+          />
+        );
+      });
+    }
   }
   return (
     <div className={props.wrapped ? classes.GameListWrap : classes.GameListRow}>

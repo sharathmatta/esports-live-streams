@@ -6,7 +6,7 @@
     .PlayerContainer{
         width: 100%;
         height: fit-content;
-        background-color: #040b13;
+        background-color: black;
         .VideoContainer{
             width: 100%;
             height: fit-content;
@@ -91,14 +91,18 @@
 
 
 
-@media(min-width:1120px){
-    .VideoContainer{
-        width: 960px;
-        margin: auto;
-        height: fit-content;
-        position: relative;
-        height: calc(960px * 0.5625);
-        padding: 0;
+@media(min-width:960px){
+    .PlayerComponent{
+        .PlayerContainer{
+            .VideoContainer{
+                width: 960px;
+                margin: auto;
+                height: fit-content;
+                position: relative;
+                height: calc(960px * 0.5625);
+                padding: 0;
+            }
+        }
     }
 }
 

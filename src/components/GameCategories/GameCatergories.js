@@ -11,6 +11,7 @@ class GameCategories extends Component {
   componentDidMount() {
     let gameList = [];
     db.collection("game")
+      .orderBy("playercount", "desc")
       .limit(15)
       .get()
       .then((snapshot) => {

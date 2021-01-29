@@ -3,7 +3,6 @@ import classes from "./Home.module.css";
 import HomeBrowse from "./HomeBrowse/HomeBrowse";
 import HomeFollowing from "../../components/VideosFollowing/VideosFollowing";
 import HomeRecommended from "../../components/VideosRecommended/VideosRecommended";
-import { NavLink } from "react-router-dom";
 
 const home = () => {
   return (

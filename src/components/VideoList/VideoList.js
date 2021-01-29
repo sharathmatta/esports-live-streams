@@ -6,6 +6,16 @@ import { withRouter } from "react-router-dom";
 
 const VideoList = (props) => {
   let clips = null;
+  let list = null;
+  if (props.list) {
+    if (props.list.length > 0) {
+      list = { ...props.list };
+    }
+    if (Object.keys(props.list).length > 0) {
+      list = { ...props.list };
+    }
+  }
+  //console.log("videolist", list);
   const videoClickHandler = (creator, type, id) => {
     const queryParams = encodeURIComponent(type) + "=" + encodeURIComponent(id);
 
@@ -14,18 +24,15 @@ const VideoList = (props) => {
       search: "?" + queryParams,
     });
   };
-  if (props.list) {
-    clips = Object.keys(props.list).map((key) => {
+  let content = null;
+  if (list) {
+    clips = Object.keys(list).map((key) => {
       return (
         <div className={classes.VideoContent} key={key}>
           <div
             className={classes.SubVideosVideo}
             onClick={() =>
-              videoClickHandler(
-                props.list[key].creator,
-                "watch",
-                props.list[key].id
-              )
+              videoClickHandler(list[key].creator, "watch", list[key].id)
             }
           >
             <div className={classes.VideoContainer}>
@@ -34,20 +41,18 @@ const VideoList = (props) => {
                   className={classes.ReactPlayer}
                   width="inherit"
                   height="inherit"
-                  url={props.list[key].videoURL}
+                  url={list[key].videoURL}
                   playing={false}
                   controls={false}
                 />
               </div>
             </div>
-            <div className={classes.VideoTitle}>{props.list[key].title}</div>
+            <div className={classes.VideoTitle}>{list[key].title}</div>
             <div className={classes.VideoUploadedOn}>
               <span>
-                {new Date(props.list[key].timestamp.seconds * 1000).getDate()}/
-                {new Date(props.list[key].timestamp.seconds * 1000).getMonth()}/
-                {new Date(
-                  props.list[key].timestamp.seconds * 1000
-                ).getFullYear()}
+                {new Date(list[key].timestamp.seconds * 1000).getDate()}/
+                {new Date(list[key].timestamp.seconds * 1000).getMonth() + 1}/
+                {new Date(list[key].timestamp.seconds * 1000).getFullYear()}
               </span>
             </div>
           </div>
@@ -57,16 +62,17 @@ const VideoList = (props) => {
   } else {
     clips = <Spinner />;
   }
-  return (
-    <div>
+  if (list) {
+    content = (
       <div className={classes.SubVideosContainer}>
         <div className={classes.SubVideosHeader}>
           {props.preTitle} <span>{props.titleKeyword}</span> {props.postTitle} :
         </div>
         <div className={classes.SubVideosFlexDiv}>{clips}</div>
       </div>
-    </div>
-  );
+    );
+  }
+  return <div>{content}</div>;
 };
 
 export default withRouter(VideoList);

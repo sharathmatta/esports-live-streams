@@ -209,6 +209,23 @@ export const checkLoginStatus = (userId) => {
     }
     query = await db
       .collection("streamers")
+      .orderBy("followercount", "desc")
+      .get();
+    let recommended = [];
+    query.forEach((el) => {
+      const data = el.data();
+      if (data.username !== username) {
+        if (!(data.username in following)) {
+          recommended[el.id] = el.data();
+        }
+      }
+    });
+    userPersonalData = {
+      ...userPersonalData,
+      recommended: recommended,
+    };
+    query = await db
+      .collection("streamers")
       .doc(username)
       .collection("game-list")
       .get();
@@ -233,23 +250,7 @@ export const checkLoginStatus = (userId) => {
         gamelist: gamelist,
       };
     }
-    query = await db
-      .collection("streamers")
-      .orderBy("followercount", "desc")
-      .get();
-    let recommended = [];
-    query.forEach((el) => {
-      const data = el.data();
-      if (data.username !== username) {
-        if (!(data.username in following)) {
-          recommended[el.id] = el.data();
-        }
-      }
-    });
-    userPersonalData = {
-      ...userPersonalData,
-      recommended: recommended,
-    };
+
     dispatch(init(userPersonalData));
   };
 };
@@ -274,11 +275,11 @@ const streamersFollowSuccess = () => {
     type: actionTypes.STREAMERS_FOLLOW_SUCCESS,
   };
 };
-const streamersFollowFail = () => {
-  return {
-    type: actionTypes.STREAMERS_FOLLOW_FAIL,
-  };
-};
+// const streamersFollowFail = () => {
+//   return {
+//     type: actionTypes.STREAMERS_FOLLOW_FAIL,
+//   };
+// };
 export const skippedStreamers = () => {
   return {
     type: actionTypes.STREAMERS_FOLLOW_SUCCESS,
@@ -288,24 +289,41 @@ export const skippedStreamers = () => {
 export const initializeStreamerFollow = (user, streamers) => {
   return async (dispatch) => {
     dispatch(streamersFollowStart());
+    let following = [];
     Object.keys(streamers).forEach(async (key) => {
       const streamer = streamers[key];
       let query = await db.collection("streamers").doc(streamer).get();
       const streamerData = query.data();
-      console.log(streamerData);
       query = await db
         .collection("streamers")
         .doc(user)
         .collection("following")
         .doc(streamer)
         .set(streamerData);
+
+      following[streamer] = streamerData;
       const creatorRef = db.collection("streamers").doc(streamer);
       creatorRef.update({
         followercount: firebase.firestore.FieldValue.increment(1),
       });
     });
-    console.log(user, streamers);
+
+    let query = await db
+      .collection("streamers")
+      .orderBy("followercount", "desc")
+      .get();
+
+    let recommended = [];
+    query.forEach((el) => {
+      const data = el.data();
+      if (data.username !== user) {
+        if (!(data.username in following)) {
+          recommended[el.id] = el.data();
+        }
+      }
+    });
     dispatch(streamersFollowSuccess());
+    dispatch(updateFollow(user));
   };
 };
 
@@ -320,11 +338,11 @@ const gameFollowSuccess = () => {
     type: actionTypes.GAME_FOLLOW_SUCCESS,
   };
 };
-const gameFollowFail = () => {
-  return {
-    type: actionTypes.GAME_FOLLOW_FAIL,
-  };
-};
+// const gameFollowFail = () => {
+//   return {
+//     type: actionTypes.GAME_FOLLOW_FAIL,
+//   };
+// };
 export const skippedGames = () => {
   return {
     type: actionTypes.GAME_FOLLOW_SUCCESS,
@@ -338,7 +356,6 @@ export const initializeGameFollow = (user, games) => {
       const game = games[key];
       let query = await db.collection("game").doc(game).get();
       const gameData = query.data();
-      console.log(gameData);
       query = await db
         .collection("streamers")
         .doc(user)
@@ -350,7 +367,6 @@ export const initializeGameFollow = (user, games) => {
         playercount: firebase.firestore.FieldValue.increment(1),
       });
     });
-    console.log(user, games);
     dispatch(gameFollowSuccess());
   };
 };

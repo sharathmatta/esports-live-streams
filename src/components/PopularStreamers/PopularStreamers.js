@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import classes from "./PopularStreamers.module.css";
 import { db } from "../../firebase";
 import StreamerList from "../StreamerList/StreamerList";
+import { connect } from "react-redux";
 
 class PopularStreamers extends Component {
   state = {
@@ -9,66 +10,38 @@ class PopularStreamers extends Component {
   };
   componentDidMount() {
     let streamerList = [];
-    db.collection("streamers")
-      .limit(15)
-      .get()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          streamerList.push(doc.data());
+    if (this.props.token && this.props.username) {
+      db.collection("streamers")
+        .limit(15)
+        .get()
+        .then((snapshot) => {
+          snapshot.forEach((doc) => {
+            console.log(doc.id, this.props.username);
+            if (doc.id !== this.props.username) {
+              streamerList.push(doc.data());
+            }
+          });
+          this.setState({ streamers: streamerList });
         });
-        this.setState({ streamers: streamerList });
-      });
+    } else {
+      db.collection("streamers")
+        .limit(15)
+        .get()
+        .then((snapshot) => {
+          snapshot.forEach((doc) => {
+            streamerList.push(doc.data());
+          });
+          this.setState({ streamers: streamerList });
+        });
+    }
   }
   render() {
-    let PopularStreamers = (
-      <div className={classes.DummyList}>
-        <div className={classes.DummyStreamer}>
-          <div className={classes.DummyStreamerImg}>
-            <div className={classes.ForAnimation}></div>
-          </div>
-          <div className={classes.DummyStreamerName}></div>
-        </div>
-        <div className={classes.DummyStreamer}>
-          <div className={classes.DummyStreamerImg}>
-            <div className={classes.ForAnimation}></div>
-          </div>
-          <div className={classes.DummyStreamerName}></div>
-        </div>
-        <div className={classes.DummyStreamer}>
-          <div className={classes.DummyStreamerImg}>
-            <div className={classes.ForAnimation}></div>
-          </div>
-          <div className={classes.DummyStreamerName}></div>
-        </div>
-        <div className={classes.DummyStreamer}>
-          <div className={classes.DummyStreamerImg}>
-            <div className={classes.ForAnimation}></div>
-          </div>
-          <div className={classes.DummyStreamerName}></div>
-        </div>
-        <div className={classes.DummyStreamer}>
-          <div className={classes.DummyStreamerImg}>
-            <div className={classes.ForAnimation}></div>
-          </div>
-          <div className={classes.DummyStreamerName}></div>
-        </div>
-        <div className={classes.DummyStreamer}>
-          <div className={classes.DummyStreamerImg}>
-            <div className={classes.ForAnimation}></div>
-          </div>
-          <div className={classes.DummyStreamerName}></div>
-        </div>
-        <div className={classes.DummyStreamer}>
-          <div className={classes.DummyStreamerImg}>
-            <div className={classes.ForAnimation}></div>
-          </div>
-          <div className={classes.DummyStreamerName}></div>
-        </div>
-      </div>
-    );
+    let PopularStreamers = <StreamerList />;
     if (this.state.streamers) {
       const streamers = this.state.streamers;
-      PopularStreamers = <StreamerList list={streamers.slice(0, 12)} />;
+      if (streamers.length > 0) {
+        PopularStreamers = <StreamerList list={streamers.slice(0, 12)} />;
+      }
     }
     return (
       <div className={classes.PopularStreamersContainer}>
@@ -81,4 +54,11 @@ class PopularStreamers extends Component {
   }
 }
 
-export default PopularStreamers;
+const matchStateToProps = (state) => {
+  return {
+    token: state.auth.token,
+    user: state.auth.username,
+  };
+};
+
+export default connect(matchStateToProps)(PopularStreamers);

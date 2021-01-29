@@ -72,7 +72,7 @@ export const initializeProfile = (user, creator) => {
       .get();
     let gameList = [];
     query.forEach((element) => {
-      gameList.push(element.data());
+      gameList[element.id] = element.data();
     });
     let following = false;
     if (user) {
@@ -145,8 +145,8 @@ export const initializeUnfollow = (user, creator) => {
       .collection("following")
       .doc(creator)
       .delete();
-    const creatorRef = await db.collection("streamers").doc(creator);
-    creatorRef.update({
+    const creatorRef = db.collection("streamers").doc(creator);
+    await creatorRef.update({
       followercount: firebase.firestore.FieldValue.increment(-1),
     });
 
@@ -166,11 +166,34 @@ export const initializeFollow = (user, creator) => {
       .collection("following")
       .doc(creator)
       .set(creatordata);
-    const creatorRef = await db.collection("streamers").doc(creator);
-    creatorRef.update({
+    const creatorRef = db.collection("streamers").doc(creator);
+    await creatorRef.update({
       followercount: firebase.firestore.FieldValue.increment(1),
     });
     dispatch(followSuccess());
     dispatch(actions.updateFollow(user));
+  };
+};
+
+export const initializeUpdateVideos = (user) => {
+  return async (dispatch) => {
+    let query = await db
+      .collection("streamers")
+      .doc(user)
+      .collection("video-uploads")
+      .orderBy("timestamp", "desc")
+      .get();
+    let uploads = [];
+    query.forEach((el) => {
+      uploads.push({ id: el.id, ...el.data() });
+    });
+    dispatch(updateVideos(uploads));
+  };
+};
+
+const updateVideos = (uploads) => {
+  return {
+    type: actionTypes.UPDATE_VIDEOS,
+    uploads: uploads,
   };
 };

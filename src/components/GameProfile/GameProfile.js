@@ -1,89 +1,120 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import { db } from "../../firebase";
+
 import { connect } from "react-redux";
 import VideoList from "../../components/VideoList/VideoList";
-import blankStreamer from "../../assets/—Pngtree—profile glyph black icon_4008321.png";
+
 import * as actions from "../../store/actions/index";
 import Spinner from "../../ui/spinner/Spinner";
+import StreamerList from "../StreamerList/StreamerList";
 import classes from "./GameProfile.module.css";
 
 const GameProfile = (props) => {
   const [gameId, setGameId] = useState(null);
-
-  const [favList, setFavList] = useState(null);
   useEffect(() => {
     setGameId(props.match.params.gameid);
-    if (gameId) {
-      props.onGameInit(gameId, props.token);
+  }, [props.match.params.gameid]);
+  useEffect(() => {
+    if (gameId && props.loginChecked) {
+      props.onGameInit(gameId, props.recommended, props.following);
+    } else if (gameId && !props.token) {
+      props.onGameInit(gameId, null, null);
     }
-  }, [props.match.params.gameid, gameId]);
-  const FavGameStreamers = <div></div>;
+  }, [gameId, props.loginChecked]);
+  useEffect(() => {
+    if (props.gameDetails.favStreamers) {
+      if (Object.keys(props.gameDetails.favStreamers).length > 0) {
+      }
+    }
+    if (props.gameDetails.popStreamers) {
+      if (Object.keys(props.gameDetails.popStreamers).length > 0) {
+      }
+    }
+  }, [props.gameDetails.favStreamers, props.gameDetails.popStreamers]);
+
+  useEffect(() => {}, [
+    props.gameDetails.favVideolist,
+    props.gameDetails.popVideolist,
+  ]);
+
   let content = null;
   let FavouriteStreamers = null;
   let PopularStreamers = null;
-
+  let favStreamersVideos = null;
+  let popStreamersVideos = null;
   if (props.gameDetails.loading) {
     content = <Spinner />;
   }
-  if (props.gameDetails.favStreamers && props.gameDetails.popStreamers) {
+  if (props.gameDetails.favStreamers) {
     let streamerList = props.gameDetails.favStreamers;
-
-    FavouriteStreamers = Object.keys(streamerList).map((key) => {
-      return (
-        <NavLink
-          to={"/profile/" + streamerList[key].username}
-          key={streamerList[key].username}
-        >
-          <div className={classes.Streamer}>
-            <img
-              src={streamerList[key].profilePicURL}
-              alt="streamerlogo"
-              onError={(e) => {
-                e.target.src = blankStreamer;
-              }}
-            />
-          </div>
-          <span>{streamerList[key].username}</span>
-        </NavLink>
-      );
-    });
-    streamerList = props.gameDetails.popStreamers;
-    PopularStreamers = Object.keys(streamerList).map((key) => {
-      return (
-        <NavLink
-          to={"/profile/" + streamerList[key].username}
-          key={streamerList[key].username}
-        >
-          <div className={classes.Streamer}>
-            <img
-              src={streamerList[key].profilePicURL}
-              alt="streamerlogo"
-              onError={(e) => {
-                e.target.src = blankStreamer;
-              }}
-            />
-          </div>
-          <span>{streamerList[key].username}</span>
-        </NavLink>
-      );
-    });
-  }
-  if (props.gameDetails.gamename) {
-    content = (
-      <div>
+    if (Object.keys(streamerList).length > 0) {
+      FavouriteStreamers = (
         <div className={classes.FavGameStreamerCont}>
           <div className={classes.Header}>
             Your favourite <span>{props.gameDetails.gamename}</span> streamers :
           </div>
-          <div className={classes.StreamerList}>{FavouriteStreamers}</div>
-        </div>
-        <div className={classes.PopGameStreamerCont}>
-          <div className={classes.Header}>
-            Popular <span>{props.gameDetails.gamename}</span> streamers :
+          <div className={classes.StreamerList}>
+            <StreamerList list={streamerList} />
           </div>
-          <div className={classes.StreamerList}>{PopularStreamers}</div>
         </div>
+      );
+    }
+  }
+  if (props.gameDetails.favVideolist) {
+    let favvideolist = props.gameDetails.favVideolist;
+    if (Object.keys(favvideolist).length > 0) {
+      favStreamersVideos = Object.keys(favvideolist).map((key) => {
+        console.log(key);
+        const list = favvideolist[key];
+        return (
+          <VideoList
+            key={key}
+            list={list}
+            titleKeyword={key + "\u0027s " + props.gameDetails.gamename}
+            postTitle={"videos"}
+          />
+        );
+      });
+    }
+  }
+  if (props.gameDetails.popVideolist) {
+    let popvideolist = props.gameDetails.popVideolist;
+    console.log(popvideolist);
+    if (Object.keys(popvideolist).length > 0) {
+      console.log("yoo");
+      popStreamersVideos = Object.keys(popvideolist).map((key) => {
+        console.log(key);
+        const list = popvideolist[key];
+        return (
+          <VideoList
+            key={key}
+            list={list}
+            titleKeyword={key + "\u0027s " + props.gameDetails.gamename}
+            postTitle={"videos"}
+          />
+        );
+      });
+    }
+  }
+  if (props.gameDetails.popStreamers) {
+    let streamerList = props.gameDetails.popStreamers;
+    PopularStreamers = (
+      <div className={classes.PopGameStreamerCont}>
+        <div className={classes.Header}>
+          Popular <span>{props.gameDetails.gamename}</span> streamers :
+        </div>
+        <div className={classes.StreamerList}>
+          <StreamerList list={streamerList} />
+        </div>
+      </div>
+    );
+  }
+  if (props.gameDetails.gamename) {
+    content = (
+      <div>
+        {FavouriteStreamers}
+        {favStreamersVideos}
+        {PopularStreamers}
+        {popStreamersVideos}
         <div className={classes.StreamerVideoList}>
           <VideoList
             preTitle={"Ninja\u0027s"}
@@ -110,12 +141,15 @@ const mapStateToProps = (state) => {
   return {
     token: state.auth.token,
     gameDetails: state.game,
+    following: state.auth.following,
+    recommended: state.auth.recommended,
+    loginChecked: state.auth.loginChecked,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    onGameInit: (id, favGameStreamer, popGameStreamer) =>
-      dispatch(actions.initializeGame(id, favGameStreamer, popGameStreamer)),
+    onGameInit: (id, recommended, following) =>
+      dispatch(actions.initializeGame(id, recommended, following)),
   };
 };
 

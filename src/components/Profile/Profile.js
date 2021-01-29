@@ -13,7 +13,6 @@ import { db, storage } from "../../firebase";
 import ProgressBar from "../../ui/ProgressBar/ProgressBar";
 
 const Profile = (props) => {
-  const [games, setGames] = useState(null);
   const [videoDetails, setVideoDetails] = useState({
     video: {
       elementType: "file",
@@ -124,6 +123,7 @@ const Profile = (props) => {
     const title = videoDetails.title.value;
     const desc = videoDetails.desc.value;
     const gameCategory = videoDetails.gameCategory.value;
+
     const timestamp = new Date();
     const task = storage.ref("uploads/" + video.name).put(video);
     task.on(
@@ -173,13 +173,27 @@ const Profile = (props) => {
                         mainvideoId: snapshot.id,
                       });
                     }
+                    if (!props.gamelist[gameCategory]) {
+                      db.collection("game")
+                        .doc(gameCategory)
+                        .get()
+                        .then((snapshot) => {
+                          db.collection("streamers")
+                            .doc(props.currentuser)
+                            .collection("game-list")
+                            .doc(gameCategory)
+                            .set({
+                              ...snapshot.data(),
+                            });
+                        });
+                    }
+                    props.onUpdateVideos(props.username);
                   });
               });
           });
       }
     );
   };
-
   const unfollowClicked = () => {
     props.onUnfollowInit(props.currentuser, props.username);
   };
@@ -285,14 +299,15 @@ const Profile = (props) => {
             <ul className={classes.GameList}>{gameList}</ul>
           </div>
         </div>
-        {props.mainVideo ? null : (
+        {props.mainVideo ? null : props.token &&
+          props.currentuser === props.username ? (
           <div className={classes.NoMainVideo}>
             <div className={classes.NoMainVideoMessage}>
               Add a Highlight video
             </div>
             <Button clicked={() => setSelectMainVid(true)}>Select</Button>
           </div>
-        )}
+        ) : null}
       </div>
     );
     if (props.mainvideo) {
@@ -393,6 +408,7 @@ const matchDispatchToProps = (dispatch) => {
       dispatch(actions.initializeFollow(user, creator)),
     onProfileInit: (user, creator) =>
       dispatch(actions.initializeProfile(user, creator)),
+    onUpdateVideos: (user) => dispatch(actions.initializeUpdateVideos(user)),
   };
 };
 export default connect(

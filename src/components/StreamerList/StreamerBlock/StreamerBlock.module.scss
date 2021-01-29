@@ -27,3 +27,55 @@ a{
         transform: scale(1.05);
     }
 }
+.DummyStreamer{
+    height: fit-content;
+    width: fit-content;
+    padding: 10px 10px;
+    
+
+    .DummyStreamerImg{
+        height: 140px;
+        width: 140px;
+        border-radius: 3px;
+        background-color: $secondaryBackground;
+        margin: 5px;
+        .ForAnimation{
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            &:before{
+              content: '';
+              background-color:  #1f1f22;
+        
+              height: inherit;
+              width: 5em;
+              display: block;
+              left: -2.5em;
+              animation: mymove 4s;
+              animation-iteration-count: infinite;
+              transition: all 0.5s ease-in-out;
+            }
+          }
+    }
+    .DummyStreamerName{
+        height: 15px;
+        width: 70px;
+        border-radius: 2px;
+        margin: 5px auto;
+        background-color: $secondaryBackground;
+    }
+}
+
+@keyframes mymove{
+    0%{
+        transform: skewX(-45deg) translateX(-4em);
+        opacity: 0.1;
+    }
+    50%{
+      opacity: 0.3;
+    }
+    100%{
+      opacity: 0.1;
+        transform: skewX(-45deg) translateX(13.5em);
+    }
+}

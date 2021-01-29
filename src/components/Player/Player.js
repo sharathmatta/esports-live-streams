@@ -5,8 +5,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import VideoList from "../VideoList/VideoList";
 import ReactPlayer from "react-player";
-import logi from "../../assets/Singer-Selena-Gomez-Background-Wallpapers-44158.jpg";
-import vid from "../../assets/Selena Gomez - Feel Me (Live from the Revival Tour)_8N_Yro5QeCE_1080p.mp4";
 
 const Player = (props) => {
   const [creator, setCreator] = useState(null);
@@ -28,14 +26,14 @@ const Player = (props) => {
     date = (
       <span>
         {new Date(props.videoData.timestamp.seconds * 1000).getDate()}/
-        {new Date(props.videoData.timestamp.seconds * 1000).getMonth()}/
+        {new Date(props.videoData.timestamp.seconds * 1000).getMonth() + 1}/
         {new Date(props.videoData.timestamp.seconds * 1000).getFullYear()}
       </span>
     );
   }
   let moreVideos = null;
   if (props.videoData.moreVideosCreator) {
-    const game = props.videoData.game;
+    const game = props.videoData.gamename;
     moreVideos = (
       <div>
         <VideoList
@@ -80,7 +78,7 @@ const Player = (props) => {
         </div>
         <div className={classes.UploadDate}>Uploaded On : {date}</div>
         <div className={classes.UploadDate}>
-          Game Category : <span>{props.videoData.game}</span>
+          Game Category : <span>{props.videoData.gamename}</span>
         </div>
         {moreVideos}
       </div>

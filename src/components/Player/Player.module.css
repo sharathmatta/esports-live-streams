@@ -13,7 +13,7 @@
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
-  background-color: #040b13;
+  background-color: black;
 }
 
 .PlayerComponent .PlayerContainer .VideoContainer {
@@ -109,8 +109,8 @@
   color: #adadad;
 }
 
-@media (min-width: 1120px) {
-  .VideoContainer {
+@media (min-width: 960px) {
+  .PlayerComponent .PlayerContainer .VideoContainer {
     width: 960px;
     margin: auto;
     height: -webkit-fit-content;

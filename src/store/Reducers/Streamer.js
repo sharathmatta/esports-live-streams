@@ -59,6 +59,11 @@ const followSuccess = (state, action) => {
     followercount: state.followercount + 1,
   });
 };
+const updateVideos = (state, action) => {
+  return updateObject(state, {
+    uploads: action.uploads,
+  });
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -74,6 +79,8 @@ const reducer = (state = initialState, action) => {
       return followInit(state, action);
     case actionTypes.FOLLOW_SUCCESS:
       return followSuccess(state, action);
+    case actionTypes.UPDATE_VIDEOS:
+      return updateVideos(state, action);
     default:
       return state;
   }

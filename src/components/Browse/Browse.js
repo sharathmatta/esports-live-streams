@@ -20,7 +20,7 @@ const Browse = (props) => {
   const [typeVal, setTypeVal] = useState("all");
   useEffect(async () => {
     let games = [];
-    if (typeVal == "all") {
+    if (typeVal === "all") {
       let query = await db.collection("game").get();
       query.forEach((el) => {
         games[el.id] = el.data();
@@ -49,16 +49,32 @@ const Browse = (props) => {
       </option>
     );
   });
-
-  let gameList = null;
-  gameList = <GameList list={gamelist} wrapped />;
+  let sortedgamelist = [];
   if (gamelist) {
-    let sorted = Object.entries(gamelist)
-      .sort((a, b) => {
-        return a[1].id > b[1].id ? 1 : a[1].id < b[1].id ? -1 : 0;
-      })
-      .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+    if (sortVal === "alpha") {
+      let sorted = Object.entries(gamelist)
+        .sort((a, b) => {
+          return a[0] > b[0] ? 1 : a[0] < b[0] ? -1 : 0;
+        })
+        .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+      sortedgamelist = sorted;
+    }
+    if (sortVal === "popularity") {
+      let sorted = Object.entries(gamelist)
+        .sort((a, b) => {
+          return a[1].playercount < b[1].playercount
+            ? 1
+            : a[1].playercount > b[1].playercount
+            ? -1
+            : 0;
+        })
+        .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+      sortedgamelist = sorted;
+    }
   }
+  let gameList = null;
+  gameList = <GameList list={sortedgamelist} wrapped />;
+
   let content = (
     <div className={classes.BrowseContainer}>
       <div className={classes.Header}>

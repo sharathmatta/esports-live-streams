@@ -19,6 +19,7 @@ const playerInitSuccess = (
     desc: videoData.desc,
     title: videoData.title,
     game: videoData.game,
+    gamename: videoData.gamename,
     timestamp: videoData.timestamp,
     moreVideosCreator: moreVideosCreator,
     moreVideosGame: moreVideosGame,
@@ -44,7 +45,7 @@ const getVideo = (creator, id) => {
       .get();
 
     videoData = { ...query.data() };
-    console.log(videoData);
+
     query = await db
       .collection("streamers")
       .doc(creator)
@@ -58,6 +59,11 @@ const getVideo = (creator, id) => {
         moreVideosCreator.push(vidData);
       }
     });
+    query = await db.collection("game").doc(videoData.game).get();
+    videoData = {
+      ...videoData,
+      gamename: query.data().id,
+    };
     query = await db
       .collection("game")
       .doc(videoData.game)

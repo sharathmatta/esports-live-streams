@@ -17,6 +17,7 @@ export {
   initializeProfile,
   initializeUnfollow,
   initializeFollow,
+  initializeUpdateVideos,
 } from "./Streamer";
 
 export { initializePlayer } from "./Player";

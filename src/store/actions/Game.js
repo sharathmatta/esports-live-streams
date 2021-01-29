@@ -1,6 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import axios from "axios";
-import { db, storage } from "../../firebase";
+import { db } from "../../firebase";
 
 const gameInitStart = () => {
   return {
@@ -16,22 +15,22 @@ const gameInitSuccess = (gameDetails) => {
     gameLogo: gameDetails.gameLogo,
     favStreamers: gameDetails.favStreamers,
     popStreamers: gameDetails.popStreamers,
-    videoList: gameDetails.videoList,
+    favVideolist: gameDetails.favVideolist,
+    popVideolist: gameDetails.popVideolist,
   };
 };
 
-const gameInitFail = () => {
-  return {
-    type: actionTypes.GAME_INIT_FAIL,
-  };
-};
+// const gameInitFail = () => {
+//   return {
+//     type: actionTypes.GAME_INIT_FAIL,
+//   };
+// };
 
-export const initializeGame = (id) => {
+export const initializeGame = (id, recommended, following) => {
   return async (dispatch) => {
     dispatch(gameInitStart());
-    console.log(id);
+
     let gameDetails = {};
-    console.log(id);
     let query = await db.collection("game").doc(id).get();
     const gameId = id;
     const gamename = query.data().id;
@@ -42,45 +41,108 @@ export const initializeGame = (id) => {
       gamename: gamename,
       gameLogo: gameLogo,
     };
-    // let favStreamersList = [];
-    // for (let i = 0; i < favStreamers.length; i++) {
-    //   let strName = favStreamers[i];
-    //   query = await db.collection("popular-streamers").doc(strName).get();
-    //   favStreamersList[strName] = query.data();
-    //   gameDetails = {
-    //     ...gameDetails,
-    //     favStreamers: {
-    //       ...favStreamersList,
-    //     },
-    //   };
-    // }
-    // let popStreamersList = [];
-    // for (let i = 0; i < popStreamers.length; i++) {
-    //   let strName = popStreamers[i];
-    //   query = await db.collection("popular-streamers").doc(strName).get();
-    //   popStreamersList[strName] = query.data();
-    //   gameDetails = {
-    //     ...gameDetails,
-    //     popStreamers: {
-    //       ...popStreamersList,
-    //     },
-    //   };
-    // }
-    query = await db
-      .collection("video-uploads")
-      .orderBy("timestamp", "desc")
-      .get();
-    let videos = [];
+    if (following) {
+      dispatch(getList(gameId, following, "following"));
+    }
+    if (recommended) {
+      dispatch(getList(gameId, recommended, "recommended"));
+    } else {
+      let recommendedList = {};
+      let query = await db
+        .collection("streamers")
+        .orderBy("followercount", "desc")
+        .get();
+      query.forEach((el) => {
+        recommendedList[el.id] = { ...el.data() };
+      });
+      dispatch(getList(gameId, recommendedList, "recommended"));
+    }
 
-    query.forEach((element) => {
-      let vidData = null;
-      vidData = { ...element.data(), id: element.id };
-      videos.push(vidData);
-    });
-    gameDetails = {
-      ...gameDetails,
-      videoList: videos,
-    };
     dispatch(gameInitSuccess(gameDetails));
+  };
+};
+
+// const getStreamerDetails = async (username) => {
+//   let query2 = await db.collection("streamers").doc(username).get();
+//   console.log(query2.data());
+//   return query2.data();
+// };
+
+const getList = (id, list, type) => {
+  return async (dispatch) => {
+    Object.keys(list).forEach((key) => {
+      dispatch(checkPlaying(id, key, list[key], type));
+    });
+  };
+};
+
+const checkPlaying = (game, creator, data, type) => {
+  return async (dispatch) => {
+    let query = await db
+      .collection("streamers")
+      .doc(creator)
+      .collection("game-list")
+      .doc(game)
+      .get();
+    if (query.exists) {
+      if (type === "following") {
+        dispatch(addFavStreamer({ [creator]: data }));
+        dispatch(checkVideos(game, creator, type));
+      }
+      if (type === "recommended") {
+        dispatch(addPopStreamer({ [creator]: data }));
+        dispatch(checkVideos(game, creator, type));
+      }
+    }
+  };
+};
+
+const checkVideos = (game, creator, type) => {
+  return async (dispatch) => {
+    let query = await db
+      .collection("game")
+      .doc(game)
+      .collection("videos")
+      .where("creator", "==", creator)
+      .get();
+    if (query.size > 0) {
+      let videos = [];
+      query.forEach((el) => {
+        videos.push({ id: el.id, ...el.data() });
+      });
+      if (type === "following") {
+        dispatch(addFavStreamerVideos(creator, videos));
+      }
+      if (type === "recommended") {
+        dispatch(addPopStreamerVideos(creator, videos));
+      }
+    }
+  };
+};
+
+const addFavStreamer = (data) => {
+  return {
+    type: actionTypes.ADD_FAV_STREAMER,
+    data: data,
+  };
+};
+const addPopStreamer = (data) => {
+  return {
+    type: actionTypes.ADD_POP_STREAMER,
+    data: data,
+  };
+};
+const addFavStreamerVideos = (creator, videos) => {
+  return {
+    type: actionTypes.ADD_FAV_STREAMER_VIDEOS,
+    creator: creator,
+    videos: videos,
+  };
+};
+const addPopStreamerVideos = (creator, videos) => {
+  return {
+    type: actionTypes.ADD_POP_STREAMER_VIDEOS,
+    creator: creator,
+    videos: videos,
   };
 };

@@ -1,4 +1,3 @@
-import { retinaImage } from "polished";
 import * as actionTypes from "../actions/actionTypes";
 import { updateObject } from "../utility";
 
@@ -164,6 +163,7 @@ const reducer = (state = initialState, action) => {
       return gamesFollowFail(state, action);
     case actionTypes.FOLLOW_UPDATE_SUCCESS:
       return followUpdateSuccess(state, action);
+
     default:
       return state;
   }

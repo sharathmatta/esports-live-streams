@@ -10,35 +10,37 @@ const HomeRecommended = (props) => {
   const [gameVideos, setGameVideos] = useState(null);
   const [recommended, setRecommended] = useState(null);
   const [gamelist, setGamelist] = useState(null);
-  useEffect(async () => {
-    if (props.token) {
-      setRecommended(props.recommended);
-      setGamelist(props.gamelist);
-    } else {
-      let query = await db
-        .collection("streamers")
-        .orderBy("followercount", "desc")
-        .get();
-      let recom = [];
+  useEffect(() => {
+    const getVideosRecommended = async () => {
+      if (props.token) {
+        setRecommended(props.recommended);
+        setGamelist(props.gamelist);
+      } else {
+        let query = await db
+          .collection("streamers")
+          .orderBy("followercount", "desc")
+          .get();
+        let recom = [];
 
-      query.forEach((el) => {
-        const data = el.data();
-        recom[el.id] = el.data();
-      });
+        query.forEach((el) => {
+          recom[el.id] = { ...el.data() };
+        });
 
-      setRecommended(recom);
+        setRecommended(recom);
 
-      query = await db
-        .collection("game")
-        .orderBy("playercount", "desc")
-        .limit(10)
-        .get();
-      let games = [];
-      query.forEach((el) => {
-        games.push(el.id);
-      });
-      setGamelist(games);
-    }
+        query = await db
+          .collection("game")
+          .orderBy("playercount", "desc")
+          .limit(10)
+          .get();
+        let games = [];
+        query.forEach((el) => {
+          games.push(el.id);
+        });
+        setGamelist(games);
+      }
+    };
+    getVideosRecommended();
   }, [props.recommended, props.gamelist]);
   useEffect(() => {
     let vidCollection = [];
