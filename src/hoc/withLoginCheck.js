@@ -5,10 +5,8 @@ const withLoginCheck = (WrappedContent, props) => {
   return class extends Component {
     componentWillMount() {
       if (props.token) {
-        console.log("hello");
       }
       if (props.loginChecked) {
-        console.log("hi");
       }
     }
     render() {

@@ -78,9 +78,7 @@ const GameProfile = (props) => {
   }
   if (props.gameDetails.popVideolist) {
     let popvideolist = props.gameDetails.popVideolist;
-    console.log(popvideolist);
     if (Object.keys(popvideolist).length > 0) {
-      console.log("yoo");
       popStreamersVideos = Object.keys(popvideolist).map((key) => {
         console.log(key);
         const list = popvideolist[key];

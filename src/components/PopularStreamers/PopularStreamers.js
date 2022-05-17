@@ -16,7 +16,6 @@ class PopularStreamers extends Component {
         .get()
         .then((snapshot) => {
           snapshot.forEach((doc) => {
-            console.log(doc.id, this.props.username);
             if (doc.id !== this.props.username) {
               streamerList.push(doc.data());
             }

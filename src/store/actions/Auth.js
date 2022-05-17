@@ -155,7 +155,6 @@ export const auth = (userData, isSignUp) => {
         }
       })
       .catch((err) => {
-        console.log(err.response.data.error);
         dispatch(authFail(err.response.data.error));
       });
   };
